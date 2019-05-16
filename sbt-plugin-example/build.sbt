@@ -2,6 +2,8 @@ name := "sbt-plugin-example"
 organization := "com.monadiccloud.bindingz"
 version := "1.0-SNAPSHOT"
 
+headerLicense := Some(HeaderLicense.ALv2("2019", "Connor Goulding"))
+
 resolvers += Resolver.mavenLocal
 resolvers += Resolver.mavenCentral
 resolvers += Resolver.sonatypeRepo("releases")
