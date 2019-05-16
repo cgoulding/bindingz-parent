@@ -1,0 +1,12 @@
+apply plugin: 'java'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.monadiccloud.bindingz:contract-annotations4j:1.0-SNAPSHOT'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.9.8'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.8'
+}

@@ -14,6 +14,7 @@ classes
 out
 build
 target
+gradle
 .gradle
 .gradletasknamecache
 dockerBuilddone

@@ -1,0 +1,52 @@
+apply plugin: 'groovy'
+apply plugin: 'java-gradle-plugin'
+apply plugin: 'java'
+apply plugin: 'java-library'
+apply plugin: 'maven-publish'
+
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+group 'com.monadiccloud.bindingz'
+version '1.0-SNAPSHOT'
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
+}
+
+gradlePlugin {
+    plugins {
+        naavroPlugin {
+            id = 'com.monadiccloud.bindingz.gradle-plugin'
+            implementationClass = 'com.monadiccloud.bindingz.contract.plugin.gradle.BindingzPlugin'
+        }
+    }
+}
+
+dependencies {
+    compile 'com.monadiccloud.bindingz:contract-annotations4j:1.0-SNAPSHOT'
+    compile 'com.fasterxml.jackson.module:jackson-module-jsonSchema:2.9.8'
+    compile 'org.jsonschema2pojo:jsonschema2pojo-core:1.0.1'
+    compile 'com.dorkbox:Annotations:2.14'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}

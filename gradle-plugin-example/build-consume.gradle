@@ -1,0 +1,29 @@
+apply from: 'build.gradle'
+
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.monadiccloud.bindingz:gradle-plugin:1.0-SNAPSHOT'
+    }
+}
+
+apply plugin: 'com.monadiccloud.bindingz.gradle-plugin'
+bindingz {
+    broker = "http://localhost:8080"
+    consumerConfigurations {
+        one {
+            providerName = "gradle-plugin-example"
+            contractName = "FooBarEvent"
+            version = "1.0"
+            packageName = "com.monadiccloud.sample.v1"
+            className = "LocalFooBarEvent"
+            jsonSchema2Pojo {
+                //take all defaults
+            }
+        }
+    }
+}
