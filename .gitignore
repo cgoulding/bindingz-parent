@@ -1,0 +1,25 @@
+# Mac
+.DS_Store
+
+# IntelliJ
+.idea
+.idea_modules
+*.iml
+*.ipr
+*.iws
+.history
+classes
+
+# build
+out
+build
+target
+.gradle
+.gradletasknamecache
+dockerBuilddone
+
+
+#vscode
+.vscode
+javac-services.*
+.settings
