@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Connor Goulding
+ * Copyright (c) 2019 Connor Goulding
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.

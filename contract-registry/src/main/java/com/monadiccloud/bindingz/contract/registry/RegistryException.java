@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Connor Goulding
+ * Copyright (c) 2019. Connor Goulding
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,9 @@
 
 package com.monadiccloud.bindingz.contract.registry;
 
-public class SchemaResource {
-
-    private final SchemaDto content;
-
-    public SchemaResource(SchemaDto content) {
-        this.content = content;
-    }
-
-    public SchemaDto getContent() {
-        return content;
+public class RegistryException extends RuntimeException {
+    public RegistryException(String message,
+                             Throwable cause) {
+        super(message, cause);
     }
 }

@@ -17,8 +17,9 @@ target
 gradle
 .gradle
 .gradletasknamecache
+gradlew
+gradlew.bat
 dockerBuilddone
-
 
 #vscode
 .vscode

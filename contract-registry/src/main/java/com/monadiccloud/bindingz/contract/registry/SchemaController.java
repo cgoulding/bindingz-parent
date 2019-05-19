@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Connor Goulding
+ * Copyright (c) 2019 Connor Goulding
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package com.monadiccloud.bindingz.contract.registry;
 
 import com.fasterxml.jackson.databind.jsonschema.JsonSchema;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,7 +32,11 @@ import java.util.Optional;
 @RestController
 public class SchemaController {
 
-    private SchemaRepository repository = new SchemaRepository();
+    private final SchemaRepository repository;
+
+    public SchemaController(@Autowired SchemaRepository repository) {
+        this.repository = repository;
+    }
 
     @RequestMapping(value = "/api/v1/schemas/{providerName}/{contractName}", method = RequestMethod.POST)
     public ResponseEntity<SchemaResource> post(@RequestBody JsonSchema schema,
