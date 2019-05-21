@@ -36,7 +36,7 @@ publishing {
 gradlePlugin {
     plugins {
         naavroPlugin {
-            id = 'com.monadiccloud.bindingz.gradle-plugin'
+            id = 'com.monadiccloud.bindingz.gradle-bindingz-plugin'
             implementationClass = 'com.monadiccloud.bindingz.contract.plugin.gradle.BindingzPlugin'
         }
     }

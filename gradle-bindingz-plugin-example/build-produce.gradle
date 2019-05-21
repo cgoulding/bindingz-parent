@@ -7,11 +7,11 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.monadiccloud.bindingz:gradle-plugin:1.0-SNAPSHOT'
+        classpath 'com.monadiccloud.bindingz:gradle-bindingz-plugin:1.0-SNAPSHOT'
     }
 }
 
-apply plugin: 'com.monadiccloud.bindingz.gradle-plugin'
+apply plugin: 'com.monadiccloud.bindingz.gradle-bindingz-plugin'
 bindingz {
     broker = "http://localhost:8080"
     producerConfigurations {

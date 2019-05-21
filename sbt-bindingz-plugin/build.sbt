@@ -1,4 +1,4 @@
-name := "sbt-plugin"
+name := "sbt-bindingz-plugin"
 organization := "com.monadiccloud.bindingz"
 version := "1.0-SNAPSHOT"
 
