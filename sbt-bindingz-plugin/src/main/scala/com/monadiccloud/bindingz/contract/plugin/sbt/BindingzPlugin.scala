@@ -38,7 +38,7 @@ object BindingzPlugin extends AutoPlugin {
   import autoImport._
 
   override lazy val projectSettings: Seq[Setting[_]] = Seq(
-    bindingzBroker := "http://localhost:8080",
+    bindingzRegistry := "http://localhost:8080",
 
     bindingzTargetSourceDirectory := file("target/generated-sources/bindingz"),
     bindingzTargetResourceDirectory := file("target/generated-resources/bindingz"),
@@ -59,7 +59,7 @@ object BindingzPlugin extends AutoPlugin {
     val sourceCodeRepository = new SourceCodeRepository(bindingzTargetSourceDirectory.value.toPath)
 
     bindingzProcessConfigurations.value.map(c => {
-      val response = scala.io.Source.fromURL(s"${bindingzBroker.value}/api/v1/schemas/${c.providerName}/${c.contractName}?version=${c.version}")
+      val response = scala.io.Source.fromURL(s"${bindingzRegistry.value}/api/v1/schemas/${c.providerName}/${c.contractName}?version=${c.version}")
       val resource = objectMapper.readValue(response.mkString, classOf[SchemaResource])
       val fileName = Paths.get(bindingzTargetResourceDirectory.value.toString, c.providerName, c.contractName, c.version)
 
@@ -80,7 +80,7 @@ object BindingzPlugin extends AutoPlugin {
   def publishResources =  Def.task {
     val cp: Seq[File] = (fullClasspath in Compile).value.files
     val classLoader = new URLClassLoader(cp.map(c => c.toURI.toURL), this.getClass.getClassLoader)
-    val resourceRepository = new ResourceRepository(bindingzBroker.value, bindingzDistributionResourceDirectory.value.toPath)
+    val resourceRepository = new ResourceRepository(bindingzRegistry.value, bindingzDistributionResourceDirectory.value.toPath)
 
     bindingzPublishConfigurations.value.map(c => {
       val resources = ResourceFactory.create(classLoader, c.scanBasePackage)

@@ -13,7 +13,7 @@ buildscript {
 
 apply plugin: 'com.monadiccloud.bindingz.gradle-bindingz-plugin'
 bindingz {
-    broker = "http://localhost:8080"
+    registry = "http://localhost:8080"
     producerConfigurations {
         one {
             scanBasePackage = "com.monadiccloud"

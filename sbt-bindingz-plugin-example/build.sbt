@@ -13,7 +13,7 @@ libraryDependencies ++= Seq(
 )
 
 import com.monadiccloud.bindingz.contract.plugin.sbt._
-bindingzBroker := "http://localhost:8080"
+bindingzRegistry := "http://localhost:8080"
 bindingzProcessConfigurations := Seq(
   BindingzProcessConfiguration("sbt-plugin-example", "SampleDto", "v2", "com.monadiccloud.sample.latest")
 )

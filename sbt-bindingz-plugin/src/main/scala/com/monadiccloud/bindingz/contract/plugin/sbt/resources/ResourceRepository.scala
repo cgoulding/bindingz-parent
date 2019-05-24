@@ -26,7 +26,7 @@ import scalaj.http.Http
 
 import scala.collection.JavaConverters._
 
-class ResourceRepository(val brokerString: String, val distributionDir: Path) {
+class ResourceRepository(val registryString: String, val distributionDir: Path) {
 
   val mapper: ObjectMapper = new ObjectMapper().registerModule(DefaultScalaModule)
 
@@ -47,7 +47,7 @@ class ResourceRepository(val brokerString: String, val distributionDir: Path) {
 
   private def post(schemaResource: SchemaResourceContent): String = {
     val url = String.format("%s/api/v1/schemas/%s/%s?version=%s",
-      brokerString,
+      registryString,
       schemaResource.providerName,
       schemaResource.contractName,
       schemaResource.version)

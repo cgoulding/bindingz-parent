@@ -19,7 +19,7 @@ package com.monadiccloud.bindingz.contract.plugin.sbt
 import sbt.{File, settingKey, taskKey}
 
 trait BindingzKeys {
-  val bindingzBroker = settingKey[String]("Bindingz broker")
+  val bindingzRegistry = settingKey[String]("Bindingz registry")
 
   val bindingzTargetSourceDirectory = settingKey[File]("Target source directory")
   val bindingzTargetResourceDirectory = settingKey[File]("Target resource directory")
