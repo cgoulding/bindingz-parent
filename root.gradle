@@ -19,7 +19,6 @@ repositories {
 }
 
 group 'com.monadiccloud.bindingz'
-version '1.0-SNAPSHOT'
 
 artifacts {
     archives jar
@@ -93,8 +92,8 @@ def customizePom(pom) {
         root.children().last() + {
             resolveStrategy = Closure.DELEGATE_FIRST
 
-            description 'Bindingz Annotations for Java'
-            name 'Bindingz Annotations for Java'
+            description 'Bindingz for Json Communication'
+            name 'Bindingz for Json Communication'
             url 'https://github.com/cgoulding/bindingz-parent'
             organization {
                 name group

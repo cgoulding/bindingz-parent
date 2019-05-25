@@ -1,1 +1,3 @@
 apply from: '../root.gradle'
+
+version '1.0-SNAPSHOT'
