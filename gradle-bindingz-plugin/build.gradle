@@ -15,7 +15,7 @@ buildscript {
 
 gradlePlugin {
     plugins {
-        naavroPlugin {
+        bindingzPlugin {
             id = 'com.monadiccloud.bindingz.gradle-bindingz-plugin'
             implementationClass = 'com.monadiccloud.bindingz.contract.plugin.gradle.BindingzPlugin'
         }

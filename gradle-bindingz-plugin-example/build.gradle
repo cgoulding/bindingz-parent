@@ -10,3 +10,9 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-core:2.9.8'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.8'
 }
+
+clean.doFirst {
+    delete "${rootDir}/out"
+    delete "${rootDir}/build"
+    delete "${rootDir}/target"
+}
