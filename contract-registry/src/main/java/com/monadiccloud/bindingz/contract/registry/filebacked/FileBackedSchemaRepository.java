@@ -40,6 +40,7 @@ public class FileBackedSchemaRepository implements SchemaRepository {
 
     public FileBackedSchemaRepository(
             @Autowired @Value("${repository.filebacked.directory:${user.home}/.bindingz/repository}") String directory) {
+        System.out.println("Repository: " + directory);
        this.directory = directory;
     }
 

@@ -43,6 +43,8 @@ public class SchemaController {
                                               @PathVariable("providerName") String providerName,
                                               @PathVariable("contractName") String contractName,
                                               @RequestParam("version") Optional<String> version) {
+        System.out.println("Posting ...");
+
         SchemaDto versioned = new SchemaDto(contractName, providerName, version.orElse("latest"), schema);
         SchemaDto latest = new SchemaDto(contractName, providerName, "latest", schema);
 
@@ -56,6 +58,8 @@ public class SchemaController {
     public ResponseEntity<SchemaResource> get(@PathVariable("providerName") String providerName,
                               @PathVariable("contractName") String contractName,
                               @RequestParam("version") Optional<String> version) {
+        System.out.println("Getting ...");
+
         SchemaDto schemaDto = repository.find(contractName, providerName, version.orElse("latest"));
         return new ResponseEntity<SchemaResource>(new SchemaResource(schemaDto), HttpStatus.OK);
     }

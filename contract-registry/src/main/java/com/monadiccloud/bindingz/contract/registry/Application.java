@@ -16,13 +16,40 @@
 
 package com.monadiccloud.bindingz.contract.registry;
 
+import com.beust.jcommander.JCommander;
+import com.beust.jcommander.Parameter;
+import com.beust.jcommander.ParameterException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class Application {
 
+    @Parameter(names = { "--repository", "-r" }, description = "Schema repository", required = true)
+    String repository;
+
+    @Parameter(names = { "--help", "-h" }, help = true)
+    boolean help;
+
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        Application cli = new Application();
+        JCommander commander = JCommander.newBuilder()
+                .addObject(cli)
+                .build();
+
+        commander.setProgramName("Contract Registry");
+
+        try {
+            commander.parse(args);
+
+            if (cli.help) {
+                commander.usage();
+            } else {
+                System.setProperty("repository.filebacked.directory", cli.repository);
+                SpringApplication.run(Application.class, args);
+            }
+        } catch (ParameterException e) {
+            commander.usage();
+        }
     }
 }
