@@ -26,9 +26,3 @@ dependencies {
     compile("com.beust:jcommander:1.72")
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }
-
-clean.doFirst {
-    delete "${rootDir}/out"
-    delete "${rootDir}/build"
-    delete "${rootDir}/target"
-}

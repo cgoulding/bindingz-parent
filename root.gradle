@@ -19,12 +19,14 @@ repositories {
 }
 
 group 'com.monadiccloud.bindingz'
-
+version '1.0-SNAPSHOT'
 artifacts {
     archives jar
 }
 
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 signing {
+    required { isReleaseVersion && gradle.taskGraph.hasTask("uploadArchives") }
     sign configurations.archives
     useGpgCmd()
 }
@@ -134,4 +136,10 @@ model {
     tasks.publishMavenJavaPublicationToMavenRepository {
         dependsOn project.tasks.signArchives
     }
+}
+
+clean.doFirst {
+    delete "${rootDir}/out"
+    delete "${rootDir}/build"
+    delete "${rootDir}/target"
 }
