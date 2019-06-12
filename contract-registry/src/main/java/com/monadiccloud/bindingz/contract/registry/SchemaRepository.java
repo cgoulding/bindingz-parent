@@ -16,10 +16,14 @@
 
 package com.monadiccloud.bindingz.contract.registry;
 
+import java.util.Collection;
+
 public interface SchemaRepository {
     void add(SchemaDto schemaDto) throws RegistryException;
 
     SchemaDto find(String contractName,
                    String providerName,
                    String version) throws RegistryException;
+
+    Collection<SchemaDto> findAll() throws RegistryException;
 }

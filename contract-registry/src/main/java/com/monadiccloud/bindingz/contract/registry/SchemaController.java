@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.jsonschema.JsonSchema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collection;
 import java.util.Optional;
 
 @RestController
@@ -36,6 +38,12 @@ public class SchemaController {
 
     public SchemaController(@Autowired SchemaRepository repository) {
         this.repository = repository;
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/api/v1/schemas", method = {RequestMethod.GET})
+    public ResponseEntity<Collection<SchemaResource>> getAll() {
+        return new ResponseEntity(repository.findAll(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/api/v1/schemas/{providerName}/{contractName}", method = RequestMethod.POST)
@@ -51,7 +59,7 @@ public class SchemaController {
         repository.add(versioned);
         repository.add(latest);
 
-        return new ResponseEntity<SchemaResource>(new SchemaResource(versioned), HttpStatus.CREATED);
+        return new ResponseEntity<>(new SchemaResource(versioned), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/api/v1/schemas/{providerName}/{contractName}", method = RequestMethod.GET)
@@ -61,6 +69,6 @@ public class SchemaController {
         System.out.println("Getting ...");
 
         SchemaDto schemaDto = repository.find(contractName, providerName, version.orElse("latest"));
-        return new ResponseEntity<SchemaResource>(new SchemaResource(schemaDto), HttpStatus.OK);
+        return new ResponseEntity<>(new SchemaResource(schemaDto), HttpStatus.OK);
     }
 }

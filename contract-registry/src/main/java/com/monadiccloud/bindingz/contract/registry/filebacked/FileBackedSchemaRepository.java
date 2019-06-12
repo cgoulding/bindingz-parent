@@ -28,8 +28,13 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Profile("filebacked")
@@ -69,6 +74,21 @@ public class FileBackedSchemaRepository implements SchemaRepository {
             }
         }
         return null;
+    }
+
+    @Override
+    public Collection<SchemaDto> findAll() throws RegistryException {
+        try {
+            return Files.walk(Paths.get(directory)).map(file -> {
+                try {
+                    return Optional.of(mapper.readValue(file.toFile(), SchemaDto.class));
+                } catch (IOException e) {
+                    return Optional.<SchemaDto>empty();
+                }
+            }).flatMap(s -> s.isPresent() ? Stream.of(s.get()) : Stream.empty()).collect(Collectors.toList());
+        } catch (IOException e) {
+            throw new RegistryException("Unable to read file", e);
+        }
     }
 
     private String getFileName(SchemaDto schemaDto) {

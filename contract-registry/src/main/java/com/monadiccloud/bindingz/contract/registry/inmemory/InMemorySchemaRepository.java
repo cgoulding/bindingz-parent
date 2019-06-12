@@ -16,12 +16,15 @@
 
 package com.monadiccloud.bindingz.contract.registry.inmemory;
 
+import com.monadiccloud.bindingz.contract.registry.RegistryException;
 import com.monadiccloud.bindingz.contract.registry.SchemaDto;
 import com.monadiccloud.bindingz.contract.registry.SchemaRepository;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -44,6 +47,11 @@ public class InMemorySchemaRepository implements SchemaRepository {
                           String providerName,
                           String version) {
         return schemas.get(new SchemaKey(contractName, providerName, version));
+    }
+
+    @Override
+    public Collection<SchemaDto> findAll() throws RegistryException {
+        return schemas.values();
     }
 
     private static class SchemaKey {
