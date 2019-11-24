@@ -18,13 +18,17 @@ package com.monadiccloud.bindingz.contract.plugin.maven.resources;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.stream.Stream;
 
 public class ResourceRepository {
 
@@ -41,43 +45,58 @@ public class ResourceRepository {
   public void export() throws IOException {
     Files.walk(distributionDir).
       filter(f -> Files.isRegularFile(f)).
-      map(f -> {
+      flatMap(f -> {
         try {
-          return mapper.readValue(f.toFile(), SchemaResourceContent.class);
+          return Stream.of(mapper.readValue(f.toFile(), SchemaResourceContent.class));
         } catch (IOException e) {
-          return new SchemaResourceContent();
+          return Stream.empty();
         }
       }).
       forEach(r -> post(r));
   }
 
-  public void save(SchemaResourceContent naavroResource) throws IOException {
+  public void save(SchemaResourceContent schemaResourceContent) throws IOException {
     File file = Paths.get(
       distributionDir.toString(),
-      String.format("%s-%s-%s", naavroResource.providerName, naavroResource.contractName, naavroResource.version)
+      String.format("%s-%s-%s", schemaResourceContent.getProviderName(), schemaResourceContent.getContractName(), schemaResourceContent.getVersion())
     ).toFile();
 
-    mapper.writeValue(file, naavroResource);
+    mapper.writeValue(file, schemaResourceContent);
   }
 
-  private void post(SchemaResourceContent naavroResource) {
+  private String post(SchemaResourceContent schemaResourceContent) {
     String url = String.format("%s/api/v1/schemas/%s/%s?version=%s",
       registryString,
-      naavroResource.providerName,
-      naavroResource.contractName,
-      naavroResource.version);
+      schemaResourceContent.getProviderName(),
+      schemaResourceContent.getContractName(),
+      schemaResourceContent.getVersion());
 
     // POST
     try {
-      URLConnection post = new URL(url).openConnection();
-      String body = mapper.writeValueAsString(naavroResource.schema);
-
+      HttpURLConnection post = (HttpURLConnection)new URL(url).openConnection();
       post.setDoOutput(true);
       post.setRequestProperty("Content-Type", "application/json");
-      post.getOutputStream().write(body.getBytes("UTF-8"));
+      post.setRequestMethod("POST");
       post.connect();
+
+      String body = mapper.writeValueAsString(schemaResourceContent.getSchema());
+      post.getOutputStream().write(body.getBytes("UTF-8"));
+
+      int responseCode = post.getResponseCode();
+      System.out.println("\nSending 'POST' request to URL : " + url);
+      System.out.println("Response Code : " + responseCode);
+
+      try (BufferedReader in = new BufferedReader(new InputStreamReader(post.getInputStream()))) {
+        StringBuilder response = new StringBuilder();
+        String line = null;
+        while ((line = in.readLine()) != null) {
+          response.append(line);
+        }
+        return response.toString();
+      }
     } catch (IOException e) {
       e.printStackTrace();
+      return null;
     }
   }
 }

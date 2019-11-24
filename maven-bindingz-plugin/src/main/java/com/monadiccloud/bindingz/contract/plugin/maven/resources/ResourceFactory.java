@@ -21,19 +21,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.module.jsonSchema.JsonSchema;
 import com.fasterxml.jackson.module.jsonSchema.JsonSchemaGenerator;
 import com.monadiccloud.bindingz.contract.annotations4j.Contract;
-import dorkbox.annotation.AnnotationDefaults;
-import dorkbox.annotation.AnnotationDetector;
 
 import java.io.IOException;
 import java.lang.annotation.ElementType;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import dorkbox.annotation.AnnotationDefaults;
+import dorkbox.annotation.AnnotationDetector;
+
 public class ResourceFactory {
 
   ObjectMapper mapper = new ObjectMapper();
 
-  Collection<SchemaResourceContent> create(ClassLoader classLoader, String... packageNames) throws IOException {
+  public Collection<SchemaResourceContent> create(ClassLoader classLoader, String... packageNames) throws IOException {
     Collection<Class<?>> contractClasses = AnnotationDetector.
       scanClassPath(classLoader, packageNames).
       forAnnotations(Contract.class).
@@ -50,12 +51,12 @@ public class ResourceFactory {
       schema = schemaGen.generateSchema(contract);
       Contract contractProvider = (Contract)contract.getAnnotation(Contract.class);
 
-      SchemaResourceContent naavroResource = new SchemaResourceContent();
-      naavroResource.contractName = contractProvider.contractName();
-      naavroResource.providerName = contractProvider.providerName();
-      naavroResource.version = contractProvider.version();
-      naavroResource.schema = schema;
-      return naavroResource;
+      return new SchemaResourceContent(
+              contractProvider.contractName(),
+              contractProvider.providerName(),
+              contractProvider.version(),
+              schema
+      );
     } catch (JsonMappingException e) {
       e.printStackTrace();
       return null;

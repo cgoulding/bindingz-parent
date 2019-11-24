@@ -16,16 +16,36 @@
 
 package com.monadiccloud.bindingz.contract.plugin.maven.resources;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.jsonschema2pojo.Jsonschema2Pojo;
-import com.monadiccloud.bindingz.contract.plugin.maven.extension.ProcessConfiguration;
+import com.monadiccloud.bindingz.contract.plugin.maven.ProcessConfiguration;
+import com.monadiccloud.bindingz.contract.plugin.maven.providers.JsonSchema2PojoConfiguration;
 
 public class SourceCodeFactory {
 
+  private final File targetSourceDirectory;
+  private final File targetResourceDirectory;
+
+  public SourceCodeFactory(File targetSourceDirectory, File targetResourceDirectory) {
+    this.targetSourceDirectory = targetSourceDirectory;
+    this.targetResourceDirectory = targetResourceDirectory;
+  }
+
   public void create(ProcessConfiguration configuration) throws IOException {
     switch (configuration.getProviderType()) {
-      case JSONSCHEMA2POJO: Jsonschema2Pojo.generate(configuration.getJsonSchema2PojoConfiguration()); break;
+      case JSONSCHEMA2POJO: Jsonschema2Pojo.generate(
+        new JsonSchema2PojoConfiguration(
+                targetSourceDirectory,
+                targetResourceDirectory,
+                configuration.getProviderName(),
+                configuration.getContractName(),
+                configuration.getVersion(),
+                configuration.getPackageName(),
+                configuration.getClassName()
+        ));
+        break;
       default: throw new UnsupportedOperationException("Unknown provider type: " + configuration.getProviderType());
     }
   }

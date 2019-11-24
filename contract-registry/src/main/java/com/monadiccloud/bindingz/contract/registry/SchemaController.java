@@ -43,6 +43,8 @@ public class SchemaController {
     @CrossOrigin
     @RequestMapping(value = "/api/v1/schemas", method = {RequestMethod.GET})
     public ResponseEntity<Collection<SchemaResource>> getAll() {
+        System.out.println("Getting ...");
+
         return new ResponseEntity(repository.findAll(), HttpStatus.OK);
     }
 

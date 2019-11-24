@@ -14,20 +14,12 @@
  * limitations under the License.
  */
 
-package com.monadiccloud.bindingz.contract.plugin.maven.extension;
+package com.monadiccloud.bindingz.contract.plugin.maven;
 
-import java.io.File;
-
-import com.monadiccloud.bindingz.contract.plugin.maven.providers.JsonSchema2PojoConfiguration;
 import com.monadiccloud.bindingz.contract.plugin.maven.resources.ProviderType;
 
 public class ProcessConfiguration {
 
-    // naavro config
-    private File targetSourceDirectory;
-    private File targetResourceDirectory;
-
-    private String name;
     private String providerName;
     private String contractName;
     private String version;
@@ -35,45 +27,7 @@ public class ProcessConfiguration {
     private String packageName;
     private String className;
 
-    private ProviderType providerType;
-    private JsonSchema2PojoConfiguration jsonSchema2PojoConfiguration;
-
-    public void jsonSchema2Pojo() {
-        providerType = ProviderType.JSONSCHEMA2POJO;
-        jsonSchema2PojoConfiguration = new JsonSchema2PojoConfiguration(
-                targetSourceDirectory,
-                targetResourceDirectory,
-                providerName,
-                contractName,
-                version,
-                packageName,
-                className
-        );
-    }
-
-    public File getTargetSourceDirectory() {
-        return targetSourceDirectory;
-    }
-
-    public void setTargetSourceDirectory(File targetSourceDirectory) {
-        this.targetSourceDirectory = targetSourceDirectory;
-    }
-
-    public File getTargetResourceDirectory() {
-        return targetResourceDirectory;
-    }
-
-    public void setTargetResourceDirectory(File targetResourceDirectory) {
-        this.targetResourceDirectory = targetResourceDirectory;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    private ProviderType providerType = ProviderType.JSONSCHEMA2POJO;
 
     public String getProviderName() {
         return providerName;
@@ -121,13 +75,5 @@ public class ProcessConfiguration {
 
     public void setProviderType(ProviderType providerType) {
         this.providerType = providerType;
-    }
-
-    public JsonSchema2PojoConfiguration getJsonSchema2PojoConfiguration() {
-        return jsonSchema2PojoConfiguration;
-    }
-
-    public void setJsonSchema2PojoConfiguration(JsonSchema2PojoConfiguration jsonSchema2PojoConfiguration) {
-        this.jsonSchema2PojoConfiguration = jsonSchema2PojoConfiguration;
     }
 }

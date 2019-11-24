@@ -14,9 +14,16 @@
  * limitations under the License.
  */
 
-package com.monadiccloud.bindingz.contract.plugin.maven.extension;
+package com.monadiccloud.bindingz.contract.plugin.maven;
 
 public class PublishConfiguration {
-    String name;
     String scanBasePackage;
+
+    public String getScanBasePackage() {
+        return scanBasePackage;
+    }
+
+    public void setScanBasePackage(String scanBasePackage) {
+        this.scanBasePackage = scanBasePackage;
+    }
 }

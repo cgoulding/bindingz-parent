@@ -20,6 +20,8 @@ gradle
 gradlew
 gradlew.bat
 dockerBuilddone
+node_modules
+dist
 
 #vscode
 .vscode

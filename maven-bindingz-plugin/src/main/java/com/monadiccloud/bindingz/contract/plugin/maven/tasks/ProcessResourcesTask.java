@@ -16,46 +16,54 @@
 
 package com.monadiccloud.bindingz.contract.plugin.maven.tasks;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.monadiccloud.bindingz.contract.plugin.maven.ProcessConfiguration;
+import com.monadiccloud.bindingz.contract.plugin.maven.resources.SchemaResource;
+import com.monadiccloud.bindingz.contract.plugin.maven.resources.SourceCodeFactory;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.nio.file.Paths;
 import java.util.Collection;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.monadiccloud.bindingz.contract.plugin.maven.extension.ProcessConfiguration;
-import com.monadiccloud.bindingz.contract.plugin.maven.resources.SchemaResource;
-import com.monadiccloud.bindingz.contract.plugin.maven.resources.SourceCodeFactory;
+public class ProcessResourcesTask implements ExecutableTask {
 
-public class ProcessResourcesTask {
+    private final ObjectMapper mapper = new ObjectMapper();
 
-    private ObjectMapper mapper = new ObjectMapper();
+    private final String registry;
+    private final File targetSourceDirectory;
+    private final File targetResourceDirectory;
+    private final Collection<ProcessConfiguration> processConfigurations;
 
-    private String registry;
-    private File targetSourceDirectory;
-    private File targetResourceDirectory;
-    private Collection<ProcessConfiguration> consumerConfigurations;
+    public ProcessResourcesTask(String registry, File targetSourceDirectory, File targetResourceDirectory, Collection<ProcessConfiguration> processConfigurations) {
+        this.registry = registry;
+        this.targetSourceDirectory = targetSourceDirectory;
+        this.targetResourceDirectory = targetResourceDirectory;
+        this.processConfigurations = processConfigurations;
+    }
 
-    public void generate() throws IOException {
-        for (ProcessConfiguration c : consumerConfigurations) {
-            c.getJsonSchema2PojoConfiguration().setTargetResourceDirectory(targetResourceDirectory);
-            c.getJsonSchema2PojoConfiguration().setTargetSourceDirectory(targetSourceDirectory);
-
+    public void execute() throws IOException {
+        for (ProcessConfiguration c : processConfigurations) {
             String response = httpGet(registry, c.getProviderName(), c.getContractName(), c.getVersion());
             SchemaResource resource = mapper.readValue(response, SchemaResource.class);
 
             if (resource != null && resource.getContent() != null) {
                 File file = Paths.get(targetResourceDirectory.toString(), c.getProviderName(), c.getContractName(), c.getVersion(), c.getClassName()).toFile();
-
                 file.getParentFile().mkdirs();
                 mapper.writeValue(file, resource.getContent().getSchema());
-                new SourceCodeFactory().create(c);
+
+                new SourceCodeFactory(targetSourceDirectory, targetResourceDirectory).create(c);
             } else {
                 System.out.println(String.format("Unable to find resource content for %s, %s, %s",
                         c.getProviderName(),
                         c.getContractName(),
                         c.getVersion()));
             }
-        };
+        }
     }
 
     private String httpGet(String registryString, String providerName, String contractName, String version) {
@@ -64,6 +72,15 @@ public class ProcessResourcesTask {
                 providerName,
                 contractName,
                 version);
-        return "TODO";
+
+        // POST
+        try {
+            URLConnection get = new URL(url).openConnection();
+            get.setDoOutput(true);
+            get.connect();
+            return StringUtils.join(IOUtils.readLines(get.getInputStream()), "");
+        } catch (IOException e) {
+            return "{}";
+        }
     }
 }

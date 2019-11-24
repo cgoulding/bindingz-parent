@@ -16,26 +16,36 @@
 
 package com.monadiccloud.bindingz.contract.plugin.maven.tasks;
 
-import com.monadiccloud.bindingz.contract.plugin.maven.extension.PublishConfiguration;
+import com.monadiccloud.bindingz.contract.plugin.maven.PublishConfiguration;
 import com.monadiccloud.bindingz.contract.plugin.maven.resources.ResourceFactory;
 import com.monadiccloud.bindingz.contract.plugin.maven.resources.ResourceRepository;
 import com.monadiccloud.bindingz.contract.plugin.maven.resources.SchemaResourceContent;
 
-class PublishResourcesTask {
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
 
-    private String registry;
-    private File targetDistributionDirectory;
-    private Collection<PublishConfiguration> producerConfigurations;
-    private ClassLoader classLoader;
+public class PublishResourcesTask implements ExecutableTask {
 
-    void generate() {
+    private final String registry;
+    private final File targetDistributionDirectory;
+    private final Collection<PublishConfiguration> producerConfigurations;
+    private final ClassLoader classLoader;
+
+    public PublishResourcesTask(String registry, File targetDistributionDirectory, Collection<PublishConfiguration> producerConfigurations, ClassLoader classLoader) {
+        this.registry = registry;
+        this.targetDistributionDirectory = targetDistributionDirectory;
+        this.producerConfigurations = producerConfigurations;
+        this.classLoader = classLoader;
+    }
+
+    public void execute() throws IOException {
         ResourceRepository repository = new ResourceRepository(registry, targetDistributionDirectory.toPath());
         ResourceFactory factory = new ResourceFactory();
 
-        System.out.println("ProducerConfigurations: " + producerConfigurations.size());
         for (PublishConfiguration p : producerConfigurations) {
-            for (SchemaResourceContent c : factory.create(classLoader, p.scanBasePackage)) {
-                repository.save(c)
+            for (SchemaResourceContent c : factory.create(classLoader, p.getScanBasePackage())) {
+                repository.save(c);
             }
         }
         repository.export();

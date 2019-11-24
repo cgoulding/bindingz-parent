@@ -16,8 +16,17 @@
 
 package com.monadiccloud.bindingz.contract.plugin.maven.resources;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class SchemaResource {
     private SchemaResourceContent content;
+
+    @JsonCreator
+    public SchemaResource(
+            @JsonProperty("content") SchemaResourceContent content) {
+        this.content = content;
+    }
 
     public SchemaResourceContent getContent() {
         return content;
