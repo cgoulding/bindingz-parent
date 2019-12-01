@@ -29,8 +29,8 @@
           <processConfigurations>
             <processConfiguration>
               <providerName>project-to-test</providerName>
-              <contractName>SampleDto</contractName>
-              <version>v2</version>
+              <contractName>ProjectToTestDto</contractName>
+              <version>v1</version>
               <packageName>com.monadiccloud.sample.latest</packageName>
               <className>SampleDto</className>
             </processConfiguration>
@@ -44,7 +44,7 @@
         <executions>
           <execution>
             <id>bindingz</id>
-            <phase>process-sources</phase>
+            <phase>generate-sources</phase>
             <goals>
               <goal>processResources</goal>
             </goals>
