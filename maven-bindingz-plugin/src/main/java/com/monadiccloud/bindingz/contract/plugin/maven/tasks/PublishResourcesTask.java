@@ -29,13 +29,13 @@ public class PublishResourcesTask implements ExecutableTask {
 
     private final String registry;
     private final File targetDistributionDirectory;
-    private final Collection<PublishConfiguration> producerConfigurations;
+    private final Collection<PublishConfiguration> publishConfigurations;
     private final ClassLoader classLoader;
 
-    public PublishResourcesTask(String registry, File targetDistributionDirectory, Collection<PublishConfiguration> producerConfigurations, ClassLoader classLoader) {
+    public PublishResourcesTask(String registry, File targetDistributionDirectory, Collection<PublishConfiguration> publishConfigurations, ClassLoader classLoader) {
         this.registry = registry;
         this.targetDistributionDirectory = targetDistributionDirectory;
-        this.producerConfigurations = producerConfigurations;
+        this.publishConfigurations = publishConfigurations;
         this.classLoader = classLoader;
     }
 
@@ -43,7 +43,7 @@ public class PublishResourcesTask implements ExecutableTask {
         ResourceRepository repository = new ResourceRepository(registry, targetDistributionDirectory.toPath());
         ResourceFactory factory = new ResourceFactory();
 
-        for (PublishConfiguration p : producerConfigurations) {
+        for (PublishConfiguration p : publishConfigurations) {
             for (SchemaResourceContent c : factory.create(classLoader, p.getScanBasePackage())) {
                 repository.save(c);
             }

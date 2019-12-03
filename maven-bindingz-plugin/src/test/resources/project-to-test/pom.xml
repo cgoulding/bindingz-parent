@@ -43,10 +43,17 @@
         </configuration>
         <executions>
           <execution>
-            <id>bindingz</id>
+            <id>processResources</id>
             <phase>generate-sources</phase>
             <goals>
               <goal>processResources</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>publishResources</id>
+            <phase>package</phase>
+            <goals>
+              <goal>publishResources</goal>
             </goals>
           </execution>
         </executions>

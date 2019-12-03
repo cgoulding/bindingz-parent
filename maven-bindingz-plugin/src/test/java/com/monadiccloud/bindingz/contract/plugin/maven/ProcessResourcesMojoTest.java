@@ -10,7 +10,7 @@ import java.io.File;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-public class BindingzMojoTest {
+public class ProcessResourcesMojoTest {
     @Rule
     public MojoRule rule = new MojoRule() {
         @Override
@@ -28,9 +28,13 @@ public class BindingzMojoTest {
         assertNotNull( pom );
         assertTrue(pom.exists());
 
-        BindingzMojo myMojo = (BindingzMojo) rule.lookupConfiguredMojo(pom, "processResources");
-        assertNotNull(myMojo);
-        myMojo.execute();
+        ProcessResourcesMojo processResources = (ProcessResourcesMojo) rule.lookupConfiguredMojo(pom, "processResources");
+        assertNotNull(processResources);
+        processResources.execute();
+
+        PublishResourcesMojo publishResources = (PublishResourcesMojo) rule.lookupConfiguredMojo(pom, "publishResources");
+        assertNotNull(publishResources);
+        publishResources.execute();
     }
 }
 
