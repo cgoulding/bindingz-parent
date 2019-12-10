@@ -16,6 +16,12 @@
       <artifactId>contract-annotations4j</artifactId>
       <version>1.1-SNAPSHOT</version>
     </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+      <version>2.10.1</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -25,7 +31,7 @@
         <artifactId>bindingz-maven-plugin</artifactId>
         <version>1.0-SNAPSHOT</version>
         <configuration>
-          <registry>http://localhost:8080</registry>
+          <registry>http://localhost:9090</registry>
           <processConfigurations>
             <processConfiguration>
               <providerName>project-to-test</providerName>

@@ -20,6 +20,7 @@ public class ProcessResourcesMojo extends AbstractBindingzMojo {
 
         if (processConfigurations != null) {
             try {
+                project.addCompileSourceRoot(targetSourceDirectory.getPath());
                 new ProcessResourcesTask(registry, targetSourceDirectory, targetResourceDirectory, processConfigurations).execute();
             } catch (IOException e) {
                 throw new MojoExecutionException(e.getMessage(), e);
