@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.monadiccloud.bindingz.contract.registry.filebacked;
+package com.monadiccloud.bindingz.contract.registry.repository.filebacked;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.monadiccloud.bindingz.contract.registry.RegistryException;
-import com.monadiccloud.bindingz.contract.registry.SchemaDto;
-import com.monadiccloud.bindingz.contract.registry.SchemaRepository;
+import com.monadiccloud.bindingz.contract.registry.resources.SchemaDto;
+import com.monadiccloud.bindingz.contract.registry.repository.SchemaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;

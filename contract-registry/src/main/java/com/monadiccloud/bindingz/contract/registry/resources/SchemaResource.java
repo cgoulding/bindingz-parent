@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.monadiccloud.bindingz.contract.registry;
+package com.monadiccloud.bindingz.contract.registry.resources;
 
 public class SchemaResource {
 

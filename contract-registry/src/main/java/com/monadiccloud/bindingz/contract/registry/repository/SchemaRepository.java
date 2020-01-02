@@ -14,7 +14,10 @@
  * limitations under the License.
  */
 
-package com.monadiccloud.bindingz.contract.registry;
+package com.monadiccloud.bindingz.contract.registry.repository;
+
+import com.monadiccloud.bindingz.contract.registry.RegistryException;
+import com.monadiccloud.bindingz.contract.registry.resources.SchemaDto;
 
 import java.util.Collection;
 

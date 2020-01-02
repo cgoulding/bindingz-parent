@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.monadiccloud.bindingz.contract.registry;
+package com.monadiccloud.bindingz.contract.registry.resources;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.jsonschema.JsonSchema;
+import com.fasterxml.jackson.module.jsonSchema.JsonSchema;
 
 public class SchemaDto {
     private final String contractName;

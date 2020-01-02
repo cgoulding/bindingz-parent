@@ -16,7 +16,15 @@
 
 package com.monadiccloud.bindingz.contract.registry;
 
-import com.fasterxml.jackson.databind.jsonschema.JsonSchema;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.module.jsonSchema.JsonSchema;
+import com.monadiccloud.bindingz.contract.registry.code.SourceCodeConfiguration;
+import com.monadiccloud.bindingz.contract.registry.code.SourceCodeFactory;
+import com.monadiccloud.bindingz.contract.registry.repository.SchemaRepository;
+import com.monadiccloud.bindingz.contract.registry.resources.SchemaDto;
+import com.monadiccloud.bindingz.contract.registry.resources.SchemaResource;
+import com.monadiccloud.bindingz.contract.registry.resources.SourceDto;
+import com.monadiccloud.bindingz.contract.registry.resources.SourceResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,13 +36,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
 public class SchemaController {
 
     private final SchemaRepository repository;
+    private final ObjectMapper mapper = new ObjectMapper();
 
     public SchemaController(@Autowired SchemaRepository repository) {
         this.repository = repository;
@@ -48,11 +60,21 @@ public class SchemaController {
         return new ResponseEntity(repository.findAll(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/api/v1/schemas/{providerName}/{contractName}", method = RequestMethod.POST)
-    public ResponseEntity<SchemaResource> post(@RequestBody JsonSchema schema,
-                                              @PathVariable("providerName") String providerName,
+    @RequestMapping(value = "/api/v1/schemas/{providerName}/{contractName}", method = RequestMethod.GET)
+    public ResponseEntity<SchemaResource> getSchema(@PathVariable("providerName") String providerName,
                                               @PathVariable("contractName") String contractName,
                                               @RequestParam("version") Optional<String> version) {
+        System.out.println("Getting ...");
+
+        SchemaDto schemaDto = repository.find(contractName, providerName, version.orElse("latest"));
+        return new ResponseEntity<>(new SchemaResource(schemaDto), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/api/v1/schemas/{providerName}/{contractName}", method = RequestMethod.POST)
+    public ResponseEntity<SchemaResource> postSchema(@PathVariable("providerName") String providerName,
+                                              @PathVariable("contractName") String contractName,
+                                              @RequestParam("version") Optional<String> version,
+                                              @RequestBody JsonSchema schema) {
         System.out.println("Posting ...");
 
         SchemaDto versioned = new SchemaDto(contractName, providerName, version.orElse("latest"), schema);
@@ -64,13 +86,19 @@ public class SchemaController {
         return new ResponseEntity<>(new SchemaResource(versioned), HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/api/v1/schemas/{providerName}/{contractName}", method = RequestMethod.GET)
-    public ResponseEntity<SchemaResource> get(@PathVariable("providerName") String providerName,
-                              @PathVariable("contractName") String contractName,
-                              @RequestParam("version") Optional<String> version) {
-        System.out.println("Getting ...");
+    @RequestMapping(value = "/api/v1/sources/{providerName}/{contractName}", method = RequestMethod.POST)
+    public ResponseEntity<SourceResource> createSources(@PathVariable("providerName") String providerName,
+                                                        @PathVariable("contractName") String contractName,
+                                                        @RequestParam("version") Optional<String> version,
+                                                        @RequestBody Map<String, String> configuration) throws IOException {
+        System.out.println("Creating ...");
 
         SchemaDto schemaDto = repository.find(contractName, providerName, version.orElse("latest"));
-        return new ResponseEntity<>(new SchemaResource(schemaDto), HttpStatus.OK);
+
+        String string = mapper.writeValueAsString(configuration);
+        SourceCodeConfiguration sourceCodeConfiguration = mapper.readValue(string, SourceCodeConfiguration.class);
+        List<SourceDto> sources = new SourceCodeFactory().create(schemaDto, sourceCodeConfiguration);
+
+        return new ResponseEntity<>(new SourceResource(schemaDto, sources), HttpStatus.OK);
     }
 }

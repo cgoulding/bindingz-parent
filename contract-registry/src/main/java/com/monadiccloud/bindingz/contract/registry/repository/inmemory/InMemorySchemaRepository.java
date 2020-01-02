@@ -14,17 +14,16 @@
  * limitations under the License.
  */
 
-package com.monadiccloud.bindingz.contract.registry.inmemory;
+package com.monadiccloud.bindingz.contract.registry.repository.inmemory;
 
 import com.monadiccloud.bindingz.contract.registry.RegistryException;
-import com.monadiccloud.bindingz.contract.registry.SchemaDto;
-import com.monadiccloud.bindingz.contract.registry.SchemaRepository;
+import com.monadiccloud.bindingz.contract.registry.resources.SchemaDto;
+import com.monadiccloud.bindingz.contract.registry.repository.SchemaRepository;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 

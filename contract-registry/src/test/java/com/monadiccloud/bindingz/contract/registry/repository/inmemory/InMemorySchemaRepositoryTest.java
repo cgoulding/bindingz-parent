@@ -1,7 +1,7 @@
-package com.monadiccloud.bindingz.contract.registry.inmemory;
+package com.monadiccloud.bindingz.contract.registry.repository.inmemory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.monadiccloud.bindingz.contract.registry.SchemaDto;
+import com.monadiccloud.bindingz.contract.registry.resources.SchemaDto;
 import org.junit.Test;
 
 import java.io.IOException;
