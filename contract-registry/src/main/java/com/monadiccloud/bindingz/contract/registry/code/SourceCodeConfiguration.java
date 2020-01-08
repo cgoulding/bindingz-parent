@@ -16,40 +16,16 @@
 
 package com.monadiccloud.bindingz.contract.registry.code;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties
 public class SourceCodeConfiguration {
 
-    private String providerName;
-    private String contractName;
-    private String version;
+    private ProviderType providerType = ProviderType.JSONSCHEMA2POJO;
+    private LanguageType languageType = LanguageType.JAVA;
 
     private String packageName;
     private String className;
-
-    private ProviderType providerType = ProviderType.JSONSCHEMA2POJO;
-
-    public String getProviderName() {
-        return providerName;
-    }
-
-    public void setProviderName(String providerName) {
-        this.providerName = providerName;
-    }
-
-    public String getContractName() {
-        return contractName;
-    }
-
-    public void setContractName(String contractName) {
-        this.contractName = contractName;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
 
     public String getPackageName() {
         return packageName;
@@ -73,5 +49,13 @@ public class SourceCodeConfiguration {
 
     public void setProviderType(ProviderType providerType) {
         this.providerType = providerType;
+    }
+
+    public LanguageType getLanguageType() {
+        return languageType;
+    }
+
+    public void setLanguageType(LanguageType languageType) {
+        this.languageType = languageType;
     }
 }

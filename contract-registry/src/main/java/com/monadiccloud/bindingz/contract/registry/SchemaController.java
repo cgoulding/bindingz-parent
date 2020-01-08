@@ -39,7 +39,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -90,14 +89,11 @@ public class SchemaController {
     public ResponseEntity<SourceResource> createSources(@PathVariable("providerName") String providerName,
                                                         @PathVariable("contractName") String contractName,
                                                         @RequestParam("version") Optional<String> version,
-                                                        @RequestBody Map<String, String> configuration) throws IOException {
+                                                        @RequestBody SourceCodeConfiguration configuration) throws IOException {
         System.out.println("Creating ...");
 
         SchemaDto schemaDto = repository.find(contractName, providerName, version.orElse("latest"));
-
-        String string = mapper.writeValueAsString(configuration);
-        SourceCodeConfiguration sourceCodeConfiguration = mapper.readValue(string, SourceCodeConfiguration.class);
-        List<SourceDto> sources = new SourceCodeFactory().create(schemaDto, sourceCodeConfiguration);
+        List<SourceDto> sources = new SourceCodeFactory().create(schemaDto, configuration);
 
         return new ResponseEntity<>(new SourceResource(schemaDto, sources), HttpStatus.OK);
     }
