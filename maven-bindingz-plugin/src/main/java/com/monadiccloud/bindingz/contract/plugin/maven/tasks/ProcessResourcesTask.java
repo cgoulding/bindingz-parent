@@ -18,16 +18,20 @@ package com.monadiccloud.bindingz.contract.plugin.maven.tasks;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.monadiccloud.bindingz.contract.plugin.maven.ProcessConfiguration;
-import com.monadiccloud.bindingz.contract.plugin.maven.resources.SchemaResource;
-import com.monadiccloud.bindingz.contract.plugin.maven.resources.SourceCodeFactory;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
+import com.monadiccloud.bindingz.contract.plugin.maven.resources.SchemaDto;
+import com.monadiccloud.bindingz.contract.plugin.maven.resources.SourceCodeConfiguration;
+import com.monadiccloud.bindingz.contract.plugin.maven.resources.SourceResource;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.Collection;
 
 public class ProcessResourcesTask implements ExecutableTask {
@@ -48,26 +52,54 @@ public class ProcessResourcesTask implements ExecutableTask {
 
     public void execute() throws IOException {
         for (ProcessConfiguration c : processConfigurations) {
-            String response = httpGet(registry, c.getProviderName(), c.getContractName(), c.getVersion());
-            SchemaResource resource = mapper.readValue(response, SchemaResource.class);
+            SourceCodeConfiguration configuration = new SourceCodeConfiguration();
+            configuration.setClassName(c.getClassName());
+            configuration.setPackageName(c.getPackageName());
+            configuration.setProviderType(c.getCodeProviderType());
+            configuration.setProviderConfiguration(c.getCodeProviderConfiguration());
 
-            if (resource != null && resource.getContent() != null) {
-                File file = Paths.get(targetResourceDirectory.toString(), c.getProviderName(), c.getContractName(), c.getVersion(), c.getClassName()).toFile();
-                file.getParentFile().mkdirs();
-                mapper.writeValue(file, resource.getContent().getSchema());
+            SourceResource resource = requestSource(registry, c.getProviderName(), c.getContractName(), c.getVersion(), configuration);
+            if (resource != null) {
+                if (resource.getSources() != null) {
+                    resource.getSources().stream().forEach(s -> {
+                        try {
+                            Path path = Paths.get(
+                                    targetSourceDirectory.getAbsolutePath(),
+                                    s.getFile().toArray(new String[s.getFile().size()])
+                            );
+                            path.toFile().getParentFile().mkdirs();
+                            Files.write(path, s.getContent().getBytes(), StandardOpenOption.CREATE);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                }
 
-                new SourceCodeFactory(targetSourceDirectory, targetResourceDirectory).create(c);
-            } else {
-                System.out.println(String.format("Unable to find resource content for %s, %s, %s",
-                        c.getProviderName(),
-                        c.getContractName(),
-                        c.getVersion()));
+                if (resource.getContent() != null) {
+                    SchemaDto schema = resource.getContent();
+                    try {
+                        Path path = Paths.get(
+                                targetResourceDirectory.getAbsolutePath(),
+                                schema.getProviderName(),
+                                schema.getContractName(),
+                                schema.getVersion()
+                        );
+                        path.toFile().getParentFile().mkdirs();
+                        Files.write(path, mapper.writeValueAsBytes(schema.getSchema()), StandardOpenOption.CREATE);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }
 
-    private String httpGet(String registryString, String providerName, String contractName, String version) {
-        String url = String.format("%s/api/v1/schemas/%s/%s?version=%s",
+    private SourceResource requestSource(String registryString,
+                                         String providerName,
+                                         String contractName,
+                                         String version,
+                                         SourceCodeConfiguration configuration) {
+        String url = String.format("%s/api/v1/sources/%s/%s?version=%s",
                 registryString,
                 providerName,
                 contractName,
@@ -75,12 +107,30 @@ public class ProcessResourcesTask implements ExecutableTask {
 
         // POST
         try {
-            URLConnection get = new URL(url).openConnection();
-            get.setDoOutput(true);
-            get.connect();
-            return StringUtils.join(IOUtils.readLines(get.getInputStream()), "");
+            HttpURLConnection post = (HttpURLConnection)new URL(url).openConnection();
+            post.setDoOutput(true);
+            post.setRequestProperty("Content-Type", "application/json");
+            post.setRequestMethod("POST");
+            post.connect();
+
+            String body = mapper.writeValueAsString(configuration);
+            post.getOutputStream().write(body.getBytes("UTF-8"));
+
+            int responseCode = post.getResponseCode();
+            System.out.println("\nSending 'POST' request to URL : " + url);
+            System.out.println("Response Code : " + responseCode);
+
+            try (BufferedReader in = new BufferedReader(new InputStreamReader(post.getInputStream()))) {
+                StringBuilder response = new StringBuilder();
+                String line = null;
+                while ((line = in.readLine()) != null) {
+                    response.append(line);
+                }
+                return mapper.readValue(response.toString(), SourceResource.class);
+            }
         } catch (IOException e) {
-            return "{}";
+            e.printStackTrace();
+            return null;
         }
     }
 }

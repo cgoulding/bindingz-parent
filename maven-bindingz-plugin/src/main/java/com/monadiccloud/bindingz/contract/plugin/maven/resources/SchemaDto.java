@@ -17,21 +17,22 @@
 package com.monadiccloud.bindingz.contract.plugin.maven.resources;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.module.jsonSchema.JsonSchema;
 
-public class SchemaResourceContent {
-    private String contractName;
-    private String providerName;
-    private String version;
-    private JsonSchema schema;
+@JsonIgnoreProperties
+public class SchemaDto {
+    private final String contractName;
+    private final String providerName;
+    private final String version;
+    private final JsonSchema schema;
 
     @JsonCreator
-    public SchemaResourceContent(
-            @JsonProperty("contractName") String contractName,
-            @JsonProperty("providerName") String providerName,
-            @JsonProperty("version") String version,
-            @JsonProperty("schema") JsonSchema schema) {
+    public SchemaDto(@JsonProperty("contractName") String contractName,
+                     @JsonProperty("providerName") String providerName,
+                     @JsonProperty("version") String version,
+                     @JsonProperty("schema") JsonSchema schema) {
         this.contractName = contractName;
         this.providerName = providerName;
         this.version = version;

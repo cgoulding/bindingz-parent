@@ -29,14 +29,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-public class ResourceRepository {
+public class SchemaRepository {
 
   private String registryString;
   private Path distributionDir;
 
   private ObjectMapper mapper = new ObjectMapper();
 
-  public ResourceRepository(String registryString, Path distributionDir) {
+  public SchemaRepository(String registryString, Path distributionDir) {
     this.registryString = registryString;
     this.distributionDir = distributionDir;
   }
@@ -46,7 +46,7 @@ public class ResourceRepository {
       filter(f -> Files.isRegularFile(f)).
       flatMap(f -> {
         try {
-          return Stream.of(mapper.readValue(f.toFile(), SchemaResourceContent.class));
+          return Stream.of(mapper.readValue(f.toFile(), SchemaDto.class));
         } catch (IOException e) {
           return Stream.empty();
         }
@@ -54,21 +54,21 @@ public class ResourceRepository {
       forEach(r -> post(r));
   }
 
-  public void save(SchemaResourceContent schemaResourceContent) throws IOException {
+  public void save(SchemaDto schemaDto) throws IOException {
     File file = Paths.get(
       distributionDir.toString(),
-      String.format("%s-%s-%s", schemaResourceContent.getProviderName(), schemaResourceContent.getContractName(), schemaResourceContent.getVersion())
+      String.format("%s-%s-%s", schemaDto.getProviderName(), schemaDto.getContractName(), schemaDto.getVersion())
     ).toFile();
 
-    mapper.writeValue(file, schemaResourceContent);
+    mapper.writeValue(file, schemaDto);
   }
 
-  private String post(SchemaResourceContent schemaResourceContent) {
+  private String post(SchemaDto schemaDto) {
     String url = String.format("%s/api/v1/schemas/%s/%s?version=%s",
       registryString,
-      schemaResourceContent.getProviderName(),
-      schemaResourceContent.getContractName(),
-      schemaResourceContent.getVersion());
+      schemaDto.getProviderName(),
+      schemaDto.getContractName(),
+      schemaDto.getVersion());
 
     // POST
     try {
@@ -78,7 +78,7 @@ public class ResourceRepository {
       post.setRequestMethod("POST");
       post.connect();
 
-      String body = mapper.writeValueAsString(schemaResourceContent.getSchema());
+      String body = mapper.writeValueAsString(schemaDto.getSchema());
       post.getOutputStream().write(body.getBytes("UTF-8"));
 
       int responseCode = post.getResponseCode();

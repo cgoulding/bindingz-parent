@@ -30,11 +30,11 @@ import java.util.stream.Collectors;
 import dorkbox.annotation.AnnotationDefaults;
 import dorkbox.annotation.AnnotationDetector;
 
-public class ResourceFactory {
+public class SchemaFactory {
 
   ObjectMapper mapper = new ObjectMapper();
 
-  public Collection<SchemaResourceContent> create(ClassLoader classLoader, String... packageNames) throws IOException {
+  public Collection<SchemaDto> create(ClassLoader classLoader, String... packageNames) throws IOException {
     Collection<Class<?>> contractClasses = AnnotationDetector.
       scanClassPath(classLoader, packageNames).
       forAnnotations(Contract.class).
@@ -44,14 +44,14 @@ public class ResourceFactory {
     return contractClasses.stream().map(clazz -> createResource(clazz)).collect(Collectors.toList());
   }
 
-  private SchemaResourceContent createResource(Class contract) {
+  private SchemaDto createResource(Class contract) {
     JsonSchemaGenerator schemaGen = new JsonSchemaGenerator(mapper);
     JsonSchema schema = null;
     try {
       schema = schemaGen.generateSchema(contract);
       Contract contractProvider = (Contract)contract.getAnnotation(Contract.class);
 
-      return new SchemaResourceContent(
+      return new SchemaDto(
               contractProvider.contractName(),
               contractProvider.providerName(),
               contractProvider.version(),

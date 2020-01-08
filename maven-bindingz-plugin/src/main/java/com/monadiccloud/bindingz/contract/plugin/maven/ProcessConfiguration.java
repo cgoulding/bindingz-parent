@@ -18,6 +18,9 @@ package com.monadiccloud.bindingz.contract.plugin.maven;
 
 import com.monadiccloud.bindingz.contract.plugin.maven.resources.ProviderType;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ProcessConfiguration {
 
     private String providerName;
@@ -27,7 +30,8 @@ public class ProcessConfiguration {
     private String packageName;
     private String className;
 
-    private ProviderType providerType = ProviderType.JSONSCHEMA2POJO;
+    private ProviderType codeProviderType = ProviderType.JSONSCHEMA2POJO;
+    private Map<String, String> codeProviderConfiguration = new HashMap<>();
 
     public String getProviderName() {
         return providerName;
@@ -69,11 +73,19 @@ public class ProcessConfiguration {
         this.className = className;
     }
 
-    public ProviderType getProviderType() {
-        return providerType;
+    public ProviderType getCodeProviderType() {
+        return codeProviderType;
     }
 
-    public void setProviderType(ProviderType providerType) {
-        this.providerType = providerType;
+    public void setCodeProviderType(ProviderType codeProviderType) {
+        this.codeProviderType = codeProviderType;
+    }
+
+    public Map<String, String> getCodeProviderConfiguration() {
+        return codeProviderConfiguration;
+    }
+
+    public void setCodeProviderConfiguration(Map<String, String> codeProviderConfiguration) {
+        this.codeProviderConfiguration = codeProviderConfiguration;
     }
 }

@@ -17,9 +17,9 @@
 package com.monadiccloud.bindingz.contract.plugin.maven.tasks;
 
 import com.monadiccloud.bindingz.contract.plugin.maven.PublishConfiguration;
-import com.monadiccloud.bindingz.contract.plugin.maven.resources.ResourceFactory;
-import com.monadiccloud.bindingz.contract.plugin.maven.resources.ResourceRepository;
-import com.monadiccloud.bindingz.contract.plugin.maven.resources.SchemaResourceContent;
+import com.monadiccloud.bindingz.contract.plugin.maven.resources.SchemaDto;
+import com.monadiccloud.bindingz.contract.plugin.maven.resources.SchemaFactory;
+import com.monadiccloud.bindingz.contract.plugin.maven.resources.SchemaRepository;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,11 +40,11 @@ public class PublishResourcesTask implements ExecutableTask {
     }
 
     public void execute() throws IOException {
-        ResourceRepository repository = new ResourceRepository(registry, targetDistributionDirectory.toPath());
-        ResourceFactory factory = new ResourceFactory();
+        SchemaRepository repository = new SchemaRepository(registry, targetDistributionDirectory.toPath());
+        SchemaFactory factory = new SchemaFactory();
 
         for (PublishConfiguration p : publishConfigurations) {
-            for (SchemaResourceContent c : factory.create(classLoader, p.getScanBasePackage())) {
+            for (SchemaDto c : factory.create(classLoader, p.getScanBasePackage())) {
                 repository.save(c);
             }
         }

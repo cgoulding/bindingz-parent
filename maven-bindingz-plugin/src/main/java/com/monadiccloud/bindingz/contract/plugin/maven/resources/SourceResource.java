@@ -20,17 +20,26 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+
 @JsonIgnoreProperties
-public class SchemaResource {
+public class SourceResource {
 
     private final SchemaDto content;
+    private final List<SourceDto> sources;
 
     @JsonCreator
-    public SchemaResource(@JsonProperty("content") SchemaDto content) {
+    public SourceResource(@JsonProperty("content") SchemaDto content,
+                          @JsonProperty("sources") List<SourceDto> sources) {
         this.content = content;
+        this.sources = sources;
     }
 
     public SchemaDto getContent() {
         return content;
+    }
+
+    public List<SourceDto> getSources() {
+        return sources;
     }
 }
