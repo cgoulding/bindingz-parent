@@ -28,8 +28,15 @@ dependencies {
     compile("com.monadiccloud.bindingz:contract-annotations4j:1.1-SNAPSHOT")
     compile("org.jsonschema2pojo:jsonschema2pojo-core:1.0.1")
 
+    compile("com.fasterxml.jackson.core:jackson-core")
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
     compile("com.fasterxml.jackson.module:jackson-module-jsonSchema")
     compile("log4j:log4j:1.2.17")
+
+    // Swagger support
+    compile('io.springfox:springfox-swagger2:2.9.2')
+    compile('io.springfox:springfox-swagger-ui:2.9.2')
+    compile('io.springfox:springfox-bean-validators:2.9.2')
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }

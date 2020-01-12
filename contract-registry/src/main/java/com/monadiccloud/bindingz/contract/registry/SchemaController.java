@@ -16,7 +16,6 @@
 
 package com.monadiccloud.bindingz.contract.registry;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.module.jsonSchema.JsonSchema;
 import com.monadiccloud.bindingz.contract.registry.code.SourceCodeConfiguration;
 import com.monadiccloud.bindingz.contract.registry.code.SourceCodeFactory;
@@ -45,7 +44,6 @@ import java.util.Optional;
 public class SchemaController {
 
     private final SchemaRepository repository;
-    private final ObjectMapper mapper = new ObjectMapper();
 
     public SchemaController(@Autowired SchemaRepository repository) {
         this.repository = repository;
