@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package com.monadiccloud.bindingz.contract.plugin.sbt
+package com.monadiccloud.bindingz.contract.registry.client.configuration;
 
-case class BindingzProcessConfiguration(providerName: String,
-                                        contractName: String,
-                                        version: String,
-                                        packageName: String,
-                                        className: String)
+public enum LanguageType {
+    JAVA,
+    SCALA
+}

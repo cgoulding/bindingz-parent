@@ -17,37 +17,32 @@
 package com.monadiccloud.bindingz.contract.plugin.maven.tasks;
 
 import com.monadiccloud.bindingz.contract.plugin.maven.PublishConfiguration;
-import com.monadiccloud.bindingz.contract.plugin.maven.resources.SchemaDto;
-import com.monadiccloud.bindingz.contract.plugin.maven.resources.SchemaFactory;
-import com.monadiccloud.bindingz.contract.plugin.maven.resources.SchemaRepository;
+import com.monadiccloud.bindingz.contract.registry.client.ContractRegistryClient;
+import com.monadiccloud.bindingz.contract.registry.client.model.ContractDto;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 
 public class PublishResourcesTask implements ExecutableTask {
 
     private final String registry;
-    private final File targetDistributionDirectory;
     private final Collection<PublishConfiguration> publishConfigurations;
     private final ClassLoader classLoader;
 
-    public PublishResourcesTask(String registry, File targetDistributionDirectory, Collection<PublishConfiguration> publishConfigurations, ClassLoader classLoader) {
+    public PublishResourcesTask(String registry, Collection<PublishConfiguration> publishConfigurations, ClassLoader classLoader) {
         this.registry = registry;
-        this.targetDistributionDirectory = targetDistributionDirectory;
         this.publishConfigurations = publishConfigurations;
         this.classLoader = classLoader;
     }
 
     public void execute() throws IOException {
-        SchemaRepository repository = new SchemaRepository(registry, targetDistributionDirectory.toPath());
-        SchemaFactory factory = new SchemaFactory();
+        ContractRegistryClient client = new ContractRegistryClient(registry);
+        ContractFactory factory = new ContractFactory();
 
         for (PublishConfiguration p : publishConfigurations) {
-            for (SchemaDto c : factory.create(classLoader, p.getScanBasePackage())) {
-                repository.save(c);
+            for (ContractDto c : factory.create(classLoader, p.getScanBasePackage())) {
+                client.publishContract(c);
             }
         }
-        repository.export();
     }
 }

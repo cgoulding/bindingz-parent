@@ -14,10 +14,23 @@
  * limitations under the License.
  */
 
-package com.monadiccloud.bindingz.contract.plugin.sbt
+package com.monadiccloud.bindingz.contract.registry.client.model;
 
-case class BindingzProcessConfiguration(providerName: String,
-                                        contractName: String,
-                                        version: String,
-                                        packageName: String,
-                                        className: String)
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonIgnoreProperties
+public class ContractResource {
+
+    private final ContractDto content;
+
+    @JsonCreator
+    public ContractResource(@JsonProperty("content") ContractDto content) {
+        this.content = content;
+    }
+
+    public ContractDto getContent() {
+        return content;
+    }
+}

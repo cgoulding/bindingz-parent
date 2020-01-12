@@ -23,7 +23,6 @@ trait BindingzKeys {
 
   val bindingzTargetSourceDirectory = settingKey[File]("Target source directory")
   val bindingzTargetResourceDirectory = settingKey[File]("Target resource directory")
-  val bindingzDistributionResourceDirectory = settingKey[File]("Distribution resource directory")
 
   val bindingzPublishConfigurations = settingKey[Seq[BindingzPublishConfiguration]]("Bindingz publish configurations")
   val bindingzProcessConfigurations = settingKey[Seq[BindingzProcessConfiguration]]("Bindingz process configurations")

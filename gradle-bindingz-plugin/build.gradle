@@ -26,6 +26,7 @@ gradlePlugin {
 
 dependencies {
     compile 'com.monadiccloud.bindingz:contract-annotations4j:1.1-SNAPSHOT'
+    compile 'com.monadiccloud.bindingz:contract-registry-client-java:1.0-SNAPSHOT'
     compile 'com.fasterxml.jackson.module:jackson-module-jsonSchema:2.9.8'
     compile 'org.jsonschema2pojo:jsonschema2pojo-core:1.0.1'
     compile 'com.dorkbox:Annotations:2.14'

@@ -15,14 +15,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Mojo(name = "publishResources", defaultPhase = LifecyclePhase.PACKAGE, requiresDependencyResolution = ResolutionScope.COMPILE)
+@Mojo(name = "publishResources", defaultPhase = LifecyclePhase.DEPLOY, requiresDependencyResolution = ResolutionScope.COMPILE)
 public class PublishResourcesMojo extends AbstractBindingzMojo {
 
     public void execute() throws MojoExecutionException {
-        if (!targetDistributionDirectory.exists()) {
-            targetDistributionDirectory.mkdirs();
-        }
-
         if (publishConfigurations != null) {
             try {
                 List<URL> urls = new ArrayList<>();
@@ -31,7 +27,7 @@ public class PublishResourcesMojo extends AbstractBindingzMojo {
                 }
                 ClassLoader classLoader = new URLClassLoader(urls.toArray(new URL[]{}), this.getClass().getClassLoader());
                 Arrays.stream(((URLClassLoader) classLoader).getURLs()).forEach(x -> System.out.println(x));
-                new PublishResourcesTask(registry, targetDistributionDirectory, publishConfigurations, classLoader).execute();
+                new PublishResourcesTask(registry, publishConfigurations, classLoader).execute();
             } catch (IOException e) {
                 throw new MojoExecutionException(e.getMessage(), e);
             } catch (DependencyResolutionRequiredException e) {

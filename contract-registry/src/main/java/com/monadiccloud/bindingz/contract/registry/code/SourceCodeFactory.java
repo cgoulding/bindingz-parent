@@ -17,7 +17,7 @@
 package com.monadiccloud.bindingz.contract.registry.code;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.monadiccloud.bindingz.contract.registry.code.providers.JsonSchema2PojoConfiguration;
+import com.monadiccloud.bindingz.contract.registry.code.providers.jsonschematopojo.JsonSchema2PojoConfiguration;
 import com.monadiccloud.bindingz.contract.registry.resources.SchemaDto;
 import com.monadiccloud.bindingz.contract.registry.resources.SourceDto;
 import org.jsonschema2pojo.Jsonschema2Pojo;

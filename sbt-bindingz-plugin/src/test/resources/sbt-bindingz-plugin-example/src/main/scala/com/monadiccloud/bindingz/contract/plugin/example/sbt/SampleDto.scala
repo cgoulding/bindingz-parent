@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package com.monadiccloud.bindingz.contract.plugin.sbt
+package com.monadiccloud.bindingz.contract.plugin.example.sbt
 
-case class BindingzProcessConfiguration(providerName: String,
-                                        contractName: String,
-                                        version: String,
-                                        packageName: String,
-                                        className: String)
+import com.monadiccloud.bindingz.contract.annotations4j.Contract
+
+@Contract(providerName = "sbt-plugin-example", contractName = "SampleDto", version = "v3")
+case class SampleDto(val one: String)

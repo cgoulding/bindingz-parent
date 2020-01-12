@@ -16,7 +16,7 @@
 
 package com.monadiccloud.bindingz.contract.plugin.maven;
 
-import com.monadiccloud.bindingz.contract.plugin.maven.resources.ProviderType;
+import com.monadiccloud.bindingz.contract.registry.client.configuration.ProviderType;
 
 import java.util.HashMap;
 import java.util.Map;
