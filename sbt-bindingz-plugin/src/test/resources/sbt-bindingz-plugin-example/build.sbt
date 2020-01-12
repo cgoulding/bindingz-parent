@@ -1,6 +1,6 @@
 name := "sbt-plugin-example"
 organization := "com.monadiccloud.bindingz"
-version := "1.0-SNAPSHOT"
+version := "1.1-SNAPSHOT"
 
 resolvers += Resolver.mavenLocal
 resolvers += Resolver.mavenCentral

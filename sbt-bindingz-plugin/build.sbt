@@ -1,6 +1,6 @@
 name := "sbt-bindingz-plugin"
 organization := "com.monadiccloud.bindingz"
-version := "1.0-SNAPSHOT"
+version := "1.1-SNAPSHOT"
 
 sbtPlugin := true
 crossSbtVersions := Seq("1.2.1")
@@ -15,9 +15,7 @@ pomIncludeRepository := { _ => false }
 
 libraryDependencies ++= Seq(
   "com.monadiccloud.bindingz" % "contract-annotations4j" % "1.1-SNAPSHOT",
-  "com.monadiccloud.bindingz" % "contract-registry-client-java" % "1.0-SNAPSHOT",
-
-  "org.scala-lang" % "scala-reflect" % scalaVersion.value,
+  "com.monadiccloud.bindingz" % "contract-registry-client-java" % "1.1-SNAPSHOT",
   "com.dorkbox" % "Annotations" % "2.14",
   "com.fasterxml.jackson.module" % "jackson-module-jsonSchema" % "2.9.8",
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.9.8"
