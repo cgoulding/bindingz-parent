@@ -14,7 +14,8 @@ classes
 out
 build
 target
-gradle
+**/gradle/wrapper/gradle-wrapper.jar
+**/gradle/wrapper/gradle-wrapper.properties
 .gradle
 .gradletasknamecache
 gradlew
