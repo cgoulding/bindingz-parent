@@ -29,12 +29,10 @@ export class AppComponent implements OnInit {
   loadSchemas(): Observable<SchemaResource[]> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Access-Control-Allow-Origin': 'http://localhost:4200',
-        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE'
+        'Content-Type':  'application/json'
       })
     };
 
-    return this.http.get<SchemaResource[]>('http://localhost:8080/api/v1/schemas', httpOptions);
+    return this.http.get<SchemaResource[]>('http://localhost:7777/api/v1/schemas', httpOptions);
   }
 }
