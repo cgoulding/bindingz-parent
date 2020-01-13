@@ -16,6 +16,7 @@
 
 package com.monadiccloud.bindingz.contract.registry.code.providers.jsonschematopojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.jsonschema2pojo.AllFileFilter;
 import org.jsonschema2pojo.AnnotationStyle;
 import org.jsonschema2pojo.Annotator;
@@ -37,6 +38,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 
+@JsonIgnoreProperties
 public class JsonSchema2PojoConfiguration implements GenerationConfig {
     private File targetSourceDirectory;
     private File targetResourceDirectory;
@@ -83,7 +85,7 @@ public class JsonSchema2PojoConfiguration implements GenerationConfig {
     private boolean includeAdditionalProperties = true;
     private boolean includeGetters = true;
     private boolean includeSetters = true;
-    private String targetVersion = "1.6";
+    private String targetVersion = "1.8";
     private boolean includeDynamicAccessors = false;
     private boolean includeDynamicGetters = false;
     private boolean includeDynamicSetters = false;
@@ -99,13 +101,6 @@ public class JsonSchema2PojoConfiguration implements GenerationConfig {
     private String customTimePattern;
     private String customDateTimePattern;
     private Language targetLanguage = Language.JAVA;
-
-    public JsonSchema2PojoConfiguration(File targetSourceDirectory, File targetResourceDirectory, String packageName, String className) {
-        this.targetSourceDirectory = targetSourceDirectory;
-        this.targetResourceDirectory = targetResourceDirectory;
-        this.packageName = packageName;
-        this.className = className;
-    }
 
     @Override
     public Iterator<URL> getSource() {

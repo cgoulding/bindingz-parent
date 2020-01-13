@@ -16,13 +16,18 @@
 
 package com.monadiccloud.bindingz.contract.plugin.gradle.extension
 
-
+import org.junit.Assert
 import org.junit.Test
 
 class ProcessConfigurationTest {
 
     @Test
     void test() {
+        def dto = new ProcessConfiguration("woop")
+        dto.factoryConfiguration {
+            language = "SCALA"
+        }
 
+        Assert.assertEquals("SCALA", dto.factoryConfiguration.get("language"))
     }
 }

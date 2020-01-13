@@ -39,6 +39,9 @@
               <version>asdf</version>
               <packageName>com.monadiccloud.sample.latest</packageName>
               <className>SampleDto</className>
+              <factoryConfiguration>
+                <targetLanguage>SCALA</targetLanguage>
+              </factoryConfiguration>
             </processConfiguration>
           </processConfigurations>
           <publishConfigurations>

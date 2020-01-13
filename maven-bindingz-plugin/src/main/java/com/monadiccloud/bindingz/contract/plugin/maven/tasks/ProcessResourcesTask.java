@@ -53,8 +53,8 @@ public class ProcessResourcesTask implements ExecutableTask {
             SourceCodeConfiguration configuration = new SourceCodeConfiguration();
             configuration.setClassName(c.getClassName());
             configuration.setPackageName(c.getPackageName());
-            configuration.setProviderType(c.getCodeProviderType());
-            configuration.setProviderConfiguration(c.getCodeProviderConfiguration());
+            configuration.setFactoryType(c.getFactoryType());
+            configuration.setFactoryConfiguration(c.getFactoryConfiguration());
 
             SourceResource resource = client.generateSources(c.getProviderName(), c.getContractName(), c.getVersion(), configuration);
             if (resource != null) {

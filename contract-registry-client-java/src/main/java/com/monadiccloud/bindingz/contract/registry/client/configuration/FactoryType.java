@@ -16,6 +16,6 @@
 
 package com.monadiccloud.bindingz.contract.registry.client.configuration;
 
-public enum ProviderType {
+public enum FactoryType {
     JSONSCHEMA2POJO
 }

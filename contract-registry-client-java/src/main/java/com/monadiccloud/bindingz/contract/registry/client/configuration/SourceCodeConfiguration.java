@@ -24,8 +24,8 @@ public class SourceCodeConfiguration {
     private String packageName;
     private String className;
 
-    private ProviderType providerType = ProviderType.JSONSCHEMA2POJO;
-    private Map<String, String> providerConfiguration = new HashMap<>();
+    private FactoryType factoryType = FactoryType.JSONSCHEMA2POJO;
+    private Map<String, String> factoryConfiguration = new HashMap<>();
 
     public String getPackageName() {
         return packageName;
@@ -43,19 +43,19 @@ public class SourceCodeConfiguration {
         this.className = className;
     }
 
-    public ProviderType getProviderType() {
-        return providerType;
+    public FactoryType getFactoryType() {
+        return factoryType;
     }
 
-    public void setProviderType(ProviderType providerType) {
-        this.providerType = providerType;
+    public void setFactoryType(FactoryType factoryType) {
+        this.factoryType = factoryType;
     }
 
-    public Map<String, String> getProviderConfiguration() {
-        return providerConfiguration;
+    public Map<String, String> getFactoryConfiguration() {
+        return factoryConfiguration;
     }
 
-    public void setProviderConfiguration(Map<String, String> providerConfiguration) {
-        this.providerConfiguration = providerConfiguration;
+    public void setFactoryConfiguration(Map<String, String> factoryConfiguration) {
+        this.factoryConfiguration = factoryConfiguration;
     }
 }

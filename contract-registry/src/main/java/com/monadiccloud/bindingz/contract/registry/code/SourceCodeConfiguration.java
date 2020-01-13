@@ -18,11 +18,15 @@ package com.monadiccloud.bindingz.contract.registry.code;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @JsonIgnoreProperties
 public class SourceCodeConfiguration {
 
-    private ProviderType providerType = ProviderType.JSONSCHEMA2POJO;
+    private FactoryType factoryType = FactoryType.JSONSCHEMA2POJO;
     private LanguageType languageType = LanguageType.JAVA;
+    private Map<String, String> factoryConfiguration = new HashMap<>();
 
     private String packageName;
     private String className;
@@ -43,12 +47,12 @@ public class SourceCodeConfiguration {
         this.className = className;
     }
 
-    public ProviderType getProviderType() {
-        return providerType;
+    public FactoryType getFactoryType() {
+        return factoryType;
     }
 
-    public void setProviderType(ProviderType providerType) {
-        this.providerType = providerType;
+    public void setFactoryType(FactoryType factoryType) {
+        this.factoryType = factoryType;
     }
 
     public LanguageType getLanguageType() {
@@ -57,5 +61,13 @@ public class SourceCodeConfiguration {
 
     public void setLanguageType(LanguageType languageType) {
         this.languageType = languageType;
+    }
+
+    public Map<String, String> getFactoryConfiguration() {
+        return factoryConfiguration;
+    }
+
+    public void setFactoryConfiguration(Map<String, String> factoryConfiguration) {
+        this.factoryConfiguration = factoryConfiguration;
     }
 }

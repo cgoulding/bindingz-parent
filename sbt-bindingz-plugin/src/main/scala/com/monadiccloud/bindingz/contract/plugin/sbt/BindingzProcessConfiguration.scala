@@ -16,8 +16,12 @@
 
 package com.monadiccloud.bindingz.contract.plugin.sbt
 
+import com.monadiccloud.bindingz.contract.registry.client.configuration.FactoryType
+
 case class BindingzProcessConfiguration(providerName: String,
                                         contractName: String,
                                         version: String,
                                         packageName: String,
-                                        className: String)
+                                        className: String,
+                                        factoryType: FactoryType = FactoryType.JSONSCHEMA2POJO,
+                                        factoryConfiguration: Map[String, String] = Map.empty[String, String])

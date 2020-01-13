@@ -11,9 +11,18 @@ libraryDependencies ++= Seq(
 )
 
 import com.monadiccloud.bindingz.contract.plugin.sbt._
-bindingzRegistry := "http://localhost:8080"
+bindingzRegistry := "http://localhost:7070"
 bindingzProcessConfigurations := Seq(
-  BindingzProcessConfiguration("asdf", "asdf", "asdf", "com.monadiccloud.sample.latest", "FooBar")
+  BindingzProcessConfiguration(
+    providerName = "asdf",
+    contractName = "asdf",
+    version = "asdf",
+    packageName = "com.monadiccloud.sample.latest",
+    className = "FooBar",
+    factoryConfiguration = Map(
+      "targetLanguage" -> "SCALA"
+    )
+  )
 )
 bindingzPublishConfigurations := Seq(
   BindingzPublishConfiguration("com.monadiccloud")

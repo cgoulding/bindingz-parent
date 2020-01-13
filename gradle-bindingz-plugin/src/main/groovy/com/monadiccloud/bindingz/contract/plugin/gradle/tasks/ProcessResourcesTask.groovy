@@ -61,6 +61,8 @@ class ProcessResourcesTask extends DefaultTask {
             def configuration = new SourceCodeConfiguration()
             configuration.setClassName(c.className)
             configuration.setPackageName(c.packageName)
+            configuration.setFactoryType(c.getFactoryType())
+            configuration.setFactoryConfiguration(c.getFactoryConfiguration())
 
             def resource = client.generateSources(c.providerName, c.contractName, c.version, configuration)
             if (resource != null) {

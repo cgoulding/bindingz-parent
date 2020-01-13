@@ -24,7 +24,7 @@ public class ProcessResourcesMojoTest {
 
     @Test
     public void testProcessResources() throws Exception {
-        File pom = new File( "target/test-classes/project-to-test" );
+        File pom = new File( "target/test-classes/maven-bindingz-plugin-example" );
         assertNotNull( pom );
         assertTrue(pom.exists());
 

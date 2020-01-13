@@ -13,7 +13,7 @@ buildscript {
 
 apply plugin: 'com.monadiccloud.bindingz.gradle-bindingz-plugin'
 bindingz {
-    registry = "http://localhost:8080"
+    registry = "http://localhost:7070"
     consumerConfigurations {
         one {
             providerName = "gradle-bindingz-plugin-example"
@@ -21,6 +21,9 @@ bindingz {
             version = "1.0"
             packageName = "com.monadiccloud.sample.v1"
             className = "LocalFooBarEvent"
+            factoryConfiguration {
+                targetLanguage = "SCALA"
+            }
         }
     }
 }

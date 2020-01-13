@@ -29,6 +29,8 @@ import sbt.{AutoPlugin, Compile, Def, File, IO, PluginTrigger, Plugins, Setting,
 import scala.collection.JavaConverters._
 import scala.reflect.internal.util.ScalaClassLoader.URLClassLoader
 
+import scala.collection.JavaConverters._
+
 object BindingzPlugin extends AutoPlugin {
 
   override val trigger: PluginTrigger = allRequirements
@@ -64,6 +66,8 @@ object BindingzPlugin extends AutoPlugin {
       val sourceCodeConfiguration = new SourceCodeConfiguration()
       sourceCodeConfiguration.setPackageName(c.packageName)
       sourceCodeConfiguration.setClassName(c.className)
+      sourceCodeConfiguration.setFactoryType(c.factoryType)
+      sourceCodeConfiguration.setFactoryConfiguration(c.factoryConfiguration.asJava)
 
       val source = client.generateSources(
         c.providerName,

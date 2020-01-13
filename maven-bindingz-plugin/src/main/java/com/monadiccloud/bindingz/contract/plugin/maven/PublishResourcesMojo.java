@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Mojo(name = "publishResources", defaultPhase = LifecyclePhase.DEPLOY, requiresDependencyResolution = ResolutionScope.COMPILE)
+@Mojo(name = "publishResources", defaultPhase = LifecyclePhase.NONE, requiresDependencyResolution = ResolutionScope.COMPILE)
 public class PublishResourcesMojo extends AbstractBindingzMojo {
 
     public void execute() throws MojoExecutionException {
