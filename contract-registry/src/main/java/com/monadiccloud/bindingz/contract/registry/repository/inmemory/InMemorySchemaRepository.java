@@ -28,7 +28,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @Service
-@Profile("dev")
+@Profile({"dev", "lambda"})
 public class InMemorySchemaRepository implements SchemaRepository {
 
     private Map<SchemaKey, SchemaDto> schemas = new HashMap<>();

@@ -13,16 +13,26 @@ buildscript {
 
 apply plugin: 'com.monadiccloud.bindingz.gradle-bindingz-plugin'
 bindingz {
-    registry = "http://localhost:7070"
+    registry = "https://m8tjphxx0b.execute-api.eu-west-1.amazonaws.com/Stage"
     consumerConfigurations {
         one {
             providerName = "gradle-bindingz-plugin-example"
             contractName = "FooBarEvent"
             version = "1.0"
-            packageName = "com.monadiccloud.sample.v1"
+            packageName = "com.monadiccloud.sample.scala"
             className = "LocalFooBarEvent"
             factoryConfiguration {
                 targetLanguage = "SCALA"
+            }
+        }
+        two {
+            providerName = "gradle-bindingz-plugin-example"
+            contractName = "FooBarEvent"
+            version = "1.0"
+            packageName = "com.monadiccloud.sample.java"
+            className = "LocalFooBarEvent"
+            factoryConfiguration {
+                targetLanguage = "JAVA"
             }
         }
     }

@@ -21,22 +21,22 @@ import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class Application {
+public class ApplicationCli extends SpringBootServletInitializer {
 
-    @Parameter(names = { "--repository", "-r" }, description = "Schema repository", required = true)
-    String repository;
+    @Parameter(names = { "--repository", "-r" }, description = "Schema repository")
+    String repository = null;
 
     @Parameter(names = { "--help", "-h" }, help = true)
     boolean help;
 
     public static void main(String[] args) {
-        Application cli = new Application();
+        ApplicationCli cli = new ApplicationCli();
         JCommander commander = JCommander.newBuilder()
                 .addObject(cli)
                 .build();
-
         commander.setProgramName("Contract Registry");
 
         try {
@@ -45,8 +45,12 @@ public class Application {
             if (cli.help) {
                 commander.usage();
             } else {
-                System.setProperty("repository.filebacked.directory", cli.repository);
-                SpringApplication.run(Application.class, args);
+                if (cli.repository != null) {
+                    System.setProperty("repository.filebacked.directory", cli.repository);
+                }
+
+                System.setProperty("spring.profiles.active", "filebacked");
+                SpringApplication.run(ApplicationCli.class, args);
             }
         } catch (ParameterException e) {
             commander.usage();

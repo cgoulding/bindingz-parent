@@ -18,6 +18,7 @@ package com.monadiccloud.bindingz.contract.registry;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.cors.CorsConfiguration;
@@ -35,6 +36,7 @@ import java.util.Collections;
 
 @EnableSwagger2
 @Configuration
+@Profile({"dev", "filebacked"})
 @Order(Ordered.LOWEST_PRECEDENCE)
 public class SwaggerConfiguration {
 
@@ -62,11 +64,11 @@ public class SwaggerConfiguration {
 
     private ApiInfo getApiInfo() {
         return new ApiInfo(
-                "Analytics Domain Api",
-                "Analytics Domain API",
-                "V1",
+                "Bindingz Contract Registry Api",
+                "Bindingz Contract Registry Api",
+                "v1",
                 "TERMS OF SERVICE URL",
-                new Contact("Poppulo", "poppulo.com", "nana@poppulo.com"),
+                new Contact("Connor Goulding", "https://github.com/cgoulding", "connor.goulding@gmail.com"),
                 null,
                 null,
                 Collections.emptyList()

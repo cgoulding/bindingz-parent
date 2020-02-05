@@ -1,0 +1,27 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Bindingz Contract Registry.
+
+Resources:
+  BindingzContractRegistryFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: com.monadiccloud.bindingz.contract.registry.aws.LambdaHandler::handleRequest
+      Runtime: java8
+      CodeUri: build/libs/contract-registry-1.1-SNAPSHOT-lambda.jar
+      MemorySize: 1512
+      Policies: AWSLambdaBasicExecutionRole
+      Timeout: 60
+      Events:
+        GetResource:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: any
+
+Outputs:
+  BindingzContractRegistryApi:
+    Description: URL for application
+    Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Stage'
+    Export:
+      Name: BindingzContractRegistryApi
