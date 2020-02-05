@@ -49,6 +49,7 @@ class ProcessResourcesTask extends DefaultTask {
     ProcessResourcesTask() {
         description = 'Generates Java classes from a json schema.'
         group = 'Build'
+        setOnlyIf { true }
         outputs.upToDateWhen { false }
     }
 
