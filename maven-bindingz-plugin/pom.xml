@@ -25,6 +25,7 @@
   </properties>
 
   <dependencies>
+    <!--    business stuff-->
     <dependency>
         <groupId>com.monadiccloud.bindingz</groupId>
         <artifactId>contract-annotations4j</artifactId>
@@ -41,15 +42,12 @@
         <version>2.9.8</version>
     </dependency>
     <dependency>
-        <groupId>org.jsonschema2pojo</groupId>
-        <artifactId>jsonschema2pojo-core</artifactId>
-        <version>1.0.1</version>
+      <groupId>com.dorkbox</groupId>
+      <artifactId>Annotations</artifactId>
+      <version>2.14</version>
     </dependency>
-    <dependency>
-        <groupId>com.dorkbox</groupId>
-        <artifactId>Annotations</artifactId>
-        <version>2.14</version>
-    </dependency>
+    
+    <!--    maven stuff-->
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-plugin-api</artifactId>
