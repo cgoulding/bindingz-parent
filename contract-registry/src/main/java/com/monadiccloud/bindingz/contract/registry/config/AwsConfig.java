@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.monadiccloud.bindingz.contract.registry.aws;
+package com.monadiccloud.bindingz.contract.registry.config;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,7 +33,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 @Configuration
 @EnableWebMvc
 @Profile("lambda")
-public class LambdaConfig {
+public class AwsConfig {
 
     /**
      * Create required HandlerMapping, to avoid several default HandlerMapping instances being created

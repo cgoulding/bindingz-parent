@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019. Connor Goulding
+ * Copyright (c) 2019 Connor Goulding
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,28 @@
  * limitations under the License.
  */
 
-package com.monadiccloud.bindingz.contract.registry.repository;
+package com.monadiccloud.bindingz.contract.registry.controller;
 
-import com.monadiccloud.bindingz.contract.registry.RegistryException;
 import com.monadiccloud.bindingz.contract.registry.model.SchemaDto;
+import com.monadiccloud.bindingz.contract.registry.model.SourceDto;
 
-import java.util.Collection;
+import java.util.List;
 
-public interface SchemaRepository {
-    void add(SchemaDto schemaDto) throws RegistryException;
+public class SourceResource {
 
-    SchemaDto find(String accountIdentifier,
-                    String namespace,
-                    String providerName,
-                    String contractName,
-                    String version) throws RegistryException;
+    private final SchemaDto content;
+    private final List<SourceDto> sources;
 
-    Collection<SchemaDto> findAllByAccount(String accountIdentifier) throws RegistryException;
+    public SourceResource(SchemaDto content, List<SourceDto> sources) {
+        this.content = content;
+        this.sources = sources;
+    }
+
+    public SchemaDto getContent() {
+        return content;
+    }
+
+    public List<SourceDto> getSources() {
+        return sources;
+    }
 }

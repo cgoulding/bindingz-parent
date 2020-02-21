@@ -17,18 +17,7 @@
 package com.monadiccloud.bindingz.contract.registry.repository;
 
 import com.monadiccloud.bindingz.contract.registry.RegistryException;
-import com.monadiccloud.bindingz.contract.registry.model.SchemaDto;
 
-import java.util.Collection;
-
-public interface SchemaRepository {
-    void add(SchemaDto schemaDto) throws RegistryException;
-
-    SchemaDto find(String accountIdentifier,
-                    String namespace,
-                    String providerName,
-                    String contractName,
-                    String version) throws RegistryException;
-
-    Collection<SchemaDto> findAllByAccount(String accountIdentifier) throws RegistryException;
+public interface ApiKeyRepository {
+    String findAccountIdentifier(String apiKey) throws RegistryException;
 }

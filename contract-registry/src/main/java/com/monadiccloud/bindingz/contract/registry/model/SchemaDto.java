@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.monadiccloud.bindingz.contract.registry.resources;
+package com.monadiccloud.bindingz.contract.registry.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -23,16 +23,22 @@ import com.fasterxml.jackson.module.jsonSchema.JsonSchema;
 
 @JsonIgnoreProperties
 public class SchemaDto {
+    private final String accountIdentifier;
+    private final String namespace;
     private final String contractName;
     private final String providerName;
     private final String version;
     private final JsonSchema schema;
 
     @JsonCreator
-    public SchemaDto(@JsonProperty("contractName") String contractName,
+    public SchemaDto(@JsonProperty("accountIdentifier") String accountIdentifier,
+                     @JsonProperty("namespace") String namespace,
+                     @JsonProperty("contractName") String contractName,
                      @JsonProperty("providerName") String providerName,
                      @JsonProperty("version") String version,
                      @JsonProperty("schema") JsonSchema schema) {
+        this.accountIdentifier = accountIdentifier;
+        this.namespace = namespace;
         this.contractName = contractName;
         this.providerName = providerName;
         this.version = version;
@@ -53,5 +59,13 @@ public class SchemaDto {
 
     public JsonSchema getSchema() {
         return schema;
+    }
+
+    public String getAccountIdentifier() {
+        return accountIdentifier;
+    }
+
+    public String getNamespace() {
+        return namespace;
     }
 }

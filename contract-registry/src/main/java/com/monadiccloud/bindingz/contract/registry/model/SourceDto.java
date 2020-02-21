@@ -1,4 +1,4 @@
-package com.monadiccloud.bindingz.contract.registry.resources;
+package com.monadiccloud.bindingz.contract.registry.model;
 
 import java.util.List;
 

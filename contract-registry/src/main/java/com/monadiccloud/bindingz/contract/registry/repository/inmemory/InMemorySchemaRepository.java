@@ -17,7 +17,7 @@
 package com.monadiccloud.bindingz.contract.registry.repository.inmemory;
 
 import com.monadiccloud.bindingz.contract.registry.RegistryException;
-import com.monadiccloud.bindingz.contract.registry.resources.SchemaDto;
+import com.monadiccloud.bindingz.contract.registry.model.SchemaDto;
 import com.monadiccloud.bindingz.contract.registry.repository.SchemaRepository;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -26,9 +26,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
-@Profile({"dev", "lambda"})
+@Profile({"inmemory"})
 public class InMemorySchemaRepository implements SchemaRepository {
 
     private Map<SchemaKey, SchemaDto> schemas = new HashMap<>();
@@ -36,33 +37,47 @@ public class InMemorySchemaRepository implements SchemaRepository {
     @Override
     public void add(SchemaDto schemaDto) {
         schemas.put(
-                new SchemaKey(schemaDto.getContractName(), schemaDto.getProviderName(), schemaDto.getVersion()),
+                new SchemaKey(schemaDto.getAccountIdentifier(),
+                        schemaDto.getNamespace(),
+                        schemaDto.getContractName(),
+                        schemaDto.getProviderName(),
+                        schemaDto.getVersion()),
                 schemaDto
         );
     }
 
     @Override
-    public SchemaDto find(String contractName,
+    public SchemaDto find(String accountIdentifier,
+                          String namespace,
                           String providerName,
+                          String contractName,
                           String version) {
-        return schemas.get(new SchemaKey(contractName, providerName, version));
+        return schemas.get(new SchemaKey(accountIdentifier, namespace, providerName, contractName, version));
     }
 
     @Override
-    public Collection<SchemaDto> findAll() throws RegistryException {
-        return schemas.values();
+    public Collection<SchemaDto> findAllByAccount(String accountIdentifier) throws RegistryException {
+        return schemas.values().stream().
+                filter(schemaDto -> schemaDto.getAccountIdentifier().equals(accountIdentifier)).
+                collect(Collectors.toList());
     }
 
     private static class SchemaKey {
-        private final String contractName;
+        private final String accountIdentifier;
+        private final String namespace;
         private final String providerName;
+        private final String contractName;
         private final String version;
 
-        public SchemaKey(String contractName,
+        public SchemaKey(String accountIdentifier,
+                         String namespace,
                          String providerName,
+                         String contractName,
                          String version) {
-            this.contractName = contractName;
+            this.accountIdentifier = accountIdentifier;
+            this.namespace = namespace;
             this.providerName = providerName;
+            this.contractName = contractName;
             this.version = version;
         }
 
@@ -71,14 +86,16 @@ public class InMemorySchemaRepository implements SchemaRepository {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             SchemaKey schemaKey = (SchemaKey) o;
-            return Objects.equals(contractName, schemaKey.contractName) &&
+            return Objects.equals(accountIdentifier, schemaKey.accountIdentifier) &&
+                    Objects.equals(namespace, schemaKey.namespace) &&
+                    Objects.equals(contractName, schemaKey.contractName) &&
                     Objects.equals(providerName, schemaKey.providerName) &&
                     Objects.equals(version, schemaKey.version);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(contractName, providerName, version);
+            return Objects.hash(accountIdentifier, namespace, contractName, providerName, version);
         }
     }
 }

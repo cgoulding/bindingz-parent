@@ -18,8 +18,8 @@ package com.monadiccloud.bindingz.contract.registry.repository.filebacked;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.monadiccloud.bindingz.contract.registry.RegistryException;
-import com.monadiccloud.bindingz.contract.registry.resources.SchemaDto;
 import com.monadiccloud.bindingz.contract.registry.repository.SchemaRepository;
+import com.monadiccloud.bindingz.contract.registry.model.SchemaDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
@@ -40,18 +40,19 @@ import java.util.stream.Stream;
 @Profile("filebacked")
 public class FileBackedSchemaRepository implements SchemaRepository {
 
+    private static final String REPO = "schemas";
+
     private final String directory;
     private final ObjectMapper mapper = new ObjectMapper();
 
     public FileBackedSchemaRepository(
             @Autowired @Value("${repository.filebacked.directory:${user.home}/.bindingz/repository}") String directory) {
-        System.out.println("Repository: " + directory);
-       this.directory = directory;
+        this.directory = directory;
     }
 
     @Override
     public void add(SchemaDto schemaDto) {
-        File file = Paths.get(directory, getFileName(schemaDto)).toFile();
+        File file = Paths.get(directory, REPO, getFileName(schemaDto)).toFile();
         file.getParentFile().mkdirs();
 
         try(FileOutputStream fos = new FileOutputStream(file.toString())) {
@@ -62,10 +63,12 @@ public class FileBackedSchemaRepository implements SchemaRepository {
     }
 
     @Override
-    public SchemaDto find(String contractName,
+    public SchemaDto find(String accountIdentifier,
+                          String namespace,
                           String providerName,
+                          String contractName,
                           String version) {
-        File file = Paths.get(directory, getFileName(new SchemaKey(contractName, providerName, version))).toFile();
+        File file = Paths.get(directory, REPO, getFileName(new SchemaKey(accountIdentifier, namespace, providerName, contractName, version))).toFile();
         if (file.exists()) {
             try {
                 return mapper.readValue(file, SchemaDto.class);
@@ -77,22 +80,29 @@ public class FileBackedSchemaRepository implements SchemaRepository {
     }
 
     @Override
-    public Collection<SchemaDto> findAll() throws RegistryException {
+    public Collection<SchemaDto> findAllByAccount(String accountIdentifier) throws RegistryException {
         try {
-            return Files.walk(Paths.get(directory)).map(file -> {
+            return Files.walk(Paths.get(directory, REPO)).map(file -> {
                 try {
                     return Optional.of(mapper.readValue(file.toFile(), SchemaDto.class));
                 } catch (IOException e) {
                     return Optional.<SchemaDto>empty();
                 }
-            }).flatMap(s -> s.isPresent() ? Stream.of(s.get()) : Stream.empty()).collect(Collectors.toList());
+            }).flatMap(s -> s.isPresent() ? Stream.of(s.get()) : Stream.empty()).
+                    filter(schemaDto -> schemaDto.getAccountIdentifier().equals(accountIdentifier)).
+                    collect(Collectors.toList());
         } catch (IOException e) {
             throw new RegistryException("Unable to read file", e);
         }
     }
 
     private String getFileName(SchemaDto schemaDto) {
-        return getFileName(new SchemaKey(schemaDto.getContractName(), schemaDto.getProviderName(), schemaDto.getVersion()));
+        return getFileName(new SchemaKey(
+                schemaDto.getAccountIdentifier(),
+                schemaDto.getNamespace(),
+                schemaDto.getProviderName(),
+                schemaDto.getContractName(),
+                schemaDto.getVersion()));
     }
 
     private String getFileName(SchemaKey schemaKey) {
@@ -100,13 +110,19 @@ public class FileBackedSchemaRepository implements SchemaRepository {
     }
 
     private static class SchemaKey {
-        private final String contractName;
+        private final String accountIdentifier;
+        private final String namespace;
         private final String providerName;
+        private final String contractName;
         private final String version;
 
-        public SchemaKey(String contractName,
+        public SchemaKey(String accountIdentifier,
+                         String namespace,
                          String providerName,
+                         String contractName,
                          String version) {
+            this.accountIdentifier = accountIdentifier;
+            this.namespace = namespace;
             this.contractName = contractName;
             this.providerName = providerName;
             this.version = version;
@@ -117,14 +133,16 @@ public class FileBackedSchemaRepository implements SchemaRepository {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             SchemaKey schemaKey = (SchemaKey) o;
-            return Objects.equals(contractName, schemaKey.contractName) &&
+            return Objects.equals(accountIdentifier, schemaKey.accountIdentifier) &&
+                    Objects.equals(namespace, schemaKey.namespace) &&
+                    Objects.equals(contractName, schemaKey.contractName) &&
                     Objects.equals(providerName, schemaKey.providerName) &&
                     Objects.equals(version, schemaKey.version);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(contractName, providerName, version);
+            return Objects.hash(accountIdentifier, namespace, contractName, providerName, version);
         }
     }
 }

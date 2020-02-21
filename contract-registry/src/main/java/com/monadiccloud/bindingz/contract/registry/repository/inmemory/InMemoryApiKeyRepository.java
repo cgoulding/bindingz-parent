@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019. Connor Goulding
+ * Copyright (c) 2019 Connor Goulding
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,22 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package com.monadiccloud.bindingz.contract.registry.repository;
+package com.monadiccloud.bindingz.contract.registry.repository.inmemory;
 
 import com.monadiccloud.bindingz.contract.registry.RegistryException;
-import com.monadiccloud.bindingz.contract.registry.model.SchemaDto;
+import com.monadiccloud.bindingz.contract.registry.repository.ApiKeyRepository;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-
-public interface SchemaRepository {
-    void add(SchemaDto schemaDto) throws RegistryException;
-
-    SchemaDto find(String accountIdentifier,
-                    String namespace,
-                    String providerName,
-                    String contractName,
-                    String version) throws RegistryException;
-
-    Collection<SchemaDto> findAllByAccount(String accountIdentifier) throws RegistryException;
+@Service
+@Profile({"inmemory"})
+public class InMemoryApiKeyRepository implements ApiKeyRepository {
+    @Override
+    public String findAccountIdentifier(String apiKey) throws RegistryException {
+        return apiKey;
+    }
 }

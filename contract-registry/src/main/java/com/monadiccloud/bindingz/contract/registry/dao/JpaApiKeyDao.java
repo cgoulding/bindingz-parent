@@ -13,18 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.monadiccloud.bindingz.contract.registry.dao;
 
-package com.monadiccloud.bindingz.contract.registry.resources;
+import com.monadiccloud.bindingz.contract.registry.entity.ApiKeyEntity;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public class SchemaResource {
-
-    private final SchemaDto content;
-
-    public SchemaResource(SchemaDto content) {
-        this.content = content;
-    }
-
-    public SchemaDto getContent() {
-        return content;
-    }
-}
+/**
+ * @author Connor Goulding
+ */
+@Repository
+public interface JpaApiKeyDao extends CrudRepository<ApiKeyEntity, String> {}

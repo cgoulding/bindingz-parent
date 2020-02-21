@@ -13,26 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.monadiccloud.bindingz.contract.registry.dao;
 
-package com.monadiccloud.bindingz.contract.registry.resources;
+import com.monadiccloud.bindingz.contract.registry.entity.ContractEntity;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public class SourceResource {
-
-    private final SchemaDto content;
-    private final List<SourceDto> sources;
-
-    public SourceResource(SchemaDto content, List<SourceDto> sources) {
-        this.content = content;
-        this.sources = sources;
-    }
-
-    public SchemaDto getContent() {
-        return content;
-    }
-
-    public List<SourceDto> getSources() {
-        return sources;
-    }
+/**
+ * @author Connor Goulding
+ */
+@Repository
+public interface JpaContractDao extends CrudRepository<ContractEntity, ContractEntity.ContractId> {
+    List<ContractEntity> findByContractIdAccountIdentifier(String accountIdentifier);
 }

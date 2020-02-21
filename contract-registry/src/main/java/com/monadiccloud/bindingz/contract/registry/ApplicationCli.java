@@ -47,9 +47,11 @@ public class ApplicationCli extends SpringBootServletInitializer {
             } else {
                 if (cli.repository != null) {
                     System.setProperty("repository.filebacked.directory", cli.repository);
+                    System.setProperty("spring.profiles.active", "filebacked");
+                } else {
+                    System.setProperty("spring.profiles.active", "lambda");
                 }
 
-                System.setProperty("spring.profiles.active", "filebacked");
                 SpringApplication.run(ApplicationCli.class, args);
             }
         } catch (ParameterException e) {

@@ -36,8 +36,7 @@ import java.util.Collections;
 
 @EnableSwagger2
 @Configuration
-@Profile({"dev", "filebacked"})
-@Order(Ordered.LOWEST_PRECEDENCE)
+@Profile({"inmemory", "filebacked"})
 public class SwaggerConfiguration {
 
     @Bean
