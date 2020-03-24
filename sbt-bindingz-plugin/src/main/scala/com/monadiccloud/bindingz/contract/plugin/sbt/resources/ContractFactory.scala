@@ -48,7 +48,7 @@ object ContractFactory {
     val contractProvider = annotations(0)
     val resourceContent = new ContractDto(
       contractProvider.contractName(),
-      contractProvider.providerName(),
+      contractProvider.owner(),
       contractProvider.version(),
       schema
     )

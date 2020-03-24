@@ -14,7 +14,7 @@ import com.monadiccloud.bindingz.contract.plugin.sbt._
 bindingzRegistry := "http://localhost:7070"
 bindingzProcessConfigurations := Seq(
   BindingzProcessConfiguration(
-    providerName = "asdf",
+    owner = "asdf",
     contractName = "asdf",
     version = "asdf",
     packageName = "com.monadiccloud.sample.latest",

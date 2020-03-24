@@ -16,7 +16,7 @@ bindingz {
     registry = "https://m8tjphxx0b.execute-api.eu-west-1.amazonaws.com/Stage"
     consumerConfigurations {
         one {
-            providerName = "gradle-bindingz-plugin-example"
+            owner = "gradle-bindingz-plugin-example"
             contractName = "FooBarEvent"
             version = "1.0"
             packageName = "com.monadiccloud.sample.scala"
@@ -26,7 +26,7 @@ bindingz {
             }
         }
         two {
-            providerName = "gradle-bindingz-plugin-example"
+            owner = "gradle-bindingz-plugin-example"
             contractName = "FooBarEvent"
             version = "1.0"
             packageName = "com.monadiccloud.sample.java"

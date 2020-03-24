@@ -24,17 +24,17 @@ import com.fasterxml.jackson.module.jsonSchema.JsonSchema;
 @JsonIgnoreProperties
 public class ContractDto {
     private final String contractName;
-    private final String providerName;
+    private final String owner;
     private final String version;
     private final JsonSchema schema;
 
     @JsonCreator
     public ContractDto(@JsonProperty("contractName") String contractName,
-                       @JsonProperty("providerName") String providerName,
+                       @JsonProperty("owner") String owner,
                        @JsonProperty("version") String version,
                        @JsonProperty("schema") JsonSchema schema) {
         this.contractName = contractName;
-        this.providerName = providerName;
+        this.owner = owner;
         this.version = version;
         this.schema = schema;
     }
@@ -43,8 +43,8 @@ public class ContractDto {
         return contractName;
     }
 
-    public String getProviderName() {
-        return providerName;
+    public String getOwner() {
+        return owner;
     }
 
     public String getVersion() {

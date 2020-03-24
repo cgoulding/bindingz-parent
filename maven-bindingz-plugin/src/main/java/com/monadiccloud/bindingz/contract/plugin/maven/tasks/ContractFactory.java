@@ -54,7 +54,7 @@ public class ContractFactory {
 
       return new ContractDto(
               contractProvider.contractName(),
-              contractProvider.providerName(),
+              contractProvider.owner(),
               contractProvider.version(),
               schema
       );

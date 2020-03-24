@@ -20,7 +20,7 @@ import com.monadiccloud.bindingz.contract.annotations4j.Contract;
 
 import java.util.List;
 
-@Contract(contractName = "FooBarEvent", providerName = "gradle-bindingz-plugin-example", version = "1.0")
+@Contract(contractName = "FooBarEvent", owner = "gradle-bindingz-plugin-example", version = "1.0")
 public class FooBarEvent {
     private String id;
     private String name;

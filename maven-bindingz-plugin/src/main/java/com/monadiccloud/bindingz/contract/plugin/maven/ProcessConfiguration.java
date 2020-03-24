@@ -23,7 +23,7 @@ import java.util.Map;
 
 public class ProcessConfiguration {
 
-    private String providerName;
+    private String owner;
     private String contractName;
     private String version;
 
@@ -33,12 +33,12 @@ public class ProcessConfiguration {
     private FactoryType factoryType = FactoryType.JSONSCHEMA2POJO;
     private Map<String, String> factoryConfiguration = new HashMap<>();
 
-    public String getProviderName() {
-        return providerName;
+    public String getOwner() {
+        return owner;
     }
 
-    public void setProviderName(String providerName) {
-        this.providerName = providerName;
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
     public String getContractName() {

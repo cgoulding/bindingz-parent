@@ -18,5 +18,5 @@ package com.monadiccloud.bindingz.contract.plugin.example.sbt
 
 import com.monadiccloud.bindingz.contract.annotations4j.Contract
 
-@Contract(providerName = "sbt-plugin-example", contractName = "SampleDto", version = "v3")
+@Contract(owner = "sbt-plugin-example", contractName = "SampleDto", version = "v3")
 case class SampleDto(val one: String)

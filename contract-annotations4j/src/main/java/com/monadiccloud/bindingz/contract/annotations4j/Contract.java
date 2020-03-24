@@ -25,6 +25,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Contract {
     String contractName();
-    String providerName();
+    String owner();
     String version();
 }

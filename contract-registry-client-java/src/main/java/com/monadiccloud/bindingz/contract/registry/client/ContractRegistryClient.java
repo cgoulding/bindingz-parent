@@ -41,7 +41,7 @@ public class ContractRegistryClient {
   public ContractResource publishContract(ContractDto schemaDto) {
     String url = String.format("%s/api/v1/schemas/%s/%s?version=%s",
       registryString,
-      schemaDto.getProviderName(),
+      schemaDto.getOwner(),
       schemaDto.getContractName(),
       schemaDto.getVersion());
 
@@ -74,13 +74,13 @@ public class ContractRegistryClient {
     }
   }
 
-  public SourceResource generateSources(String providerName,
+  public SourceResource generateSources(String owner,
                                         String contractName,
                                         String version,
                                         SourceCodeConfiguration configuration) {
     String url = String.format("%s/api/v1/sources/%s/%s?version=%s",
             registryString,
-            providerName,
+            owner,
             contractName,
             version);
 

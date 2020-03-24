@@ -34,7 +34,7 @@
           <registry>http://localhost:8080</registry>
           <processConfigurations>
             <processConfiguration>
-              <providerName>asdf</providerName>
+              <owner>asdf</owner>
               <contractName>asdf</contractName>
               <version>asdf</version>
               <packageName>com.monadiccloud.sample.latest</packageName>

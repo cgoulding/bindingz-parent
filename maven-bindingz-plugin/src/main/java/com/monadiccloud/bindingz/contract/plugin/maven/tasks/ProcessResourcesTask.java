@@ -56,7 +56,7 @@ public class ProcessResourcesTask implements ExecutableTask {
             configuration.setFactoryType(c.getFactoryType());
             configuration.setFactoryConfiguration(c.getFactoryConfiguration());
 
-            SourceResource resource = client.generateSources(c.getProviderName(), c.getContractName(), c.getVersion(), configuration);
+            SourceResource resource = client.generateSources(c.getOwner(), c.getContractName(), c.getVersion(), configuration);
             if (resource != null) {
                 if (resource.getSources() != null) {
                     resource.getSources().stream().forEach(s -> {
@@ -78,7 +78,7 @@ public class ProcessResourcesTask implements ExecutableTask {
                     try {
                         Path path = Paths.get(
                                 targetResourceDirectory.getAbsolutePath(),
-                                schema.getProviderName(),
+                                schema.getOwner(),
                                 schema.getContractName(),
                                 schema.getVersion()
                         );

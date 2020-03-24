@@ -70,13 +70,13 @@ object BindingzPlugin extends AutoPlugin {
       sourceCodeConfiguration.setFactoryConfiguration(c.factoryConfiguration.asJava)
 
       val source = client.generateSources(
-        c.providerName,
+        c.owner,
         c.contractName,
         c.version,
         sourceCodeConfiguration
       )
 
-      val resourcePath = Paths.get(bindingzTargetResourceDirectory.value.toString, c.providerName, c.contractName, c.version)
+      val resourcePath = Paths.get(bindingzTargetResourceDirectory.value.toString, c.owner, c.contractName, c.version)
       resourcePath.getParent.toFile.mkdir()
 
       IO.write(resourcePath.toFile, objectMapper.writeValueAsString(source.getContent().getSchema))

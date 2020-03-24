@@ -18,7 +18,7 @@ package com.monadiccloud.bindingz.contract.plugin.sbt
 
 import com.monadiccloud.bindingz.contract.registry.client.configuration.FactoryType
 
-case class BindingzProcessConfiguration(providerName: String,
+case class BindingzProcessConfiguration(owner: String,
                                         contractName: String,
                                         version: String,
                                         packageName: String,
