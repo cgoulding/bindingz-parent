@@ -24,6 +24,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Contract {
+    String namespace() default "default";
     String contractName();
     String owner();
     String version();
