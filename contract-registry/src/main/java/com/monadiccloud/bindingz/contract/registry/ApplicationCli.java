@@ -20,11 +20,8 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
 
-@SpringBootApplication
-public class ApplicationCli extends SpringBootServletInitializer {
+public class ApplicationCli {
 
     @Parameter(names = { "--repository", "-r" }, description = "Schema repository")
     String repository = null;
@@ -49,10 +46,10 @@ public class ApplicationCli extends SpringBootServletInitializer {
                     System.setProperty("repository.filebacked.directory", cli.repository);
                     System.setProperty("spring.profiles.active", "filebacked");
                 } else {
-                    System.setProperty("spring.profiles.active", "lambda");
+                    System.setProperty("spring.profiles.active", "prod");
                 }
 
-                SpringApplication.run(ApplicationCli.class, args);
+                SpringApplication.run(Application.class, args);
             }
         } catch (ParameterException e) {
             commander.usage();

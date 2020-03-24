@@ -19,8 +19,12 @@ import com.monadiccloud.bindingz.contract.registry.entity.ApiKeyEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author Connor Goulding
  */
 @Repository
-public interface JpaApiKeyDao extends CrudRepository<ApiKeyEntity, String> {}
+public interface JpaApiKeyDao extends CrudRepository<ApiKeyEntity, String> {
+    List<ApiKeyEntity> findByClientIdentifier(String clientIdentifier);
+}

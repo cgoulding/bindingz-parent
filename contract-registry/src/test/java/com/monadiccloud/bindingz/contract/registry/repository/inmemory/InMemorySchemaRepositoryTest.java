@@ -12,10 +12,10 @@ public class InMemorySchemaRepositoryTest {
 
     @Test
     public void test() throws IOException {
-        repository.add(objectMapper.readValue("{\"contractName\":\"SampleDto\",\"providerName\":\"example1\",\"version\":\"v1\",\"schema\":{\"type\":\"object\",\"id\":\"urn:jsonschema:com:monadiccloud:bindingz:contract:plugin:example:sbt:SampleDto\",\"properties\":{\"one\":{\"type\":\"string\"}}}}", SchemaDto.class));
-        repository.add(objectMapper.readValue("{\"contractName\":\"SampleDto\",\"providerName\":\"example1\",\"version\":\"v2\",\"schema\":{\"type\":\"object\",\"id\":\"urn:jsonschema:com:monadiccloud:bindingz:contract:plugin:example:sbt:SampleDto\",\"properties\":{\"one\":{\"type\":\"string\"}}}}", SchemaDto.class));
-        repository.add(objectMapper.readValue("{\"contractName\":\"SampleDto\",\"providerName\":\"example2\",\"version\":\"v2\",\"schema\":{\"type\":\"object\",\"id\":\"urn:jsonschema:com:monadiccloud:bindingz:contract:plugin:example:sbt:SampleDto\",\"properties\":{\"one\":{\"type\":\"string\"}}}}", SchemaDto.class));
+        repository.add(objectMapper.readValue("{\"clientIdentifier\":\"asdf\",\"contractName\":\"SampleDto\",\"owner\":\"example1\",\"version\":\"v1\",\"schema\":{\"type\":\"object\",\"id\":\"urn:jsonschema:com:monadiccloud:bindingz:contract:plugin:example:sbt:SampleDto\",\"properties\":{\"one\":{\"type\":\"string\"}}}}", SchemaDto.class));
+        repository.add(objectMapper.readValue("{\"clientIdentifier\":\"asdf\",\"contractName\":\"SampleDto\",\"owner\":\"example1\",\"version\":\"v2\",\"schema\":{\"type\":\"object\",\"id\":\"urn:jsonschema:com:monadiccloud:bindingz:contract:plugin:example:sbt:SampleDto\",\"properties\":{\"one\":{\"type\":\"string\"}}}}", SchemaDto.class));
+        repository.add(objectMapper.readValue("{\"clientIdentifier\":\"asdf\",\"contractName\":\"SampleDto\",\"owner\":\"example2\",\"version\":\"v2\",\"schema\":{\"type\":\"object\",\"id\":\"urn:jsonschema:com:monadiccloud:bindingz:contract:plugin:example:sbt:SampleDto\",\"properties\":{\"one\":{\"type\":\"string\"}}}}", SchemaDto.class));
 
-        System.out.println(objectMapper.writeValueAsString(repository.findAllByAccount("asdf")));
+        System.out.println(objectMapper.writeValueAsString(repository.findAllByClient("asdf")));
     }
 }

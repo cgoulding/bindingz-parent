@@ -14,24 +14,15 @@
  * limitations under the License.
  */
 
-package com.monadiccloud.bindingz.contract.registry.model;
+package com.monadiccloud.bindingz.contract.registry;
 
-import java.util.List;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-public class SourceDto {
-    private final List<String> file;
-    private final String content;
+@SpringBootApplication
+public class Application {
 
-    public SourceDto(List<String> file, String content) {
-        this.file = file;
-        this.content = content;
-    }
-
-    public List<String> getFile() {
-        return file;
-    }
-
-    public String getContent() {
-        return content;
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
     }
 }

@@ -19,6 +19,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 @Entity
 @Table(name = "API_KEY")
@@ -28,15 +29,31 @@ public class ApiKeyEntity {
     @Column(name = "API_KEY")
     private String apiKey;
 
-    @Column(name = "ACCOUNT_IDENTIFIER")
-    private String accountIdentifier;
+    @Column(name = "PREFIX")
+    private String prefix;
+
+    @Column(name = "CLIENT_IDENTIFIER")
+    private String clientIdentifier;
+
+    @Column(name = "EXPIRY_DATE")
+    private Date expiryDate;
 
     public ApiKeyEntity() {
     }
 
-    public ApiKeyEntity(String apiKey, String accountIdentifier) {
+    public ApiKeyEntity(String prefix, String apiKey, String clientIdentifier, Date expiryDate) {
+        this.prefix = prefix;
         this.apiKey = apiKey;
-        this.accountIdentifier = accountIdentifier;
+        this.clientIdentifier = clientIdentifier;
+        this.expiryDate = expiryDate;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
     }
 
     public String getApiKey() {
@@ -47,11 +64,19 @@ public class ApiKeyEntity {
         this.apiKey = apiKey;
     }
 
-    public String getAccountIdentifier() {
-        return accountIdentifier;
+    public String getClientIdentifier() {
+        return clientIdentifier;
     }
 
-    public void setAccountIdentifier(String accountIdentifier) {
-        this.accountIdentifier = accountIdentifier;
+    public void setClientIdentifier(String clientIdentifier) {
+        this.clientIdentifier = clientIdentifier;
+    }
+
+    public Date getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setExpiryDate(Date expiryDate) {
+        this.expiryDate = expiryDate;
     }
 }

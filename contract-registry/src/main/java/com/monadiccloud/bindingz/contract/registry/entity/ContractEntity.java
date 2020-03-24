@@ -22,6 +22,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * @author Connor Goulding
@@ -62,14 +63,14 @@ public class ContractEntity implements Serializable {
 
     @Embeddable
     public static class ContractId implements Serializable {
-        @Column(name = "ACCOUNT_IDENTIFIER")
-        private String accountIdentifier;
+        @Column(name = "CLIENT_IDENTIFIER")
+        private String clientIdentifier;
 
         @Column(name = "NAMESPACE", length = 128)
         private String namespace;
 
-        @Column(name = "PROVIDER", length = 128)
-        private String provider;
+        @Column(name = "OWNER", length = 128)
+        private String owner;
 
         @Column(name = "NAME", length = 128)
         private String name;
@@ -80,20 +81,20 @@ public class ContractEntity implements Serializable {
         public ContractId() {
         }
 
-        public ContractId(String accountIdentifier, String namespace, String provider, String name, String revision) {
-            this.accountIdentifier = accountIdentifier;
+        public ContractId(String clientIdentifier, String namespace, String owner, String name, String revision) {
+            this.clientIdentifier = clientIdentifier;
             this.namespace = namespace;
-            this.provider = provider;
+            this.owner = owner;
             this.name = name;
             this.revision = revision;
         }
 
-        public void setAccountIdentifier(String accountIdentifier) {
-            this.accountIdentifier = accountIdentifier;
+        public void setClientIdentifier(String clientIdentifier) {
+            this.clientIdentifier = clientIdentifier;
         }
 
-        public String getAccountIdentifier() {
-            return accountIdentifier;
+        public String getClientIdentifier() {
+            return clientIdentifier;
         }
 
         public String getRevision() {
@@ -112,12 +113,12 @@ public class ContractEntity implements Serializable {
             this.namespace = namespace;
         }
 
-        public String getProvider() {
-            return provider;
+        public String getOwner() {
+            return owner;
         }
 
-        public void setProvider(String provider) {
-            this.provider = provider;
+        public void setOwner(String owner) {
+            this.owner = owner;
         }
 
         public String getName() {
@@ -126,6 +127,23 @@ public class ContractEntity implements Serializable {
 
         public void setName(String name) {
             this.name = name;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            ContractId that = (ContractId) o;
+            return Objects.equals(clientIdentifier, that.clientIdentifier) &&
+                    Objects.equals(namespace, that.namespace) &&
+                    Objects.equals(owner, that.owner) &&
+                    Objects.equals(name, that.name) &&
+                    Objects.equals(revision, that.revision);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(clientIdentifier, namespace, owner, name, revision);
         }
     }
 }

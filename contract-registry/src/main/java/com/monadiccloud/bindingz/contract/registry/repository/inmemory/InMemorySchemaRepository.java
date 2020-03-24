@@ -26,6 +26,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,46 +38,51 @@ public class InMemorySchemaRepository implements SchemaRepository {
     @Override
     public void add(SchemaDto schemaDto) {
         schemas.put(
-                new SchemaKey(schemaDto.getAccountIdentifier(),
+                new SchemaKey(schemaDto.getClientIdentifier(),
                         schemaDto.getNamespace(),
                         schemaDto.getContractName(),
-                        schemaDto.getProviderName(),
+                        schemaDto.getOwner(),
                         schemaDto.getVersion()),
                 schemaDto
         );
     }
 
     @Override
-    public SchemaDto find(String accountIdentifier,
-                          String namespace,
-                          String providerName,
-                          String contractName,
-                          String version) {
-        return schemas.get(new SchemaKey(accountIdentifier, namespace, providerName, contractName, version));
+    public Optional<SchemaDto> find(String clientIdentifier,
+                                    String namespace,
+                                    String owner,
+                                    String contractName,
+                                    String version) {
+        return Optional.ofNullable(schemas.get(new SchemaKey(
+                clientIdentifier,
+                namespace,
+                owner,
+                contractName,
+                version)));
     }
 
     @Override
-    public Collection<SchemaDto> findAllByAccount(String accountIdentifier) throws RegistryException {
+    public Collection<SchemaDto> findAllByClient(String clientIdentifier) throws RegistryException {
         return schemas.values().stream().
-                filter(schemaDto -> schemaDto.getAccountIdentifier().equals(accountIdentifier)).
+                filter(schemaDto -> schemaDto.getClientIdentifier().equals(clientIdentifier)).
                 collect(Collectors.toList());
     }
 
     private static class SchemaKey {
-        private final String accountIdentifier;
+        private final String clientIdentifier;
         private final String namespace;
-        private final String providerName;
+        private final String owner;
         private final String contractName;
         private final String version;
 
-        public SchemaKey(String accountIdentifier,
+        public SchemaKey(String clientIdentifier,
                          String namespace,
-                         String providerName,
+                         String owner,
                          String contractName,
                          String version) {
-            this.accountIdentifier = accountIdentifier;
+            this.clientIdentifier = clientIdentifier;
             this.namespace = namespace;
-            this.providerName = providerName;
+            this.owner = owner;
             this.contractName = contractName;
             this.version = version;
         }
@@ -86,16 +92,16 @@ public class InMemorySchemaRepository implements SchemaRepository {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             SchemaKey schemaKey = (SchemaKey) o;
-            return Objects.equals(accountIdentifier, schemaKey.accountIdentifier) &&
+            return Objects.equals(clientIdentifier, schemaKey.clientIdentifier) &&
                     Objects.equals(namespace, schemaKey.namespace) &&
                     Objects.equals(contractName, schemaKey.contractName) &&
-                    Objects.equals(providerName, schemaKey.providerName) &&
+                    Objects.equals(owner, schemaKey.owner) &&
                     Objects.equals(version, schemaKey.version);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(accountIdentifier, namespace, contractName, providerName, version);
+            return Objects.hash(clientIdentifier, namespace, contractName, owner, version);
         }
     }
 }

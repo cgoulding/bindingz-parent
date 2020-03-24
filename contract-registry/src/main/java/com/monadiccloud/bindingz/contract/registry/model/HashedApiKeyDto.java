@@ -16,22 +16,34 @@
 
 package com.monadiccloud.bindingz.contract.registry.model;
 
-import java.util.List;
+import java.util.Date;
 
-public class SourceDto {
-    private final List<String> file;
-    private final String content;
+public class HashedApiKeyDto {
+    private final String clientIdentifier;
+    private final String prefix;
+    private final String hash;
+    private final Date expiry;
 
-    public SourceDto(List<String> file, String content) {
-        this.file = file;
-        this.content = content;
+    public HashedApiKeyDto(String clientIdentifier, String prefix, String hash, Date expiry) {
+        this.clientIdentifier = clientIdentifier;
+        this.prefix = prefix;
+        this.hash = hash;
+        this.expiry = expiry;
     }
 
-    public List<String> getFile() {
-        return file;
+    public String getClientIdentifier() {
+        return clientIdentifier;
     }
 
-    public String getContent() {
-        return content;
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public Date getExpiry() {
+        return expiry;
     }
 }

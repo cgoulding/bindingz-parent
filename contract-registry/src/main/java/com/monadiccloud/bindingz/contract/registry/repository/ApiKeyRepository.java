@@ -17,7 +17,13 @@
 package com.monadiccloud.bindingz.contract.registry.repository;
 
 import com.monadiccloud.bindingz.contract.registry.RegistryException;
+import com.monadiccloud.bindingz.contract.registry.model.HashedApiKeyDto;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface ApiKeyRepository {
-    String findAccountIdentifier(String apiKey) throws RegistryException;
+    List<HashedApiKeyDto> getApiKeys(String clientIdentifier) throws RegistryException;
+    Optional<String> findClientIdentifier(String apiKey) throws RegistryException;
+    void saveApiKey(HashedApiKeyDto apiKey) throws RegistryException;
 }

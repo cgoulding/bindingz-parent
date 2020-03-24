@@ -26,5 +26,5 @@ import java.util.List;
  */
 @Repository
 public interface JpaContractDao extends CrudRepository<ContractEntity, ContractEntity.ContractId> {
-    List<ContractEntity> findByContractIdAccountIdentifier(String accountIdentifier);
+    List<ContractEntity> findByContractIdClientIdentifier(String clientIdentifier);
 }

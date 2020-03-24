@@ -23,24 +23,24 @@ import com.fasterxml.jackson.module.jsonSchema.JsonSchema;
 
 @JsonIgnoreProperties
 public class SchemaDto {
-    private final String accountIdentifier;
+    private final String clientIdentifier;
     private final String namespace;
     private final String contractName;
-    private final String providerName;
+    private final String owner;
     private final String version;
     private final JsonSchema schema;
 
     @JsonCreator
-    public SchemaDto(@JsonProperty("accountIdentifier") String accountIdentifier,
+    public SchemaDto(@JsonProperty("clientIdentifier") String clientIdentifier,
                      @JsonProperty("namespace") String namespace,
                      @JsonProperty("contractName") String contractName,
-                     @JsonProperty("providerName") String providerName,
+                     @JsonProperty("owner") String owner,
                      @JsonProperty("version") String version,
                      @JsonProperty("schema") JsonSchema schema) {
-        this.accountIdentifier = accountIdentifier;
+        this.clientIdentifier = clientIdentifier;
         this.namespace = namespace;
         this.contractName = contractName;
-        this.providerName = providerName;
+        this.owner = owner;
         this.version = version;
         this.schema = schema;
     }
@@ -49,8 +49,8 @@ public class SchemaDto {
         return contractName;
     }
 
-    public String getProviderName() {
-        return providerName;
+    public String getOwner() {
+        return owner;
     }
 
     public String getVersion() {
@@ -61,8 +61,8 @@ public class SchemaDto {
         return schema;
     }
 
-    public String getAccountIdentifier() {
-        return accountIdentifier;
+    public String getClientIdentifier() {
+        return clientIdentifier;
     }
 
     public String getNamespace() {

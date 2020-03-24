@@ -16,22 +16,26 @@
 
 package com.monadiccloud.bindingz.contract.registry.model;
 
-import java.util.List;
+public class ExposedApiKeyDto {
+    private final String clientIdentifier;
+    private final String prefix;
+    private final String key;
 
-public class SourceDto {
-    private final List<String> file;
-    private final String content;
-
-    public SourceDto(List<String> file, String content) {
-        this.file = file;
-        this.content = content;
+    public ExposedApiKeyDto(String clientIdentifier, String prefix, String key) {
+        this.clientIdentifier = clientIdentifier;
+        this.prefix = prefix;
+        this.key = key;
     }
 
-    public List<String> getFile() {
-        return file;
+    public String getClientIdentifier() {
+        return clientIdentifier;
     }
 
-    public String getContent() {
-        return content;
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public String getKey() {
+        return key;
     }
 }

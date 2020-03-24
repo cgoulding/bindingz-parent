@@ -20,15 +20,16 @@ import com.monadiccloud.bindingz.contract.registry.RegistryException;
 import com.monadiccloud.bindingz.contract.registry.model.SchemaDto;
 
 import java.util.Collection;
+import java.util.Optional;
 
 public interface SchemaRepository {
     void add(SchemaDto schemaDto) throws RegistryException;
 
-    SchemaDto find(String accountIdentifier,
-                    String namespace,
-                    String providerName,
-                    String contractName,
-                    String version) throws RegistryException;
+    Optional<SchemaDto> find(String clientIdentifier,
+                             String namespace,
+                             String owner,
+                             String contractName,
+                             String version) throws RegistryException;
 
-    Collection<SchemaDto> findAllByAccount(String accountIdentifier) throws RegistryException;
+    Collection<SchemaDto> findAllByClient(String clientIdentifier) throws RegistryException;
 }

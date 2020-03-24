@@ -17,13 +17,19 @@ package com.monadiccloud.bindingz.contract.registry.repository.jpa;
 
 import com.monadiccloud.bindingz.contract.registry.RegistryException;
 import com.monadiccloud.bindingz.contract.registry.dao.JpaApiKeyDao;
+import com.monadiccloud.bindingz.contract.registry.entity.ApiKeyEntity;
+import com.monadiccloud.bindingz.contract.registry.model.HashedApiKeyDto;
 import com.monadiccloud.bindingz.contract.registry.repository.ApiKeyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 @Service
-@Profile({"lambda", "prod"})
+@Profile({"prod"})
 public class JpaApiKeyRepository implements ApiKeyRepository {
 
     private final JpaApiKeyDao apiKeyDao;
@@ -33,7 +39,33 @@ public class JpaApiKeyRepository implements ApiKeyRepository {
     }
 
     @Override
-    public String findAccountIdentifier(String apiKey) throws RegistryException {
-        return apiKeyDao.findOne(apiKey).getAccountIdentifier();
+    public Optional<String> findClientIdentifier(String apiKey) throws RegistryException {
+        return apiKeyDao.findById(apiKey).map(ApiKeyEntity::getClientIdentifier);
+    }
+
+    @Override
+    public void saveApiKey(HashedApiKeyDto apiKey) throws RegistryException {
+        apiKeyDao.save(new ApiKeyEntity(
+                apiKey.getPrefix(),
+                apiKey.getHash(),
+                apiKey.getClientIdentifier(),
+                apiKey.getExpiry()
+        ));
+    }
+
+    @Override
+    public List<HashedApiKeyDto> getApiKeys(String clientIdentifier) {
+        return apiKeyDao.findByClientIdentifier(clientIdentifier).stream().
+                map(this::transform).
+                collect(Collectors.toList());
+    }
+
+    private HashedApiKeyDto transform(ApiKeyEntity apiKeyEntity) {
+        return new HashedApiKeyDto(
+                apiKeyEntity.getClientIdentifier(),
+                apiKeyEntity.getPrefix(),
+                apiKeyEntity.getApiKey(),
+                apiKeyEntity.getExpiryDate()
+        );
     }
 }

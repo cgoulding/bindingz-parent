@@ -29,11 +29,12 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-@Profile({"lambda", "prod"})
+@Profile({"prod"})
 public class JpaSchemaRepository implements SchemaRepository {
 
     private final JpaContractDao contractDao;
@@ -48,9 +49,9 @@ public class JpaSchemaRepository implements SchemaRepository {
         try {
             ContractEntity contractEntity = new ContractEntity(
                     new ContractEntity.ContractId(
-                            schemaDto.getAccountIdentifier(),
+                            schemaDto.getClientIdentifier(),
                             schemaDto.getNamespace(),
-                            schemaDto.getProviderName(),
+                            schemaDto.getOwner(),
                             schemaDto.getContractName(),
                             schemaDto.getVersion()
                     ),
@@ -64,23 +65,23 @@ public class JpaSchemaRepository implements SchemaRepository {
     }
 
     @Override
-    public SchemaDto find(String accountIdentifier,
-                          String namespace,
-                          String providerName,
-                          String contractName,
-                          String version) throws RegistryException {
-        return transform(contractDao.findOne(new ContractEntity.ContractId(
-                accountIdentifier,
+    public Optional<SchemaDto> find(String clientIdentifier,
+                                    String namespace,
+                                    String owner,
+                                    String contractName,
+                                    String version) throws RegistryException {
+        return contractDao.findById(new ContractEntity.ContractId(
+                clientIdentifier,
                 namespace,
-                providerName,
+                owner,
                 contractName,
                 version
-        )));
+        )).map(this::transform);
     }
 
     @Override
-    public Collection<SchemaDto> findAllByAccount(String accountIdentifier) throws RegistryException {
-        return StreamSupport.stream(contractDao.findByContractIdAccountIdentifier(accountIdentifier).spliterator(), false).
+    public Collection<SchemaDto> findAllByClient(String clientIdentifier) throws RegistryException {
+        return StreamSupport.stream(contractDao.findByContractIdClientIdentifier(clientIdentifier).spliterator(), false).
                 map(this::transform).
                 collect(Collectors.toList());
     }
@@ -88,9 +89,9 @@ public class JpaSchemaRepository implements SchemaRepository {
     private SchemaDto transform(ContractEntity contractEntity) {
         try {
             return new SchemaDto(
-                    contractEntity.getContractId().getAccountIdentifier(),
+                    contractEntity.getContractId().getClientIdentifier(),
                     contractEntity.getContractId().getNamespace(),
-                    contractEntity.getContractId().getProvider(),
+                    contractEntity.getContractId().getOwner(),
                     contractEntity.getContractId().getName(),
                     contractEntity.getContractId().getRevision(),
                     mapper.readValue(contractEntity.getSchema(), JsonSchema.class)
