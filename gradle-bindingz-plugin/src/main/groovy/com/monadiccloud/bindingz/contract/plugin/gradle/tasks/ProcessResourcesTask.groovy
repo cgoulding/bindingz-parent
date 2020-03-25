@@ -35,6 +35,9 @@ class ProcessResourcesTask extends DefaultTask {
     @Internal
     String registry;
 
+    @Internal
+    String apiKey;
+
     @OutputDirectory
     File targetSourceDirectory;
 
@@ -52,12 +55,11 @@ class ProcessResourcesTask extends DefaultTask {
         setOnlyIf { true }
         outputs.upToDateWhen { false }
     }
-
     @TaskAction
     def generate() {
         println("ConsumerConfigurations: " + consumerConfigurations.size())
 
-        def client = new ContractRegistryClient(registry)
+        def client = new ContractRegistryClient(registry, apiKey)
         consumerConfigurations.forEach { c ->
             def configuration = new SourceCodeConfiguration()
             configuration.setClassName(c.className)
@@ -65,7 +67,7 @@ class ProcessResourcesTask extends DefaultTask {
             configuration.setFactoryType(c.getFactoryType())
             configuration.setFactoryConfiguration(c.getFactoryConfiguration())
 
-            def resource = client.generateSources(c.owner, c.contractName, c.version, configuration)
+            def resource = client.generateSources(c.namespace, c.owner, c.contractName, c.version, configuration)
             if (resource != null) {
                 if (resource.getSources() != null) {
                     resource.getSources().forEach{ s ->
@@ -87,6 +89,7 @@ class ProcessResourcesTask extends DefaultTask {
                     try {
                         def path = Paths.get(
                                 targetResourceDirectory.getAbsolutePath(),
+                                schema.getNamespace(),
                                 schema.getOwner(),
                                 schema.getContractName(),
                                 schema.getVersion()

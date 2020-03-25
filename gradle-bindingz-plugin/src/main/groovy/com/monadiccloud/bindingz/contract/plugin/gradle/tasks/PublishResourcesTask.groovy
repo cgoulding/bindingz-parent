@@ -29,6 +29,9 @@ class PublishResourcesTask extends DefaultTask {
     String registry
 
     @Internal
+    String apiKey
+
+    @Internal
     NamedDomainObjectContainer<PublishConfiguration> producerConfigurations
 
     @Internal
@@ -41,7 +44,9 @@ class PublishResourcesTask extends DefaultTask {
 
     @TaskAction
     def generate() {
-        def client = new ContractRegistryClient(registry)
+        def client = new ContractRegistryClient(registry, apiKey)
+        System.out.println(registry + " " + apiKey);
+
         def factory = new ContractFactory()
 
         println("ProducerConfigurations: " + producerConfigurations.size())

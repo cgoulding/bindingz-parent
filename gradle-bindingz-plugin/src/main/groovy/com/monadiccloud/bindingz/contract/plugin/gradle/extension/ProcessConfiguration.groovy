@@ -21,6 +21,7 @@ import com.monadiccloud.bindingz.contract.registry.client.configuration.FactoryT
 class ProcessConfiguration {
 
     String name
+    String namespace
     String owner
     String contractName
     String version

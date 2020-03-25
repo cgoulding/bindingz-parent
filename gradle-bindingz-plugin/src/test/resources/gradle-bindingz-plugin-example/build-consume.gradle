@@ -13,9 +13,10 @@ buildscript {
 
 apply plugin: 'com.monadiccloud.bindingz.gradle-bindingz-plugin'
 bindingz {
-    registry = "https://m8tjphxx0b.execute-api.eu-west-1.amazonaws.com/Stage"
+    apiKey = "cPrS6nyv.ac5bc2f16417e79f2517531c2f6a0591"
     consumerConfigurations {
         one {
+            namespace = "default"
             owner = "gradle-bindingz-plugin-example"
             contractName = "FooBarEvent"
             version = "1.0"
@@ -26,6 +27,7 @@ bindingz {
             }
         }
         two {
+            namespace = "default"
             owner = "gradle-bindingz-plugin-example"
             contractName = "FooBarEvent"
             version = "1.0"

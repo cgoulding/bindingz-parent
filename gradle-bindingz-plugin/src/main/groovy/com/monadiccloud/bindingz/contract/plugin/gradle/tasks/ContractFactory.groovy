@@ -47,12 +47,13 @@ class ContractFactory {
     JsonSchema schema = schemaGen.generateSchema(contract)
 
     Contract[] annotations = contract.getAnnotationsByType(Contract.class)
-    Contract contractProvider = annotations[0]
+    Contract annotation = annotations[0]
 
     return new ContractDto(
-        contractProvider.contractName(),
-        contractProvider.owner(),
-        contractProvider.version(),
+        annotation.namespace(),
+        annotation.owner(),
+        annotation.contractName(),
+        annotation.version(),
         schema
     )
   }

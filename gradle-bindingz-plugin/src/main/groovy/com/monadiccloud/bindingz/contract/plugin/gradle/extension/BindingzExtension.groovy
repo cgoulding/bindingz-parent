@@ -19,7 +19,8 @@ package com.monadiccloud.bindingz.contract.plugin.gradle.extension
 import org.gradle.api.NamedDomainObjectContainer
 
 class BindingzExtension {
-    String registry
+    String registry = "https://d4wt28di9g.execute-api.eu-west-1.amazonaws.com/Stage"
+    String apiKey
 
     File targetSourceDirectory;
     File targetResourceDirectory;

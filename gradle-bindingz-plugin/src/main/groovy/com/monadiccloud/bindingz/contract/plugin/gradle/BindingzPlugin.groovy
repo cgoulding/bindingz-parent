@@ -71,6 +71,7 @@ class BindingzPlugin implements Plugin<Project> {
 
         processResourcesTask.consumerConfigurations = configuration.consumerConfigurations
         processResourcesTask.registry = configuration.registry
+        processResourcesTask.apiKey = configuration.apiKey
 
         processResourcesTask.targetSourceDirectory = configuration.targetSourceDirectory
         processResourcesTask.targetResourceDirectory = configuration.targetResourceDirectory
@@ -93,6 +94,7 @@ class BindingzPlugin implements Plugin<Project> {
 
         publishResourcesTask.producerConfigurations = configuration.producerConfigurations
         publishResourcesTask.registry = configuration.registry
+        publishResourcesTask.apiKey = configuration.apiKey
 
         Set<File> classFiles = project.sourceSets.main.runtimeClasspath.getFiles()
         URL[] urls = classFiles.collect { it.toURI().toURL() }.toArray() as URL[]
