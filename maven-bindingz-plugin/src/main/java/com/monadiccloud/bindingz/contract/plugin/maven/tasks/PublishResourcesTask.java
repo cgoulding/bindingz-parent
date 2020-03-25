@@ -26,17 +26,19 @@ import java.util.Collection;
 public class PublishResourcesTask implements ExecutableTask {
 
     private final String registry;
+    private final String apiKey;
     private final Collection<PublishConfiguration> publishConfigurations;
     private final ClassLoader classLoader;
 
-    public PublishResourcesTask(String registry, Collection<PublishConfiguration> publishConfigurations, ClassLoader classLoader) {
+    public PublishResourcesTask(String registry, String apiKey, Collection<PublishConfiguration> publishConfigurations, ClassLoader classLoader) {
         this.registry = registry;
+        this.apiKey = apiKey;
         this.publishConfigurations = publishConfigurations;
         this.classLoader = classLoader;
     }
 
     public void execute() throws IOException {
-        ContractRegistryClient client = new ContractRegistryClient(registry);
+        ContractRegistryClient client = new ContractRegistryClient(registry, apiKey);
         ContractFactory factory = new ContractFactory();
 
         for (PublishConfiguration p : publishConfigurations) {

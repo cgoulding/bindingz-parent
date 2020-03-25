@@ -23,6 +23,7 @@ import java.util.Map;
 
 public class ProcessConfiguration {
 
+    private String namespace;
     private String owner;
     private String contractName;
     private String version;
@@ -32,6 +33,14 @@ public class ProcessConfiguration {
 
     private FactoryType factoryType = FactoryType.JSONSCHEMA2POJO;
     private Map<String, String> factoryConfiguration = new HashMap<>();
+
+    public String getNamespace() {
+        return namespace;
+    }
+
+    public void setNamespace(String namespace) {
+        this.namespace = namespace;
+    }
 
     public String getOwner() {
         return owner;

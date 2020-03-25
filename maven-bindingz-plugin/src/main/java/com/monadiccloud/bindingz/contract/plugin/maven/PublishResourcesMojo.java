@@ -27,7 +27,7 @@ public class PublishResourcesMojo extends AbstractBindingzMojo {
                 }
                 ClassLoader classLoader = new URLClassLoader(urls.toArray(new URL[]{}), this.getClass().getClassLoader());
                 Arrays.stream(((URLClassLoader) classLoader).getURLs()).forEach(x -> System.out.println(x));
-                new PublishResourcesTask(registry, publishConfigurations, classLoader).execute();
+                new PublishResourcesTask(registry, apiKey, publishConfigurations, classLoader).execute();
             } catch (IOException e) {
                 throw new MojoExecutionException(e.getMessage(), e);
             } catch (DependencyResolutionRequiredException e) {

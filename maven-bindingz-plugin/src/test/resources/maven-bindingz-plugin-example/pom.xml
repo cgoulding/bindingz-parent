@@ -31,12 +31,13 @@
         <artifactId>bindingz-maven-plugin</artifactId>
         <version>1.1-SNAPSHOT</version>
         <configuration>
-          <registry>http://localhost:8080</registry>
+          <apiKey>cPrS6nyv.ac5bc2f16417e79f2517531c2f6a0591</apiKey>
           <processConfigurations>
             <processConfiguration>
-              <owner>asdf</owner>
-              <contractName>asdf</contractName>
-              <version>asdf</version>
+              <namespace>default</namespace>
+              <owner>project-to-test</owner>
+              <contractName>ProjectToTestDto</contractName>
+              <version>latest</version>
               <packageName>com.monadiccloud.sample.latest</packageName>
               <className>SampleDto</className>
               <factoryConfiguration>

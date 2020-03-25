@@ -36,11 +36,13 @@ public class ProcessResourcesTask implements ExecutableTask {
     private final ObjectMapper mapper = new ObjectMapper();
 
     private final String registry;
+    private final String apiKey;
     private final File targetSourceDirectory;
     private final File targetResourceDirectory;
     private final Collection<ProcessConfiguration> processConfigurations;
 
-    public ProcessResourcesTask(String registry, File targetSourceDirectory, File targetResourceDirectory, Collection<ProcessConfiguration> processConfigurations) {
+    public ProcessResourcesTask(String registry, String apiKey, File targetSourceDirectory, File targetResourceDirectory, Collection<ProcessConfiguration> processConfigurations) {
+        this.apiKey = apiKey;
         this.registry = registry;
         this.targetSourceDirectory = targetSourceDirectory;
         this.targetResourceDirectory = targetResourceDirectory;
@@ -48,7 +50,7 @@ public class ProcessResourcesTask implements ExecutableTask {
     }
 
     public void execute() throws IOException {
-        ContractRegistryClient client = new ContractRegistryClient(registry);
+        ContractRegistryClient client = new ContractRegistryClient(registry, apiKey);
         for (ProcessConfiguration c : processConfigurations) {
             SourceCodeConfiguration configuration = new SourceCodeConfiguration();
             configuration.setClassName(c.getClassName());
@@ -56,7 +58,7 @@ public class ProcessResourcesTask implements ExecutableTask {
             configuration.setFactoryType(c.getFactoryType());
             configuration.setFactoryConfiguration(c.getFactoryConfiguration());
 
-            SourceResource resource = client.generateSources(c.getOwner(), c.getContractName(), c.getVersion(), configuration);
+            SourceResource resource = client.generateSources(c.getNamespace(), c.getOwner(), c.getContractName(), c.getVersion(), configuration);
             if (resource != null) {
                 if (resource.getSources() != null) {
                     resource.getSources().stream().forEach(s -> {
@@ -78,6 +80,7 @@ public class ProcessResourcesTask implements ExecutableTask {
                     try {
                         Path path = Paths.get(
                                 targetResourceDirectory.getAbsolutePath(),
+                                schema.getNamespace(),
                                 schema.getOwner(),
                                 schema.getContractName(),
                                 schema.getVersion()

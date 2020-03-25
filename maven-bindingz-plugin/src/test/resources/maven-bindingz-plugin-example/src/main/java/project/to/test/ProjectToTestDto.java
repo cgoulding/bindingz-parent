@@ -2,7 +2,7 @@ package project.to.test;
 
 import com.monadiccloud.bindingz.contract.annotations4j.Contract;
 
-@Contract(contractName = "ProjectToTestDto", owner = "project-to-test", version = "v1")
+@Contract(contractName = "ProjectToTestDto", owner = "project-to-test", version = "v2")
 public class ProjectToTestDto {
     private float accountId;
     private String code;

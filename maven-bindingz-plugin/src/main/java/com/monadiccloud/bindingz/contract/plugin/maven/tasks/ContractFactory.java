@@ -50,12 +50,13 @@ public class ContractFactory {
     JsonSchema schema = null;
     try {
       schema = schemaGen.generateSchema(contract);
-      Contract contractProvider = (Contract)contract.getAnnotation(Contract.class);
+      Contract owner = (Contract)contract.getAnnotation(Contract.class);
 
       return new ContractDto(
-              contractProvider.contractName(),
-              contractProvider.owner(),
-              contractProvider.version(),
+              owner.namespace(),
+              owner.owner(),
+              owner.contractName(),
+              owner.version(),
               schema
       );
     } catch (JsonMappingException e) {
