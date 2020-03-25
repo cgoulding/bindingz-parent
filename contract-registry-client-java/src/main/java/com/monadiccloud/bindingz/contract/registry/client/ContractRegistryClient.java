@@ -30,17 +30,20 @@ import java.net.URL;
 
 public class ContractRegistryClient {
 
-  private String registryString;
+  private final String registryString;
+  private final String apiKey;
 
   private ObjectMapper mapper = new ObjectMapper();
 
-  public ContractRegistryClient(String registryString) {
+  public ContractRegistryClient(String registryString, String apiKey) {
     this.registryString = registryString;
+    this.apiKey = apiKey;
   }
 
   public ContractResource publishContract(ContractDto schemaDto) {
-    String url = String.format("%s/api/v1/schemas/%s/%s?version=%s",
+    String url = String.format("%s/api/v1/schemas/%s/%s/%s?version=%s",
       registryString,
+      schemaDto.getNamespace(),
       schemaDto.getOwner(),
       schemaDto.getContractName(),
       schemaDto.getVersion());
@@ -50,6 +53,7 @@ public class ContractRegistryClient {
       HttpURLConnection post = (HttpURLConnection)new URL(url).openConnection();
       post.setDoOutput(true);
       post.setRequestProperty("Content-Type", "application/json");
+      post.setRequestProperty("Authorization", apiKey);
       post.setRequestMethod("POST");
       post.connect();
 
@@ -74,12 +78,14 @@ public class ContractRegistryClient {
     }
   }
 
-  public SourceResource generateSources(String owner,
+  public SourceResource generateSources(String namespace,
+                                        String owner,
                                         String contractName,
                                         String version,
                                         SourceCodeConfiguration configuration) {
-    String url = String.format("%s/api/v1/sources/%s/%s?version=%s",
+    String url = String.format("%s/api/v1/sources/%s/%s/%s?version=%s",
             registryString,
+            namespace,
             owner,
             contractName,
             version);
@@ -89,6 +95,7 @@ public class ContractRegistryClient {
       HttpURLConnection post = (HttpURLConnection)new URL(url).openConnection();
       post.setDoOutput(true);
       post.setRequestProperty("Content-Type", "application/json");
+      post.setRequestProperty("Authorization", apiKey);
       post.setRequestMethod("POST");
       post.connect();
 

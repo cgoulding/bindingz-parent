@@ -21,22 +21,29 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.module.jsonSchema.JsonSchema;
 
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ContractDto {
-    private final String contractName;
+    private final String namespace;
     private final String owner;
+    private final String contractName;
     private final String version;
     private final JsonSchema schema;
 
     @JsonCreator
-    public ContractDto(@JsonProperty("contractName") String contractName,
+    public ContractDto(@JsonProperty("namespace") String namespace,
                        @JsonProperty("owner") String owner,
+                       @JsonProperty("contractName") String contractName,
                        @JsonProperty("version") String version,
                        @JsonProperty("schema") JsonSchema schema) {
-        this.contractName = contractName;
+        this.namespace = namespace;
         this.owner = owner;
+        this.contractName = contractName;
         this.version = version;
         this.schema = schema;
+    }
+
+    public String getNamespace() {
+        return namespace;
     }
 
     public String getContractName() {
