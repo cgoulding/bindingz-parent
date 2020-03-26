@@ -6,7 +6,7 @@
 
   <groupId>com.monadiccloud.bindingz</groupId>
   <artifactId>bindingz-maven-plugin</artifactId>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.1</version>
   <packaging>maven-plugin</packaging>
 
   <name>Bindingz Maven Plugin</name>
@@ -29,12 +29,12 @@
     <dependency>
         <groupId>com.monadiccloud.bindingz</groupId>
         <artifactId>contract-annotations4j</artifactId>
-        <version>1.1-SNAPSHOT</version>
+        <version>1.1</version>
     </dependency>
     <dependency>
       <groupId>com.monadiccloud.bindingz</groupId>
       <artifactId>contract-registry-client-java</artifactId>
-      <version>1.1-SNAPSHOT</version>
+      <version>1.1</version>
     </dependency>
     <dependency>
         <groupId>com.fasterxml.jackson.module</groupId>

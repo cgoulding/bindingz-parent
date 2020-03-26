@@ -3,7 +3,7 @@ apply from: '../root.gradle'
 apply plugin: 'groovy'
 apply plugin: 'java-gradle-plugin'
 
-version '1.1-SNAPSHOT'
+version '1.1'
 
 buildscript {
     repositories {
@@ -25,8 +25,8 @@ gradlePlugin {
 }
 
 dependencies {
-    compile 'com.monadiccloud.bindingz:contract-annotations4j:1.1-SNAPSHOT'
-    compile 'com.monadiccloud.bindingz:contract-registry-client-java:1.1-SNAPSHOT'
+    compile 'com.monadiccloud.bindingz:contract-annotations4j:1.1'
+    compile 'com.monadiccloud.bindingz:contract-registry-client-java:1.1'
     compile 'com.fasterxml.jackson.module:jackson-module-jsonSchema:2.9.8'
     compile 'com.dorkbox:Annotations:2.14'
 

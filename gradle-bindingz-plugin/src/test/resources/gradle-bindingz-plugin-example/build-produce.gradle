@@ -7,7 +7,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.monadiccloud.bindingz:gradle-bindingz-plugin:1.1-SNAPSHOT'
+        classpath 'com.monadiccloud.bindingz:gradle-bindingz-plugin:1.1'
     }
 }
 

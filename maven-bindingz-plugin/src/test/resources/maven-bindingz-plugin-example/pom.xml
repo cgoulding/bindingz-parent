@@ -6,7 +6,7 @@
 
   <groupId>com.monadiccloud.bindingz</groupId>
   <artifactId>maven-bindingz-plugin-example</artifactId>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.1</version>
   <packaging>jar</packaging>
   <name>Bindingz Mojo</name>
 
@@ -14,7 +14,7 @@
     <dependency>
       <groupId>com.monadiccloud.bindingz</groupId>
       <artifactId>contract-annotations4j</artifactId>
-      <version>1.1-SNAPSHOT</version>
+      <version>1.1</version>
     </dependency>
 
     <dependency>
@@ -29,7 +29,7 @@
       <plugin>
         <groupId>com.monadiccloud.bindingz</groupId>
         <artifactId>bindingz-maven-plugin</artifactId>
-        <version>1.1-SNAPSHOT</version>
+        <version>1.1</version>
         <configuration>
           <apiKey>cPrS6nyv.ac5bc2f16417e79f2517531c2f6a0591</apiKey>
           <processConfigurations>
