@@ -11,12 +11,13 @@ libraryDependencies ++= Seq(
 )
 
 import com.monadiccloud.bindingz.contract.plugin.sbt._
-bindingzRegistry := "http://localhost:7070"
+bindingzApiKey := "cPrS6nyv.ac5bc2f16417e79f2517531c2f6a0591"
 bindingzProcessConfigurations := Seq(
   BindingzProcessConfiguration(
-    owner = "asdf",
-    contractName = "asdf",
-    version = "asdf",
+    namespace = "default",
+    owner = "sbt-plugin-example",
+    contractName = "SampleDto",
+    version = "v3",
     packageName = "com.monadiccloud.sample.latest",
     className = "FooBar",
     factoryConfiguration = Map(

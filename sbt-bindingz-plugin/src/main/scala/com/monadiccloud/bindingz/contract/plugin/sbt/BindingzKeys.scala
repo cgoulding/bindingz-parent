@@ -20,6 +20,7 @@ import sbt.{File, settingKey, taskKey}
 
 trait BindingzKeys {
   val bindingzRegistry = settingKey[String]("Bindingz registry")
+  val bindingzApiKey = settingKey[String]("Bindingz API Key")
 
   val bindingzTargetSourceDirectory = settingKey[File]("Target source directory")
   val bindingzTargetResourceDirectory = settingKey[File]("Target resource directory")

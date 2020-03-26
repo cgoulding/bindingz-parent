@@ -43,7 +43,8 @@ object BindingzPlugin extends AutoPlugin {
   import autoImport._
 
   override lazy val projectSettings: Seq[Setting[_]] = Seq(
-    bindingzRegistry := "http://localhost:8080",
+    bindingzRegistry := "https://d4wt28di9g.execute-api.eu-west-1.amazonaws.com/Stage",
+    bindingzApiKey := "",
 
     bindingzTargetSourceDirectory := file("target/generated-sources/bindingz"),
     bindingzTargetResourceDirectory := file("target/generated-resources/bindingz"),
@@ -60,7 +61,7 @@ object BindingzPlugin extends AutoPlugin {
   )
 
   def processResources =  Def.task {
-    val client = new ContractRegistryClient(bindingzRegistry.value)
+    val client = new ContractRegistryClient(bindingzRegistry.value, bindingzApiKey.value)
 
     bindingzProcessConfigurations.value.map(c => {
       val sourceCodeConfiguration = new SourceCodeConfiguration()
@@ -70,13 +71,14 @@ object BindingzPlugin extends AutoPlugin {
       sourceCodeConfiguration.setFactoryConfiguration(c.factoryConfiguration.asJava)
 
       val source = client.generateSources(
+        c.namespace,
         c.owner,
         c.contractName,
         c.version,
         sourceCodeConfiguration
       )
 
-      val resourcePath = Paths.get(bindingzTargetResourceDirectory.value.toString, c.owner, c.contractName, c.version)
+      val resourcePath = Paths.get(bindingzTargetResourceDirectory.value.toString, c.namespace, c.owner, c.contractName, c.version)
       resourcePath.getParent.toFile.mkdir()
 
       IO.write(resourcePath.toFile, objectMapper.writeValueAsString(source.getContent().getSchema))
@@ -96,7 +98,7 @@ object BindingzPlugin extends AutoPlugin {
   def publishResources =  Def.task {
     val cp: Seq[File] = (fullClasspath in Compile).value.files
     val classLoader = new URLClassLoader(cp.map(c => c.toURI.toURL), this.getClass.getClassLoader)
-    val client = new ContractRegistryClient(bindingzRegistry.value)
+    val client = new ContractRegistryClient(bindingzRegistry.value, bindingzApiKey.value)
 
     bindingzPublishConfigurations.value.map(c => {
       val resources = ContractFactory.create(classLoader, c.scanBasePackage)

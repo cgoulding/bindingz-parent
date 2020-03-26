@@ -45,11 +45,12 @@ object ContractFactory {
     val schemaGen: JsonSchemaGenerator = new JsonSchemaGenerator(mapper)
     val annotations: Array[Contract] = contract.getAnnotationsByType(classOf[Contract])
     val schema: JsonSchema = schemaGen.generateSchema(contract)
-    val contractProvider = annotations(0)
+    val annotation = annotations(0)
     val resourceContent = new ContractDto(
-      contractProvider.contractName(),
-      contractProvider.owner(),
-      contractProvider.version(),
+      annotation.namespace(),
+      annotation.owner(),
+      annotation.contractName(),
+      annotation.version(),
       schema
     )
     resourceContent
