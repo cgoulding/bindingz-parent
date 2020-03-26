@@ -1,9 +1,1 @@
-<ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
-  <div *ngFor="let schema of schemas">
-    <ngb-panel title="{{schema.providerName}} | {{schema.contractName}} | {{schema.version}}">
-      <ng-template ngbPanelContent>
-        <pre>{{schema.schema | json}}</pre>
-      </ng-template>
-    </ngb-panel>
-  </div>
-</ngb-accordion>
+<router-outlet></router-outlet>

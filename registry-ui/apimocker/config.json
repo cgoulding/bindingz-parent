@@ -1,0 +1,16 @@
+{
+  "mockDirectory": "./mocks/",
+  "quiet": false,
+  "port": "9080",
+  "latency": 50,
+  "logRequestHeaders": false,
+  "webServices": {
+    "backend/v1/schemas": {
+      "mockFile": "schemas.json",
+      "verbs": ["get"],
+      "headers": {
+        "Authorization": "Bearer asdf"
+      }
+    }
+  }
+}
