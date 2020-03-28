@@ -1,3 +1,0 @@
-apply from: '../root.gradle'
-
-version '1.1'

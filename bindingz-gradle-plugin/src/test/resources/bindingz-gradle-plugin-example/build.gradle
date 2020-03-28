@@ -1,0 +1,63 @@
+apply plugin: 'java'
+apply plugin: 'bindingz'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.monadiccloud.bindingz:bindingz-gradle-plugin:1.1.3'
+    }
+}
+
+bindingz {
+    apiKey = "cPrS6nyv.ac5bc2f16417e79f2517531c2f6a0591"
+    producerConfigurations {
+        one {
+            scanBasePackage = "com.monadiccloud"
+        }
+    }
+    consumerConfigurations {
+        one {
+            namespace = "default"
+            owner = "bindingz-gradle-plugin-example"
+            contractName = "FooBarEvent"
+            version = "1.0"
+            packageName = "com.monadiccloud.sample.scala"
+            className = "LocalFooBarEvent"
+            factoryConfiguration {
+                targetLanguage = "SCALA"
+            }
+        }
+        two {
+            namespace = "default"
+            owner = "bindingz-gradle-plugin-example"
+            contractName = "FooBarEvent"
+            version = "1.0"
+            packageName = "com.monadiccloud.sample.java"
+            className = "LocalFooBarEvent"
+            factoryConfiguration {
+                targetLanguage = "JAVA"
+            }
+        }
+    }
+}
+
+dependencies {
+    compile 'com.monadiccloud.bindingz:contract-annotations4j:1.1.3'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.9.8'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.8'
+}
+
+clean.doFirst {
+    delete "${rootDir}/out"
+    delete "${rootDir}/build"
+    delete "${rootDir}/target"
+}
