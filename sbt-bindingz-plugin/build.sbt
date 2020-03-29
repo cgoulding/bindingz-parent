@@ -12,6 +12,39 @@ resolvers += Resolver.sonatypeRepo("releases")
 publishMavenStyle := true
 publishArtifact in Test := false
 pomIncludeRepository := { _ => false }
+sonatypeProfileName := "com.monadiccloud"
+
+// Open-source license of your choice
+licenses := Seq("APL2" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
+
+import xerial.sbt.Sonatype._
+sonatypeProjectHosting := Some(GitHubHosting("cgoulding", "sbt-bindingz-plugin", "connor.goulding@gmail.com"))
+
+homepage := Some(url("https://github.com/cgoulding/bindingz-parent"))
+scmInfo := Some(
+  ScmInfo(
+    url("https://github.com/cgoulding/bindingz-parent"),
+    "scm:git:git://github.com/cgoulding/bindingz-parent.git"
+  )
+)
+developers := List(
+  Developer(
+    id="cgoulding",
+    name="Connor Goulding",
+    email="connor.goulding@gmail.com",
+    url=url("https://github.com/cgoulding/bindingz-parent")
+  )
+)
+
+publishConfiguration := publishConfiguration.value.withOverwrite(true)
+publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true)
+
+publishTo := Some(
+  if (isSnapshot.value)
+    Opts.resolver.sonatypeSnapshots
+  else
+    Opts.resolver.sonatypeStaging
+)
 
 libraryDependencies ++= Seq(
   "com.monadiccloud.bindingz" % "contract-annotations4j" % "1.1.3",
