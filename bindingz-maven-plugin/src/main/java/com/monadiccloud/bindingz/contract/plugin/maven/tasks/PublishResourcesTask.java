@@ -16,14 +16,18 @@
 
 package com.monadiccloud.bindingz.contract.plugin.maven.tasks;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.monadiccloud.bindingz.contract.core.model.ContractDto;
 import com.monadiccloud.bindingz.contract.plugin.maven.PublishConfiguration;
 import com.monadiccloud.bindingz.contract.registry.client.ContractRegistryClient;
-import com.monadiccloud.bindingz.contract.registry.client.model.ContractDto;
+import com.monadiccloud.bindingz.contract.registry.client.ContractService;
 
 import java.io.IOException;
 import java.util.Collection;
 
 public class PublishResourcesTask implements ExecutableTask {
+
+    private final ObjectMapper mapper = new ObjectMapper();
 
     private final String registry;
     private final String apiKey;
@@ -38,11 +42,11 @@ public class PublishResourcesTask implements ExecutableTask {
     }
 
     public void execute() throws IOException {
-        ContractRegistryClient client = new ContractRegistryClient(registry, apiKey);
-        ContractFactory factory = new ContractFactory();
+        ContractRegistryClient client = new ContractRegistryClient(registry, apiKey, mapper);
+        ContractService service = new ContractService(mapper);
 
         for (PublishConfiguration p : publishConfigurations) {
-            for (ContractDto c : factory.create(classLoader, p.getScanBasePackage())) {
+            for (ContractDto c : service.create(classLoader, p.getScanBasePackage())) {
                 client.publishContract(c);
             }
         }

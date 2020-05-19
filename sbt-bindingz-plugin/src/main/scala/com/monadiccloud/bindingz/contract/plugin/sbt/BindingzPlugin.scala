@@ -68,7 +68,7 @@ object BindingzPlugin extends AutoPlugin {
       sourceCodeConfiguration.setPackageName(c.packageName)
       sourceCodeConfiguration.setClassName(c.className)
       sourceCodeConfiguration.setFactoryType(c.factoryType)
-      sourceCodeConfiguration.setFactoryConfiguration(c.factoryConfiguration.asJava)
+      sourceCodeConfiguration.setProviderConfiguration(c.providerConfiguration.asJava)
 
       val source = client.generateSources(
         c.namespace,

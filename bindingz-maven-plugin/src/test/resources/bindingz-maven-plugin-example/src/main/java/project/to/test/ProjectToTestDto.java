@@ -2,13 +2,14 @@ package project.to.test;
 
 import com.monadiccloud.bindingz.contract.annotations4j.Contract;
 
-@Contract(contractName = "ProjectToTestDto", owner = "project-to-test", version = "v2")
+@Contract(contractName = "ProjectToTestDto", owner = "project-to-test", version = "v5")
 public class ProjectToTestDto {
     private float accountId;
     private String code;
     private String startDay;
     private String endDay;
     private String groupId;
+    private String groupName;
 
     public float getAccountId() {
         return accountId;
@@ -48,5 +49,13 @@ public class ProjectToTestDto {
 
     public void setGroupId(String groupId) {
         this.groupId = groupId;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 }

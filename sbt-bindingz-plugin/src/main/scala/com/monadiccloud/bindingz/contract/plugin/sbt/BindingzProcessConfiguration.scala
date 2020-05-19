@@ -25,4 +25,4 @@ case class BindingzProcessConfiguration(namespace: String,
                                         packageName: String,
                                         className: String,
                                         factoryType: FactoryType = FactoryType.JSONSCHEMA2POJO,
-                                        factoryConfiguration: Map[String, String] = Map.empty[String, String])
+                                        providerConfiguration: Map[String, String] = Map.empty[String, String])

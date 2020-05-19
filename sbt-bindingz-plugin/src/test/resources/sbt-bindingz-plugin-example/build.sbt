@@ -20,7 +20,7 @@ bindingzProcessConfigurations := Seq(
     version = "v4",
     packageName = "com.monadiccloud.sample.latest",
     className = "FooBar",
-    factoryConfiguration = Map(
+    providerConfiguration = Map(
       "targetLanguage" -> "SCALA"
     )
   )

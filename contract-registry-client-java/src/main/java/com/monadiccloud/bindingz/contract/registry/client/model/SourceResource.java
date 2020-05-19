@@ -19,6 +19,8 @@ package com.monadiccloud.bindingz.contract.registry.client.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.monadiccloud.bindingz.contract.core.model.ContractDto;
+import com.monadiccloud.bindingz.contract.core.model.SourceDto;
 
 import java.util.List;
 

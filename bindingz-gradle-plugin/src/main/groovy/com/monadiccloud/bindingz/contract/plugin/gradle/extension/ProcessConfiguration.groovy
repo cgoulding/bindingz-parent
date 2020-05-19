@@ -16,8 +16,6 @@
 
 package com.monadiccloud.bindingz.contract.plugin.gradle.extension
 
-import com.monadiccloud.bindingz.contract.registry.client.configuration.FactoryType
-
 class ProcessConfiguration {
 
     String name
@@ -29,15 +27,15 @@ class ProcessConfiguration {
     String packageName
     String className
 
-    FactoryType factoryType = FactoryType.JSONSCHEMA2POJO
-    Map<String, String> factoryConfiguration = new HashMap<>()
+    String sourceCodeProvider = "JSONSCHEMA2POJO"
+    Map<String, String> sourceCodeConfiguration = new HashMap<>()
 
     ProcessConfiguration(String name) {
         this.name = name
     }
 
-    def factoryConfiguration(final Closure configureClosure) {
-        configureClosure.delegate = factoryConfiguration
+    def sourceCodeConfiguration(final Closure configureClosure) {
+        configureClosure.delegate = sourceCodeConfiguration
         configureClosure.call()
     }
 }

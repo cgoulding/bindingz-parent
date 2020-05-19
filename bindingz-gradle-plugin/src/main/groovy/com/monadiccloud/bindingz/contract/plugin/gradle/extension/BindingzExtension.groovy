@@ -25,19 +25,19 @@ class BindingzExtension {
     File targetSourceDirectory;
     File targetResourceDirectory;
 
-    NamedDomainObjectContainer<ProcessConfiguration> consumerConfigurations
-    NamedDomainObjectContainer<PublishConfiguration> producerConfigurations
+    NamedDomainObjectContainer<ProcessConfiguration> processConfigurations
+    NamedDomainObjectContainer<PublishConfiguration> publishConfigurations
 
     BindingzExtension() {
         super()
     }
 
     def consumerConfigurations(final Closure configureClosure) {
-        consumerConfigurations.configure(configureClosure)
+        processConfigurations.configure(configureClosure)
     }
 
     def producerConfigurations(final Closure configureClosure) {
-        producerConfigurations.configure(configureClosure)
+        publishConfigurations.configure(configureClosure)
     }
 
     @Override

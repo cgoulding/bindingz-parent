@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package com.monadiccloud.bindingz.contract.registry.client.configuration;
+package com.monadiccloud.bindingz.source.code;
 
-public enum LanguageType {
-    JAVA,
-    SCALA
+public enum SourceCodeProviderType {
+    JSONSCHEMA2POJO
 }

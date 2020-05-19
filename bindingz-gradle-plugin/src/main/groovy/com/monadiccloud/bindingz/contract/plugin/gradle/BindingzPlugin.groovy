@@ -21,7 +21,6 @@ import com.monadiccloud.bindingz.contract.plugin.gradle.extension.BindingzExtens
 import com.monadiccloud.bindingz.contract.plugin.gradle.extension.PublishConfiguration
 import com.monadiccloud.bindingz.contract.plugin.gradle.tasks.ProcessResourcesTask
 import com.monadiccloud.bindingz.contract.plugin.gradle.tasks.PublishResourcesTask
-import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -39,8 +38,8 @@ class BindingzPlugin implements Plugin<Project> {
     private def setupExtension(final Project project) {
         def configuration = project.extensions.create(EXTENSION_NAME, BindingzExtension)
 
-        configuration.producerConfigurations = project.container(PublishConfiguration)
-        configuration.consumerConfigurations = project.container(ProcessConfiguration)
+        configuration.publishConfigurations = project.container(PublishConfiguration)
+        configuration.processConfigurations = project.container(ProcessConfiguration)
 
         configuration
     }
@@ -68,8 +67,9 @@ class BindingzPlugin implements Plugin<Project> {
 
     private void createProcessResourcesTask(Project project, BindingzExtension configuration) {
         def processResourcesTask = project.tasks.create "bindingzProcessResources", ProcessResourcesTask
-
-        processResourcesTask.consumerConfigurations = configuration.consumerConfigurations
+        processResourcesTask.group = "bindingz"
+        processResourcesTask.description = "Process bindingz resources"
+        processResourcesTask.processConfigurations = configuration.processConfigurations
         processResourcesTask.registry = configuration.registry
         processResourcesTask.apiKey = configuration.apiKey
 
@@ -91,8 +91,9 @@ class BindingzPlugin implements Plugin<Project> {
 
     private void createPublishResourcesTask(Project project, BindingzExtension configuration) {
         def publishResourcesTask = project.tasks.create "bindingzPublishResources", PublishResourcesTask
-
-        publishResourcesTask.producerConfigurations = configuration.producerConfigurations
+        publishResourcesTask.group = "bindingz"
+        publishResourcesTask.description = "Publish bindingz resources"
+        publishResourcesTask.publishConfigurations = configuration.publishConfigurations
         publishResourcesTask.registry = configuration.registry
         publishResourcesTask.apiKey = configuration.apiKey
 

@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-package com.monadiccloud.bindingz.contract.registry.client.model;
+package com.monadiccloud.bindingz.contract.core.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.module.jsonSchema.JsonSchema;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ContractDto {
@@ -27,14 +26,14 @@ public class ContractDto {
     private final String owner;
     private final String contractName;
     private final String version;
-    private final JsonSchema schema;
+    private final ContractSchema schema;
 
     @JsonCreator
     public ContractDto(@JsonProperty("namespace") String namespace,
                        @JsonProperty("owner") String owner,
                        @JsonProperty("contractName") String contractName,
                        @JsonProperty("version") String version,
-                       @JsonProperty("schema") JsonSchema schema) {
+                       @JsonProperty("schema") ContractSchema schema) {
         this.namespace = namespace;
         this.owner = owner;
         this.contractName = contractName;
@@ -58,7 +57,7 @@ public class ContractDto {
         return version;
     }
 
-    public JsonSchema getSchema() {
+    public ContractSchema getSchema() {
         return schema;
     }
 }

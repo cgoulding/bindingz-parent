@@ -17,10 +17,10 @@
 package com.monadiccloud.bindingz.contract.plugin.maven.tasks;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.monadiccloud.bindingz.contract.core.configuration.SourceCodeConfiguration;
+import com.monadiccloud.bindingz.contract.core.model.ContractDto;
 import com.monadiccloud.bindingz.contract.plugin.maven.ProcessConfiguration;
 import com.monadiccloud.bindingz.contract.registry.client.ContractRegistryClient;
-import com.monadiccloud.bindingz.contract.registry.client.configuration.SourceCodeConfiguration;
-import com.monadiccloud.bindingz.contract.registry.client.model.ContractDto;
 import com.monadiccloud.bindingz.contract.registry.client.model.SourceResource;
 
 import java.io.File;
@@ -50,13 +50,13 @@ public class ProcessResourcesTask implements ExecutableTask {
     }
 
     public void execute() throws IOException {
-        ContractRegistryClient client = new ContractRegistryClient(registry, apiKey);
+        ContractRegistryClient client = new ContractRegistryClient(registry, apiKey, mapper);
         for (ProcessConfiguration c : processConfigurations) {
             SourceCodeConfiguration configuration = new SourceCodeConfiguration();
             configuration.setClassName(c.getClassName());
             configuration.setPackageName(c.getPackageName());
-            configuration.setFactoryType(c.getFactoryType());
-            configuration.setFactoryConfiguration(c.getFactoryConfiguration());
+            configuration.setSourceCodeProvider(c.getSourceCodeProvider());
+            configuration.setProviderConfiguration(c.getSourceCodeConfiguration());
 
             SourceResource resource = client.generateSources(c.getNamespace(), c.getOwner(), c.getContractName(), c.getVersion(), configuration);
             if (resource != null) {

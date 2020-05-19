@@ -26,7 +26,7 @@ public class SourceCodeConfiguration {
 
     private FactoryType factoryType = FactoryType.JSONSCHEMA2POJO;
     private LanguageType languageType = LanguageType.JAVA;
-    private Map<String, String> factoryConfiguration = new HashMap<>();
+    private Map<String, String> providerConfiguration = new HashMap<>();
 
     private String packageName;
     private String className;
@@ -63,11 +63,11 @@ public class SourceCodeConfiguration {
         this.languageType = languageType;
     }
 
-    public Map<String, String> getFactoryConfiguration() {
-        return factoryConfiguration;
+    public Map<String, String> getProviderConfiguration() {
+        return providerConfiguration;
     }
 
-    public void setFactoryConfiguration(Map<String, String> factoryConfiguration) {
-        this.factoryConfiguration = factoryConfiguration;
+    public void setProviderConfiguration(Map<String, String> providerConfiguration) {
+        this.providerConfiguration = providerConfiguration;
     }
 }

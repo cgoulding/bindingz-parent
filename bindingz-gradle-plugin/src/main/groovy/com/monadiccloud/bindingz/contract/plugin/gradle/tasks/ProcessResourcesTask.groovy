@@ -17,9 +17,9 @@
 package com.monadiccloud.bindingz.contract.plugin.gradle.tasks
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.monadiccloud.bindingz.contract.core.configuration.SourceCodeConfiguration
 import com.monadiccloud.bindingz.contract.plugin.gradle.extension.ProcessConfiguration
 import com.monadiccloud.bindingz.contract.registry.client.ContractRegistryClient
-import com.monadiccloud.bindingz.contract.registry.client.configuration.SourceCodeConfiguration
 import org.gradle.api.DefaultTask
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.tasks.Internal
@@ -45,7 +45,7 @@ class ProcessResourcesTask extends DefaultTask {
     File targetResourceDirectory;
 
     @Internal
-    NamedDomainObjectContainer<ProcessConfiguration> consumerConfigurations
+    NamedDomainObjectContainer<ProcessConfiguration> processConfigurations
 
     ObjectMapper mapper = new ObjectMapper()
 
@@ -57,15 +57,15 @@ class ProcessResourcesTask extends DefaultTask {
     }
     @TaskAction
     def generate() {
-        println("ConsumerConfigurations: " + consumerConfigurations.size())
+        println("ProcessConfigurations: " + processConfigurations.size())
 
-        def client = new ContractRegistryClient(registry, apiKey)
-        consumerConfigurations.forEach { c ->
+        def client = new ContractRegistryClient(registry, apiKey, mapper)
+        processConfigurations.forEach { c ->
             def configuration = new SourceCodeConfiguration()
             configuration.setClassName(c.className)
             configuration.setPackageName(c.packageName)
-            configuration.setFactoryType(c.getFactoryType())
-            configuration.setFactoryConfiguration(c.getFactoryConfiguration())
+            configuration.setSourceCodeProvider(c.getSourceCodeProvider())
+            configuration.setProviderConfiguration(c.getSourceCodeConfiguration())
 
             def resource = client.generateSources(c.namespace, c.owner, c.contractName, c.version, configuration)
             if (resource != null) {

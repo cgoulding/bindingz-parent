@@ -14,8 +14,15 @@
  * limitations under the License.
  */
 
-package com.monadiccloud.bindingz.contract.registry.client.configuration;
+package com.monadiccloud.bindingz.source.code.provider;
 
-public enum FactoryType {
-    JSONSCHEMA2POJO
+import com.monadiccloud.bindingz.contract.core.configuration.SourceCodeConfiguration;
+import com.monadiccloud.bindingz.contract.core.model.ContractDto;
+import com.monadiccloud.bindingz.contract.core.model.SourceDto;
+import com.monadiccloud.bindingz.source.code.SourceCodeProviderException;
+
+import java.util.List;
+
+public interface SourceCodeProvider {
+    List<SourceDto> create(ContractDto contractDto, SourceCodeConfiguration configuration) throws SourceCodeProviderException;
 }

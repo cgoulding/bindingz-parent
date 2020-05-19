@@ -16,8 +16,10 @@
 
 package com.monadiccloud.bindingz.contract.plugin.gradle.tasks
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.monadiccloud.bindingz.contract.plugin.gradle.extension.PublishConfiguration
 import com.monadiccloud.bindingz.contract.registry.client.ContractRegistryClient
+import com.monadiccloud.bindingz.contract.registry.client.ContractService
 import org.gradle.api.DefaultTask
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.tasks.Internal
@@ -32,10 +34,12 @@ class PublishResourcesTask extends DefaultTask {
     String apiKey
 
     @Internal
-    NamedDomainObjectContainer<PublishConfiguration> producerConfigurations
+    NamedDomainObjectContainer<PublishConfiguration> publishConfigurations
 
     @Internal
     ClassLoader classLoader;
+
+    ObjectMapper mapper = new ObjectMapper()
 
     PublishResourcesTask() {
         description = 'Publishes contract.'
@@ -44,14 +48,14 @@ class PublishResourcesTask extends DefaultTask {
 
     @TaskAction
     def generate() {
-        def client = new ContractRegistryClient(registry, apiKey)
+        def client = new ContractRegistryClient(registry, apiKey, mapper)
         System.out.println(registry + " " + apiKey);
 
-        def factory = new ContractFactory()
+        def service = new ContractService(mapper)
 
-        println("ProducerConfigurations: " + producerConfigurations.size())
-        producerConfigurations.forEach { p ->
-            factory.create(classLoader, p.scanBasePackage).forEach { c ->
+        println("PublishConfigurations: " + publishConfigurations.size())
+        publishConfigurations.forEach { p ->
+            service.create(classLoader, p.scanBasePackage).forEach { c ->
                 client.publishContract(c)
             }
         }

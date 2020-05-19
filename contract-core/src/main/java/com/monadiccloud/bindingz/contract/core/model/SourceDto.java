@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.monadiccloud.bindingz.contract.registry.client.model;
+package com.monadiccloud.bindingz.contract.core.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

@@ -39,7 +39,7 @@ public class SourceCodeFactory {
         File targetDirectory = createTargetDirectory();
         switch (configuration.getFactoryType()) {
             case JSONSCHEMA2POJO: {
-                String config = mapper.writeValueAsString(configuration.getFactoryConfiguration());
+                String config = mapper.writeValueAsString(configuration.getProviderConfiguration());
                 JsonSchema2PojoConfiguration factoryConfig = mapper.readValue(config, JsonSchema2PojoConfiguration.class);
                 factoryConfig.setTargetSourceDirectory(targetDirectory);
                 factoryConfig.setTargetResourceDirectory(createResourceDirectory(schemaDto, configuration));

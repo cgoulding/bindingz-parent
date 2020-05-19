@@ -19,6 +19,7 @@ buildscript {
 
 bindingz {
     apiKey = "cPrS6nyv.ac5bc2f16417e79f2517531c2f6a0591"
+    registry = "http://localhost:7070"
     producerConfigurations {
         one {
             scanBasePackage = "com.monadiccloud"
@@ -32,7 +33,7 @@ bindingz {
             version = "1.0"
             packageName = "com.monadiccloud.sample.scala"
             className = "LocalFooBarEvent"
-            factoryConfiguration {
+            sourceCodeConfiguration {
                 targetLanguage = "SCALA"
             }
         }
@@ -43,7 +44,7 @@ bindingz {
             version = "1.0"
             packageName = "com.monadiccloud.sample.java"
             className = "LocalFooBarEvent"
-            factoryConfiguration {
+            sourceCodeConfiguration {
                 targetLanguage = "JAVA"
             }
         }

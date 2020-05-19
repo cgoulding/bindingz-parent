@@ -17,106 +17,91 @@
 package com.monadiccloud.bindingz.contract.registry.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.monadiccloud.bindingz.contract.registry.client.configuration.SourceCodeConfiguration;
-import com.monadiccloud.bindingz.contract.registry.client.model.ContractDto;
+import com.monadiccloud.bindingz.contract.core.configuration.SourceCodeConfiguration;
+import com.monadiccloud.bindingz.contract.core.model.ContractDto;
 import com.monadiccloud.bindingz.contract.registry.client.model.ContractResource;
 import com.monadiccloud.bindingz.contract.registry.client.model.SourceResource;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.stream.Collectors;
 
 public class ContractRegistryClient {
 
-  private final String registryString;
-  private final String apiKey;
+    private final String registryString;
+    private final String apiKey;
+    private final ObjectMapper objectMapper;
 
-  private ObjectMapper mapper = new ObjectMapper();
-
-  public ContractRegistryClient(String registryString, String apiKey) {
-    this.registryString = registryString;
-    this.apiKey = apiKey;
-  }
-
-  public ContractResource publishContract(ContractDto schemaDto) {
-    String url = String.format("%s/api/v1/schemas/%s/%s/%s?version=%s",
-      registryString,
-      schemaDto.getNamespace(),
-      schemaDto.getOwner(),
-      schemaDto.getContractName(),
-      schemaDto.getVersion());
-
-    // POST
-    try {
-      HttpURLConnection post = (HttpURLConnection)new URL(url).openConnection();
-      post.setDoOutput(true);
-      post.setRequestProperty("Content-Type", "application/json");
-      post.setRequestProperty("Authorization", apiKey);
-      post.setRequestMethod("POST");
-      post.connect();
-
-      String body = mapper.writeValueAsString(schemaDto.getSchema());
-      post.getOutputStream().write(body.getBytes("UTF-8"));
-
-      int responseCode = post.getResponseCode();
-      System.out.println("\nSending 'POST' request to URL : " + url);
-      System.out.println("Response Code : " + responseCode);
-
-      try (BufferedReader in = new BufferedReader(new InputStreamReader(post.getInputStream()))) {
-        StringBuilder response = new StringBuilder();
-        String line = null;
-        while ((line = in.readLine()) != null) {
-          response.append(line);
-        }
-        return mapper.readValue(response.toString(), ContractResource.class);
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-      return null;
+    public ContractRegistryClient(String registryString, String apiKey, ObjectMapper objectMapper) {
+        this.registryString = registryString;
+        this.apiKey = apiKey;
+        this.objectMapper = objectMapper;
     }
-  }
 
-  public SourceResource generateSources(String namespace,
-                                        String owner,
-                                        String contractName,
-                                        String version,
-                                        SourceCodeConfiguration configuration) {
-    String url = String.format("%s/api/v1/sources/%s/%s/%s?version=%s",
-            registryString,
-            namespace,
-            owner,
-            contractName,
-            version);
-
-    // POST
-    try {
-      HttpURLConnection post = (HttpURLConnection)new URL(url).openConnection();
-      post.setDoOutput(true);
-      post.setRequestProperty("Content-Type", "application/json");
-      post.setRequestProperty("Authorization", apiKey);
-      post.setRequestMethod("POST");
-      post.connect();
-
-      String body = mapper.writeValueAsString(configuration);
-      post.getOutputStream().write(body.getBytes("UTF-8"));
-
-      int responseCode = post.getResponseCode();
-      System.out.println("\nSending 'POST' request to URL : " + url);
-      System.out.println("Response Code : " + responseCode);
-
-      try (BufferedReader in = new BufferedReader(new InputStreamReader(post.getInputStream()))) {
-        StringBuilder response = new StringBuilder();
-        String line = null;
-        while ((line = in.readLine()) != null) {
-          response.append(line);
+    public ContractResource publishContract(ContractDto contractDto) {
+        String url = String.format("%s/api/v1/contracts/namespaces/%s/owners/%s/names/%s?version=%s",
+                registryString,
+                contractDto.getNamespace(),
+                contractDto.getOwner(),
+                contractDto.getContractName(),
+                contractDto.getVersion());
+        try {
+            System.out.println(String.format("Bindingz - Requesting %s with %s",
+                    url,
+                    objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(contractDto.getSchema())));
+            String response = post(url, objectMapper.writeValueAsString(contractDto.getSchema()));
+            return objectMapper.readValue(response, ContractResource.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
-        return mapper.readValue(response.toString(), SourceResource.class);
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-      return null;
     }
-  }
+
+    public SourceResource generateSources(String namespace,
+                                          String owner,
+                                          String contractName,
+                                          String version,
+                                          SourceCodeConfiguration configuration) {
+        String url = String.format("%s/api/v1/sources/namespaces/%s/owners/%s/names/%s?version=%s",
+                registryString,
+                namespace,
+                owner,
+                contractName,
+                version);
+        try {
+            System.out.println(String.format("Bindingz - Requesting %s with %s",
+                    url,
+                    objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(configuration)));
+            String response = post(url, objectMapper.writeValueAsString(configuration));
+            return objectMapper.readValue(response, SourceResource.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private String post(String url, String body) throws IOException {
+        HttpURLConnection post = (HttpURLConnection) new URL(url).openConnection();
+        post.setDoOutput(true);
+        post.setRequestProperty("Content-Type", "application/json");
+        post.setRequestProperty("X-Api-Key", apiKey);
+        post.setRequestMethod("POST");
+        post.connect();
+        ;
+        post.getOutputStream().write(body.getBytes("UTF-8"));
+
+        System.out.println("Bindingz Response Code : " + post.getResponseCode());
+        return getAsString(post.getInputStream());
+    }
+
+    private String getAsString(InputStream inputStream) {
+        return new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))
+                .lines()
+                .collect(Collectors.joining());
+    }
 }

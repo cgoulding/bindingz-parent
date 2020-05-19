@@ -24,10 +24,10 @@ class ProcessConfigurationTest {
     @Test
     void test() {
         def dto = new ProcessConfiguration("woop")
-        dto.factoryConfiguration {
+        dto.providerConfiguration {
             language = "SCALA"
         }
 
-        Assert.assertEquals("SCALA", dto.factoryConfiguration.get("language"))
+        Assert.assertEquals("SCALA", dto.sourceCodeConfiguration.get("language"))
     }
 }

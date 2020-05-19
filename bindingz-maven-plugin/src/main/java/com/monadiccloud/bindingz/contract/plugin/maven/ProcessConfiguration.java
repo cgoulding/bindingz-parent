@@ -16,8 +16,6 @@
 
 package com.monadiccloud.bindingz.contract.plugin.maven;
 
-import com.monadiccloud.bindingz.contract.registry.client.configuration.FactoryType;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,8 +29,8 @@ public class ProcessConfiguration {
     private String packageName;
     private String className;
 
-    private FactoryType factoryType = FactoryType.JSONSCHEMA2POJO;
-    private Map<String, String> factoryConfiguration = new HashMap<>();
+    private String sourceCodeProvider = "JSONSCHEMA2POJO";
+    private Map<String, String> sourceCodeConfiguration = new HashMap<>();
 
     public String getNamespace() {
         return namespace;
@@ -82,19 +80,19 @@ public class ProcessConfiguration {
         this.className = className;
     }
 
-    public FactoryType getFactoryType() {
-        return factoryType;
+    public String getSourceCodeProvider() {
+        return sourceCodeProvider;
     }
 
-    public void setFactoryType(FactoryType factoryType) {
-        this.factoryType = factoryType;
+    public void setSourceCodeProvider(String sourceCodeProvider) {
+        this.sourceCodeProvider = sourceCodeProvider;
     }
 
-    public Map<String, String> getFactoryConfiguration() {
-        return factoryConfiguration;
+    public Map<String, String> getSourceCodeConfiguration() {
+        return sourceCodeConfiguration;
     }
 
-    public void setFactoryConfiguration(Map<String, String> factoryConfiguration) {
-        this.factoryConfiguration = factoryConfiguration;
+    public void setSourceCodeConfiguration(Map<String, String> sourceCodeConfiguration) {
+        this.sourceCodeConfiguration = sourceCodeConfiguration;
     }
 }
