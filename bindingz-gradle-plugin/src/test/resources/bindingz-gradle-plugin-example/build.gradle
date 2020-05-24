@@ -13,19 +13,19 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.monadiccloud.bindingz:bindingz-gradle-plugin:1.1.3'
+        classpath 'com.monadiccloud.bindingz:bindingz-gradle-plugin:1.1.4-SNAPSHOT'
     }
 }
 
 bindingz {
     apiKey = "cPrS6nyv.ac5bc2f16417e79f2517531c2f6a0591"
-    registry = "http://localhost:7070"
-    producerConfigurations {
+    registry = "https://api.bindingz.io"
+    publishConfigurations {
         one {
             scanBasePackage = "com.monadiccloud"
         }
     }
-    consumerConfigurations {
+    processConfigurations {
         one {
             namespace = "default"
             owner = "bindingz-gradle-plugin-example"
@@ -52,7 +52,7 @@ bindingz {
 }
 
 dependencies {
-    compile 'com.monadiccloud.bindingz:contract-annotations4j:1.1.3'
+    compile 'com.monadiccloud.bindingz:contract-annotations4j:1.1.4-SNAPSHOT'
     compile 'com.fasterxml.jackson.core:jackson-core:2.9.8'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.8'
 }

@@ -32,11 +32,11 @@ class BindingzExtension {
         super()
     }
 
-    def consumerConfigurations(final Closure configureClosure) {
+    def processConfigurations(final Closure configureClosure) {
         processConfigurations.configure(configureClosure)
     }
 
-    def producerConfigurations(final Closure configureClosure) {
+    def publishConfigurations(final Closure configureClosure) {
         publishConfigurations.configure(configureClosure)
     }
 
