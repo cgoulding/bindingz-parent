@@ -19,6 +19,8 @@ package com.monadiccloud.bindingz.contract.registry.client;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.monadiccloud.bindingz.contract.core.configuration.SourceCodeConfiguration;
 import com.monadiccloud.bindingz.contract.core.model.ContractDto;
+import com.monadiccloud.bindingz.contract.registry.client.credentials.ApiCredentials;
+import com.monadiccloud.bindingz.contract.registry.client.credentials.ApiCredentialsBuilder;
 import com.monadiccloud.bindingz.contract.registry.client.model.ContractResource;
 import com.monadiccloud.bindingz.contract.registry.client.model.SourceResource;
 
@@ -33,19 +35,20 @@ import java.util.stream.Collectors;
 
 public class ContractRegistryClient {
 
-    private final String registryString;
+    private final String hostname;
     private final String apiKey;
     private final ObjectMapper objectMapper;
 
-    public ContractRegistryClient(String registryString, String apiKey, ObjectMapper objectMapper) {
-        this.registryString = registryString;
-        this.apiKey = apiKey;
+    public ContractRegistryClient(String hostname, String apiKey, ObjectMapper objectMapper) {
+        ApiCredentials credentials = new ApiCredentialsBuilder().apiKey(apiKey).hostname(hostname).build();
+        this.hostname = credentials.getHostname();
+        this.apiKey = credentials.getApiKey();
         this.objectMapper = objectMapper;
     }
 
     public ContractResource publishContract(ContractDto contractDto) {
-        String url = String.format("%s/api/v1/contracts/namespaces/%s/owners/%s/names/%s?version=%s",
-                registryString,
+        String url = String.format("%s/api/v1/contracts/namespaces/%s/owners/%s/models/%s?version=%s",
+                hostname,
                 contractDto.getNamespace(),
                 contractDto.getOwner(),
                 contractDto.getContractName(),
@@ -67,8 +70,8 @@ public class ContractRegistryClient {
                                           String contractName,
                                           String version,
                                           SourceCodeConfiguration configuration) {
-        String url = String.format("%s/api/v1/sources/namespaces/%s/owners/%s/names/%s?version=%s",
-                registryString,
+        String url = String.format("%s/api/v1/sources/namespaces/%s/owners/%s/models/%s?version=%s",
+                hostname,
                 namespace,
                 owner,
                 contractName,
@@ -92,7 +95,6 @@ public class ContractRegistryClient {
         post.setRequestProperty("X-Api-Key", apiKey);
         post.setRequestMethod("POST");
         post.connect();
-        ;
         post.getOutputStream().write(body.getBytes("UTF-8"));
 
         System.out.println("Bindingz Response Code : " + post.getResponseCode());
