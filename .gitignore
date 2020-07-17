@@ -74,3 +74,5 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+bindingz-api-client-java/src/test/java/io/bindingz/api/client/examples
