@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.monadiccloud.bindingz</groupId>
+        <groupId>io.bindingz</groupId>
         <artifactId>bindingz-parent</artifactId>
-        <version>1.1.4-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.monadiccloud.bindingz</groupId>
+    <groupId>io.bindingz</groupId>
     <artifactId>bindingz-gradle-plugin</artifactId>
     <name>${project.artifactId}</name>
     <packaging>jar</packaging>
@@ -22,12 +22,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.monadiccloud.bindingz</groupId>
-            <artifactId>contract-annotations4j</artifactId>
+            <groupId>io.bindingz</groupId>
+            <artifactId>bindingz-annotations</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.monadiccloud.bindingz</groupId>
-            <artifactId>contract-registry-client-java</artifactId>
+            <groupId>io.bindingz</groupId>
+            <artifactId>bindingz-api-client-java</artifactId>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
@@ -119,19 +119,6 @@
                         <include>**/*Test.*</include>
                     </includes>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>com.bluetrainsoftware.maven</groupId>
-                <artifactId>groovydoc-maven-plugin</artifactId>
-                <version>1.2</version>
-                <executions>
-                    <execution>
-                        <id>attach-docs</id>
-                        <goals>
-                            <goal>attach-docs</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

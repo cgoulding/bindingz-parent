@@ -36,7 +36,7 @@
         </dependency>
         <dependency>
             <groupId>com.monadiccloud.bindingz</groupId>
-            <artifactId>contract-registry-client-java</artifactId>
+            <artifactId>bindingz-api-client-java</artifactId>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>

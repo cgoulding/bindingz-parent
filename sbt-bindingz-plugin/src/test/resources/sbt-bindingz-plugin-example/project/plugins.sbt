@@ -4,6 +4,6 @@ resolvers += Resolver.mavenLocal
 resolvers += Resolver.mavenCentral
 resolvers += Resolver.sonatypeRepo("releases")
 
-addSbtPlugin("com.monadiccloud.bindingz" %% "sbt-bindingz-plugin" % "1.1.4-SNAPSHOT")
+addSbtPlugin("io.bindingz" %% "sbt-bindingz-plugin" % "1.0.0-SNAPSHOT")
 
 addSbtPlugin("de.heikoseeberger" % "sbt-header" % "5.2.0")

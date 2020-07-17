@@ -1,6 +1,6 @@
 package project.to.test;
 
-import com.monadiccloud.bindingz.contract.annotations4j.Contract;
+import io.bindingz.core.annotations.Contract;
 
 @Contract(contractName = "ProjectToTestDto", owner = "project-to-test", version = "v5")
 public class ProjectToTestDto {

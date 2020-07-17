@@ -2,9 +2,9 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.monadiccloud.bindingz</groupId>
+    <groupId>io.bindingz</groupId>
     <artifactId>bindingz-parent</artifactId>
-    <version>1.1.4-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>bindingz-parent</name>
@@ -31,9 +31,9 @@
     </licenses>
 
     <modules>
-        <module>contract-annotations4j</module>
-        <module>contract-core</module>
-        <module>contract-registry-client-java</module>
+        <module>bindingz-annotations</module>
+        <module>bindingz-core</module>
+        <module>bindingz-api-client-java</module>
         <module>bindingz-maven-plugin</module>
         <module>bindingz-gradle-plugin</module>
         <module>source-code-provider</module>
@@ -44,6 +44,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.version>3.3.9</maven.version>
+        <jackson.version>2.10.0.pr1</jackson.version>
     </properties>
 
     <build>
@@ -158,49 +159,49 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.monadiccloud.bindingz</groupId>
-                <artifactId>contract-annotations4j</artifactId>
+                <groupId>io.bindingz</groupId>
+                <artifactId>bindingz-annotations</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.monadiccloud.bindingz</groupId>
-                <artifactId>contract-core</artifactId>
+                <groupId>io.bindingz</groupId>
+                <artifactId>bindingz-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.monadiccloud.bindingz</groupId>
+                <groupId>io.bindingz</groupId>
                 <artifactId>source-code-provider</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.monadiccloud.bindingz</groupId>
-                <artifactId>contract-registry-client-java</artifactId>
+                <groupId>io.bindingz</groupId>
+                <artifactId>bindingz-api-client-java</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.monadiccloud.bindingz</groupId>
+                <groupId>io.bindingz</groupId>
                 <artifactId>bindingz-maven-plugin</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.monadiccloud.bindingz</groupId>
+                <groupId>io.bindingz</groupId>
                 <artifactId>bindingz-gradle-plugin</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-annotations</artifactId>
-                <version>2.9.8</version>
+                <version>${jackson.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>2.10.0.pr1</version>
+                <version>${jackson.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.module</groupId>
                 <artifactId>jackson-module-jsonSchema</artifactId>
-                <version>2.9.8</version>
+                <version>${jackson.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.dorkbox</groupId>

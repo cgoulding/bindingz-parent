@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.monadiccloud.bindingz</groupId>
+  <groupId>io.bindingz</groupId>
   <artifactId>bindingz-maven-plugin-example</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
@@ -12,9 +12,9 @@
 
   <dependencies>
     <dependency>
-      <groupId>com.monadiccloud.bindingz</groupId>
-      <artifactId>contract-annotations4j</artifactId>
-      <version>1.1.4-SNAPSHOT</version>
+      <groupId>io.bindingz</groupId>
+      <artifactId>bindingz-annotations</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
@@ -27,9 +27,9 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>com.monadiccloud.bindingz</groupId>
+        <groupId>io.bindingz</groupId>
         <artifactId>bindingz-maven-plugin</artifactId>
-        <version>1.1.4-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
         <configuration>
           <apiKey>cPrS6nyv.ac5bc2f16417e79f2517531c2f6a0591</apiKey>
           <registry>http://localhost:7070</registry>

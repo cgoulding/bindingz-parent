@@ -13,7 +13,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.monadiccloud.bindingz:bindingz-gradle-plugin:1.1.4-SNAPSHOT'
+        classpath 'io.bindingz:bindingz-gradle-plugin:1.0.0-SNAPSHOT'
     }
 }
 
@@ -31,7 +31,7 @@ bindingz {
             owner = "bindingz-gradle-plugin-example"
             contractName = "FooBarEvent"
             version = "1.0"
-            packageName = "com.monadiccloud.sample.scala"
+            packageName = "io.bindingz.sample.scala"
             className = "LocalFooBarEvent"
             sourceCodeConfiguration {
                 targetLanguage = "SCALA"
@@ -42,7 +42,7 @@ bindingz {
             owner = "bindingz-gradle-plugin-example"
             contractName = "FooBarEvent"
             version = "1.0"
-            packageName = "com.monadiccloud.sample.java"
+            packageName = "io.bindingz.sample.java"
             className = "LocalFooBarEvent"
             sourceCodeConfiguration {
                 targetLanguage = "JAVA"
@@ -52,7 +52,7 @@ bindingz {
 }
 
 dependencies {
-    compile 'com.monadiccloud.bindingz:contract-annotations4j:1.1.4-SNAPSHOT'
+    compile 'io.bindingz:bindingz-annotations:1.0.0-SNAPSHOT'
     compile 'com.fasterxml.jackson.core:jackson-core:2.9.8'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.8'
 }

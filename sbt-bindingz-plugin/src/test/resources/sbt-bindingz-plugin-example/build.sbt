@@ -1,13 +1,13 @@
 name := "sbt-plugin-example"
-organization := "com.monadiccloud.bindingz"
-version := "1.1.4-SNAPSHOT"
+organization := "io.bindingz"
+version := "1.0.0-SNAPSHOT"
 
 resolvers += Resolver.mavenLocal
 resolvers += Resolver.mavenCentral
 resolvers += Resolver.sonatypeRepo("releases")
 
 libraryDependencies ++= Seq(
-  "com.monadiccloud.bindingz" % "contract-annotations4j" % "1.1.4-SNAPSHOT"
+  "io.bindingz" % "bindingz-annotations" % "1.0.0-SNAPSHOT"
 )
 
 import com.monadiccloud.bindingz.contract.plugin.sbt._
